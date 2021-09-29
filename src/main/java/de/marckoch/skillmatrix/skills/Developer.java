@@ -44,10 +44,10 @@ public class Developer {
 	@Override
 	public String toString() {
 		return new ToStringCreator(this)
-				.append("id", this.getDeveloperId())
+				.append("id", this.developerId)
 				.append("new", this.isNew())
-				.append("lastName", this.getLastName())
-				.append("firstName", this.getFirstName())
+				.append("lastName", this.lastName)
+				.append("firstName", this.firstName)
 				.append("title", this.title)
 				.append("experiences", this.experiences)
 				.toString();

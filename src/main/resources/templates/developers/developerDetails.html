@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 
 <html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+</head>
     <body>
         <h2>Developer Information</h2>
         <table class="table table-striped" th:object="${developer}">
             <tr>
                 <th>Name</th>
-                <td><b th:text="*{firstName + ' ' + lastName}"></b></td>
+                <td><b th:text="*{firstName + ' ' + lastName}">Developer 1</b></td>
             </tr>
             <tr>
                 <th>Title</th>
-                <td><b th:text="*{title}"></b></td>
+                <td><b th:text="*{title}">Dr.</b></td>
             </tr>
         </table>
     </body>

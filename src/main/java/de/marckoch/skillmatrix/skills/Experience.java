@@ -2,7 +2,6 @@ package de.marckoch.skillmatrix.skills;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -17,7 +16,6 @@ public class Experience {
 	private Integer experienceid;
 
 	@EqualsAndHashCode.Exclude
-	@ToString.Exclude
 	@ManyToOne
 	@JoinColumn(name = "developer_id")
 	private Developer developer;
@@ -33,4 +31,14 @@ public class Experience {
 	@Column(name = "rating")
 	private Integer rating;
 
+	@Override
+	public String toString() {
+		return "Experience{" +
+				"experienceid=" + experienceid +
+				", developer=" + developer.getFirstName() + " " + developer.getLastName() +
+				", skill=" + skill.getName() + " " + skill.getVersion() +
+				", years=" + years +
+				", rating=" + rating +
+				'}';
+	}
 }

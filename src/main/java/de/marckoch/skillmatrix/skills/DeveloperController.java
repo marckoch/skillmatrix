@@ -20,7 +20,6 @@ class DeveloperController {
 	public ModelAndView showAll() {
 		ModelAndView mav = new ModelAndView("developers/developerList");
 		Collection<Developer> devs = developerRepository.findAll();
-		System.out.println("===" + devs);
 		mav.getModel().put("developers", devs);
 		return mav;
 	}

@@ -20,7 +20,6 @@ class SkillController {
 	public ModelAndView showAll() {
 		ModelAndView mav = new ModelAndView("skills/skillList");
 		Collection<Skill> skills = skillRepository.findAll();
-		System.out.println("===" + skills);
 		mav.getModel().put("skills", skills);
 		return mav;
 	}
