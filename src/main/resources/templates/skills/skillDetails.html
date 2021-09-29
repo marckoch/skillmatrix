@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org">
+    <body>
+        <h2>Developer Information</h2>
+        <table class="table table-striped" th:object="${skill}">
+            <tr>
+                <th>Name</th>
+                <td><b th:text="*{name}"></b></td>
+            </tr>
+            <tr>
+                <th>Versione</th>
+                <td><b th:text="*{version}"></b></td>
+            </tr>
+        </table>
+    </body>
+</html>
