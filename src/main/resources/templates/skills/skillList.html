@@ -21,16 +21,17 @@
               <td>
                   <table id="top-experts" class="table table-striped">
                       <thead>
-                      <tr>
-                          <th>Developer</th>
-                          <th>Years</th>
-                          <th>Rating</th>
-                      </tr>
+                          <tr>
+                              <th>Developer</th>
+                              <th>Years</th>
+                              <th>Rating</th>
+                          </tr>
                       </thead>
                       <tr th:each="exp : ${skill.topThreeExperts()}">
-                          <td th:text="${exp.developer.firstName + ' ' + exp.developer.lastName}"></td>
-                          <td th:text="${exp.years}"></td>
-                          <td th:text="${exp.rating}"></td>
+                          <td><a th:href="@{/developers/__${exp.developer.developerId}__}"
+                                 th:text="${exp.developer.firstName + ' ' + exp.developer.lastName}">Developer Name</a></td>
+                          <td th:text="${exp.years}">13</td>
+                          <td th:text="${exp.rating}">4</td>
                       </tr>
                   </table>
               </td>

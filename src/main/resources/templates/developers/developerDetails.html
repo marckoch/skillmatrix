@@ -26,7 +26,8 @@
                 <th>rating (x of 5)</th>
             </thead>
             <tr th:each="exp : ${developer.experiences}">
-                <td th:text="${exp.skill.name}">Skill</td>
+                <td><a th:href="@{/skills/__${exp.skill.skillId}__}"
+                       th:text="${exp.skill.name}">Skill 1</a></td>
                 <td th:text="${exp.skill.version}">Skill Version</td>
                 <td th:text="${exp.years}">years</td>
                 <td th:text="${exp.rating}">rating</td>
