@@ -13,9 +13,9 @@ public interface DeveloperRepository extends Repository<Developer, Integer> {
 	@Transactional(readOnly = true)
 	Developer findById(@Param("id") Integer id);
 
-	@Query("SELECT DISTINCT dev FROM Developer dev left join fetch dev.experiences WHERE dev.lastName LIKE :lastName%")
+	@Query("SELECT DISTINCT dev FROM Developer dev left join fetch dev.experiences WHERE UPPER(dev.lastName) LIKE %:queryInUpperCase% OR UPPER(dev.firstName) LIKE %:queryInUpperCase%")
 	@Transactional(readOnly = true)
-	Collection<Developer> findByLastName(@Param("lastName") String lastName);
+	Collection<Developer> findByQuery(@Param("queryInUpperCase") String queryInUpperCase);
 
 	@Query("SELECT DISTINCT dev FROM Developer dev join fetch dev.experiences exp join fetch exp.skill")
 	@Transactional(readOnly = true)

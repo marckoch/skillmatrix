@@ -46,6 +46,11 @@
 
         <ul class="nav navbar-nav navbar-right">
 
+          <li th:replace="::menuItem ('/search/init','search','find everything','search','search all')">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+            <span>all</span>
+          </li>
+
           <li th:replace="::menuItem ('/developers','developers','find developers','search','list developers')">
             <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
             <span>developers</span>
