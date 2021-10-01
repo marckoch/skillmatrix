@@ -2,7 +2,6 @@
 <html th:fragment="layout (template, menu)">
 
 <head>
-
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,7 +12,6 @@
   <title>SkillMatrix :: a Spring Framework demonstration</title>
 
   <link rel="stylesheet" th:href="@{/resources/css/skillmatrix.css}" />
-
 </head>
 
 <body>
@@ -48,25 +46,14 @@
 
         <ul class="nav navbar-nav navbar-right">
 
-          <li th:replace="::menuItem ('/','home','home page','home','Home')">
-            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-            <span>Home</span>
-          </li>
-
-          <li th:replace="::menuItem ('/developers','developers','find developers','search','Find developers')">
+          <li th:replace="::menuItem ('/developers','developers','find developers','search','list developers')">
             <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-            <span>Find owners</span>
+            <span>developers</span>
           </li>
 
-          <li th:replace="::menuItem ('/skills','skills','skills','search','Find skills')">
+          <li th:replace="::menuItem ('/skills','skills','skills','search','list skills')">
             <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-            <span>Veterinarians</span>
-          </li>
-
-          <li
-            th:replace="::menuItem ('/oups','error','trigger a RuntimeException to see how it is handled','warning-sign','Error')">
-            <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-            <span>Error</span>
+            <span>skills</span>
           </li>
 
         </ul>
@@ -84,7 +71,7 @@
         <div class="row">
           <div class="col-12 text-center">
             <img src="../static/resources/images/spring-pivotal-logo.png"
-              th:src="@{/resources/images/spring-pivotal-logo.png}" alt="created by Marc based on Spring PetClinic" /></div>
+              th:src="@{/resources/images/spring-pivotal-logo.png}" alt="created by Marc Koch based on Spring PetClinic ❤️" /></div>
         </div>
       </div>
     </div>

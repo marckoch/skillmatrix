@@ -5,6 +5,8 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -34,4 +36,10 @@ public class Skill {
 	@OneToMany(mappedBy = "skill")
 	private Set<Experience> experiences;
 
+	public List<Experience> topThreeExperts() {
+		return experiences.stream()
+				.sorted(Comparator.comparing(Experience::getRating).reversed())
+				.limit(3)
+				.toList();
+	}
 }

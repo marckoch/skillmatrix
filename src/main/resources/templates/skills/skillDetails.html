@@ -2,7 +2,7 @@
 
 <html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'skills')}">
     <body>
-        <h2>Developer Information</h2>
+        <h2>Skill Information</h2>
         <table class="table table-striped" th:object="${skill}">
             <tr>
                 <th>Name</th>
@@ -11,6 +11,19 @@
             <tr>
                 <th>Version</th>
                 <td th:text="*{version}">Skill Version 1</td>
+            </tr>
+        </table>
+
+        <table class="table table-striped">
+            <thead>
+            <th>Developer</th>
+            <th>years</th>
+            <th>rating (x of 5)</th>
+            </thead>
+            <tr th:each="exp : ${skill.experiences}">
+                <td th:text="${exp.developer.firstName + ' ' + exp.developer.lastName}">Developer</td>
+                <td th:text="${exp.years}">years</td>
+                <td th:text="${exp.rating}">rating</td>
             </tr>
         </table>
     </body>

@@ -17,5 +17,20 @@
                 <td th:text="*{title}">Dr.</td>
             </tr>
         </table>
+
+        <table class="table table-striped">
+            <thead>
+                <th>Skill</th>
+                <th>Version</th>
+                <th>years</th>
+                <th>rating (x of 5)</th>
+            </thead>
+            <tr th:each="exp : ${developer.experiences}">
+                <td th:text="${exp.skill.name}">Skill</td>
+                <td th:text="${exp.skill.version}">Skill Version</td>
+                <td th:text="${exp.years}">years</td>
+                <td th:text="${exp.rating}">rating</td>
+            </tr>
+        </table>
     </body>
 </html>

@@ -8,7 +8,7 @@
         <tr>
             <th style="width: 150px;">Name</th>
             <th style="width: 200px;">Version</th>
-            <th style="width: 200px;">Experiences</th>
+            <th style="width: 200px;">Top 3 Experts</th>
         </tr>
         </thead>
         <tbody>
@@ -17,7 +17,23 @@
                   <a th:href="@{/skills/__${skill.getSkillId()}__}" th:text="${skill.name}">Skill 1</a>
               </td>
               <td th:text="${skill.version}">Version 33</td>
-              <td><span th:text="${#strings.listJoin(skill.experiences, ', ')}">Developer 1, Developer 2</span></td>
+
+              <td>
+                  <table id="top-experts" class="table table-striped">
+                      <thead>
+                      <tr>
+                          <th>Developer</th>
+                          <th>Years</th>
+                          <th>Rating</th>
+                      </tr>
+                      </thead>
+                      <tr th:each="exp : ${skill.topThreeExperts()}">
+                          <td th:text="${exp.developer.firstName + ' ' + exp.developer.lastName}"></td>
+                          <td th:text="${exp.years}"></td>
+                          <td th:text="${exp.rating}"></td>
+                      </tr>
+                  </table>
+              </td>
           </tr>
         </tbody>
     </table>

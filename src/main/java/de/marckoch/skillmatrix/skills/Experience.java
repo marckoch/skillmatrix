@@ -5,6 +5,9 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
+/**
+ * Simple JavaBean domain object representing an experience, that is a connection between a person and a skill.
+ */
 @Entity
 @Data
 @Table(name = "experiences")

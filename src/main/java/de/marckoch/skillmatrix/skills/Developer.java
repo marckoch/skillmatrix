@@ -2,11 +2,12 @@ package de.marckoch.skillmatrix.skills;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import org.springframework.core.style.ToStringCreator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -36,6 +37,13 @@ public class Developer {
 	@EqualsAndHashCode.Exclude
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "developer")
 	private Set<Experience> experiences;
+
+	public List<Experience> topThreeExperiences() {
+		return experiences.stream()
+				.sorted(Comparator.comparing(Experience::getRating).reversed())
+				.limit(3)
+				.toList();
+	}
 
 	public boolean isNew() {
 		return this.developerId == null;
