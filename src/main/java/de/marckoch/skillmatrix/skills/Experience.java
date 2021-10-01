@@ -19,12 +19,12 @@ public class Experience {
 	private Integer experienceid;
 
 	@EqualsAndHashCode.Exclude
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "developer_id")
 	private Developer developer;
 
 	@EqualsAndHashCode.Exclude
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "skill_id")
 	private Skill skill;
 

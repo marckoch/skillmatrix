@@ -35,7 +35,7 @@ public class Developer {
 	private String title;
 
 	@EqualsAndHashCode.Exclude
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "developer")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "developer", fetch = FetchType.EAGER)
 	private Set<Experience> experiences;
 
 	public List<Experience> topThreeExperiences() {

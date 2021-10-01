@@ -33,7 +33,7 @@ public class Skill {
 
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
-	@OneToMany(mappedBy = "skill")
+	@OneToMany(mappedBy = "skill", fetch = FetchType.EAGER)
 	private Set<Experience> experiences;
 
 	public List<Experience> topThreeExperts() {

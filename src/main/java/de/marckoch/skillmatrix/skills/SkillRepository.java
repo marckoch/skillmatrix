@@ -9,15 +9,15 @@ import java.util.Collection;
 
 public interface SkillRepository extends Repository<Skill, Integer> {
 
-	@Query("SELECT s FROM Skill s left join fetch s.experiences WHERE s.skillId =:id")
+	@Query("SELECT s FROM Skill s WHERE s.skillId =:id")
 	@Transactional(readOnly = true)
 	Skill findById(@Param("id") Integer id);
 
-	@Query("SELECT DISTINCT s FROM Skill s left join fetch s.experiences WHERE UPPER(s.name) LIKE %:queryInUpperCase%")
+	@Query("SELECT DISTINCT s FROM Skill s WHERE UPPER(s.name) LIKE %:queryInUpperCase%")
 	@Transactional(readOnly = true)
 	Collection<Skill> findByQuery(@Param("queryInUpperCase") String queryInUpperCase);
 
-	@Query("SELECT DISTINCT s FROM Skill s join fetch s.experiences exp join fetch exp.developer")
+	@Query("SELECT DISTINCT s FROM Skill s")
 	@Transactional(readOnly = true)
 	Collection<Skill> findAll();
 }
