@@ -27,6 +27,7 @@
         <th>Version</th>
         <th>years</th>
         <th>rating (x of 5)</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -35,6 +36,7 @@
         <td th:text="${exp.skill.version}">Skill Version</td>
         <td th:text="${exp.years}">years</td>
         <td th:text="${exp.rating}">rating</td>
+        <td><a class="btn btn-default" th:href="@{/experience/delete/__${exp.experienceid}__}">X</a></td>
       </tr>
     </tbody>
   </table>

@@ -32,7 +32,7 @@ class SkillController {
 	@GetMapping("/skills/{skillId}")
 	public ModelAndView showSkill(@PathVariable("skillId") int skillId) {
 		ModelAndView mav = new ModelAndView("skills/skillDetails");
-		Skill skill = skillRepository.findById(skillId);
+		Skill skill = skillRepository.findById(skillId).get();
 		mav.addObject(skill);
 		return mav;
 	}
@@ -56,7 +56,7 @@ class SkillController {
 
 	@GetMapping("/skills/{skillId}/edit")
 	public String initUpdateSkillForm(@PathVariable("skillId") int skillId, Model model) {
-		Skill skill = skillRepository.findById(skillId);
+		Skill skill = skillRepository.findById(skillId).get();
 		model.addAttribute(skill);
 		return "/skills/createOrUpdateSkillForm";
 	}

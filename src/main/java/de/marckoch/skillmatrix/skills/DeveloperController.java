@@ -32,7 +32,7 @@ class DeveloperController {
 	@GetMapping("/developers/{developerId}")
 	public ModelAndView showDeveloper(@PathVariable("developerId") int developerId) {
 		ModelAndView mav = new ModelAndView("developers/developerDetails");
-		Developer dev = developerRepository.findById(developerId);
+		Developer dev = developerRepository.findById(developerId).get();
 		mav.addObject(dev);
 		return mav;
 	}
@@ -56,7 +56,7 @@ class DeveloperController {
 
 	@GetMapping("/developers/{developerId}/edit")
 	public String initUpdateDeveloperForm(@PathVariable("developerId") int developerId, Model model) {
-		Developer developer = developerRepository.findById(developerId);
+		Developer developer = developerRepository.findById(developerId).get();
 		model.addAttribute(developer);
 		return "/developers/createOrUpdateDeveloperForm";
 	}

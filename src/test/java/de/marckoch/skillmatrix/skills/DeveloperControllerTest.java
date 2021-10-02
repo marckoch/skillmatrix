@@ -6,6 +6,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Optional;
+
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -27,7 +29,7 @@ class DeveloperControllerTest {
         peter.setFirstName("Peter");
         peter.setLastName("Parker");
 
-        given(developerRepository.findById(peter.getDeveloperId())).willReturn(peter);
+        given(developerRepository.findById(peter.getDeveloperId())).willReturn(Optional.of(peter));
 
         mockMvc.perform(get("/developers/{developerId}", 123))
                 .andExpect(status().is2xxSuccessful())
