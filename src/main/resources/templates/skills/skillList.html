@@ -11,8 +11,9 @@
     <table id="skills" class="table table-striped">
         <thead>
         <tr>
-            <th style="width: 40%;">Name</th>
+            <th style="width: 30%;">Name</th>
             <th style="width: 10%;">Version</th>
+            <th style="width: 10%;">Alias</th>
             <th style="width: 50%;">Top 3 Experts</th>
         </tr>
         </thead>
@@ -22,6 +23,7 @@
                   <a th:href="@{/skills/__${skill.getSkillId()}__}" th:text="${skill.name}">Skill 1</a>
               </td>
               <td th:text="${skill.version}">Version 33</td>
+              <td th:text="${skill.alias}">Alias</td>
 
               <td>
                   <table id="top-experts" class="table table-striped">

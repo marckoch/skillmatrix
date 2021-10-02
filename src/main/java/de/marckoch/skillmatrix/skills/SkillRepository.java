@@ -13,7 +13,7 @@ public interface SkillRepository extends Repository<Skill, Integer> {
 	@Transactional(readOnly = true)
 	Skill findById(@Param("id") Integer id);
 
-	@Query("SELECT DISTINCT s FROM Skill s WHERE UPPER(s.name) LIKE %:queryInUpperCase%")
+	@Query("SELECT DISTINCT s FROM Skill s WHERE UPPER(s.name) LIKE %:queryInUpperCase% OR UPPER(s.alias) LIKE %:queryInUpperCase%")
 	@Transactional(readOnly = true)
 	Collection<Skill> findByQuery(@Param("queryInUpperCase") String queryInUpperCase);
 
