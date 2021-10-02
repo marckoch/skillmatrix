@@ -6,9 +6,9 @@
     <table id="skills" class="table table-striped">
         <thead>
         <tr>
-            <th style="width: 150px;">Name</th>
-            <th style="width: 200px;">Version</th>
-            <th style="width: 200px;">Top 3 Experts</th>
+            <th style="width: 40%;">Name</th>
+            <th style="width: 10%;">Version</th>
+            <th style="width: 50%;">Top 3 Experts</th>
         </tr>
         </thead>
         <tbody>
@@ -22,9 +22,9 @@
                   <table id="top-experts" class="table table-striped">
                       <thead>
                           <tr>
-                              <th>Developer</th>
-                              <th>Years</th>
-                              <th>Rating</th>
+                              <th style="width: 60%;">Developer</th>
+                              <th style="width: 20%;">Years</th>
+                              <th style="width: 20%;">Rating</th>
                           </tr>
                       </thead>
                       <tr th:each="exp : ${skill.topThreeExperts()}">
