@@ -3,6 +3,11 @@
 <html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'skills')}">
   <body>
     <h2>Skills</h2>
+
+    <a class="btn btn-default" th:href="@{/skills/new}">Add Skill</a>
+
+    <hr>
+
     <table id="skills" class="table table-striped">
         <thead>
         <tr>

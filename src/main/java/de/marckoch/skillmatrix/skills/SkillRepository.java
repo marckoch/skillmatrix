@@ -20,4 +20,6 @@ public interface SkillRepository extends Repository<Skill, Integer> {
 	@Query("SELECT DISTINCT s FROM Skill s")
 	@Transactional(readOnly = true)
 	Collection<Skill> findAll();
+
+	void save(Skill skill);
 }

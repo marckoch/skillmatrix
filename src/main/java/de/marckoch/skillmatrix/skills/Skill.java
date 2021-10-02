@@ -36,6 +36,10 @@ public class Skill {
 	@OneToMany(mappedBy = "skill", fetch = FetchType.EAGER)
 	private Set<Experience> experiences;
 
+	public boolean isNew() {
+		return this.skillId == null;
+	}
+
 	public List<Experience> topThreeExperts() {
 		return experiences.stream()
 				.sorted(Comparator.comparing(Experience::getRating).reversed())

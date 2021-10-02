@@ -48,8 +48,7 @@ class DeveloperController {
 	public String processCreationForm(@Valid Developer developer, BindingResult result) {
 		if (result.hasErrors()) {
 			return "/developers/createOrUpdateDeveloperForm";
-		}
-		else {
+		} else {
 			developerRepository.save(developer);
 			return "redirect:/developers/" + developer.getDeveloperId();
 		}
@@ -67,8 +66,7 @@ class DeveloperController {
 										 @PathVariable("developerId") int developerId) {
 		if (result.hasErrors()) {
 			return "/developers/createOrUpdateDeveloperForm";
-		}
-		else {
+		} else {
 			developer.setDeveloperId(developerId);
 			developerRepository.save(developer);
 			return "redirect:/developers/{developerId}";

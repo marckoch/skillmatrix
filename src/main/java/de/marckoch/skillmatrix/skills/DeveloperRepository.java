@@ -21,5 +21,5 @@ public interface DeveloperRepository extends Repository<Developer, Integer> {
 	@Transactional(readOnly = true)
 	Collection<Developer> findAll();
 
-	void save(Developer owner);
+	void save(Developer developer);
 }

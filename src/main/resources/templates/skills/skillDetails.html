@@ -3,6 +3,11 @@
 <html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'skills')}">
     <body>
         <h2>Skill Information</h2>
+
+        <a class="btn btn-default" th:href="@{/skills/{id}/edit(id=${skill.skillId})}">Edit Skill</a>
+
+        <hr>
+
         <table class="table table-striped" th:object="${skill}">
             <tr>
                 <th>Name</th>
@@ -11,6 +16,10 @@
             <tr>
                 <th>Version</th>
                 <td th:text="*{version}">Skill Version 1</td>
+            </tr>
+            <tr>
+                <th>Alias</th>
+                <td th:text="*{alias}">Alias</td>
             </tr>
         </table>
 
