@@ -12,9 +12,7 @@
             <option th:each="item : ${items}" th:value="${item.key}"
               th:text="${item.value}">dog</option>
           </select>
-          <span th:if="${valid}"
-            class="glyphicon glyphicon-ok form-control-feedback"
-            aria-hidden="true"></span>
+
           <th:block th:if="${!valid}">
             <span
               class="glyphicon glyphicon-remove form-control-feedback"

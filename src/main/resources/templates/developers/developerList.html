@@ -24,23 +24,25 @@
             </td>
             <td th:text="${developer.title}">Dr.</td>
             <td>
-                <table id="top-skills" class="table table-striped">
-                    <thead>
+                <th:block th:if="${developer.topThreeExperiences().size() > 0}">
+                    <table id="top-skills" class="table table-striped">
+                        <thead>
                         <tr>
                             <th style="width: 40%;">Skill</th>
                             <th style="width: 20%;">Version</th>
                             <th style="width: 20%;">Years</th>
                             <th style="width: 20%;">Rating</th>
                         </tr>
-                    </thead>
-                    <tr th:each="exp : ${developer.topThreeExperiences()}">
-                        <td><a th:href="@{/skills/__${exp.skill.skillId}__}"
-                                th:text="${exp.skill.name}">Skill 1</a></td>
-                        <td th:text="${exp.skill.version}">Version </td>
-                        <td th:text="${exp.years}">12</td>
-                        <td th:text="${exp.rating}">3</td>
-                    </tr>
-                </table>
+                        </thead>
+                        <tr th:each="exp : ${developer.topThreeExperiences()}">
+                            <td><a th:href="@{/skills/__${exp.skill.skillId}__}"
+                                   th:text="${exp.skill.name}">Skill 1</a></td>
+                            <td th:text="${exp.skill.version}">Version </td>
+                            <td th:text="${exp.years}">12</td>
+                            <td th:text="${exp.rating}">3</td>
+                        </tr>
+                    </table>
+                </th:block>
             </td>
         </tr>
     </tbody>

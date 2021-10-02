@@ -1,49 +1,50 @@
 <!DOCTYPE html>
 
 <html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'developers')}">
-    <body>
-        <h2>Developer Information</h2>
 
-        <a class="btn btn-default" th:href="@{/developers/{id}/edit(id=${developer.developerId})}">Edit Developer</a>
+<body>
+    <h2>Developer Information</h2>
 
-        <hr>
+    <a class="btn btn-default" th:href="@{/developers/{id}/edit(id=${developer.developerId})}">Edit Developer</a>
 
-        <table class="table table-striped" th:object="${developer}">
+    <hr>
+
+    <table class="table table-striped" th:object="${developer}">
+        <tr>
+            <th>First Name</th>
+            <td th:text="*{firstName}">Developer First Name 1</td>
+        </tr>
+        <tr>
+            <th>Last Name</th>
+            <td th:text="*{lastName}">Developer LastName 1</td>
+        </tr>
+        <tr>
+            <th>Title</th>
+            <td th:text="*{title}">Dr.</td>
+        </tr>
+    </table>
+
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <th>First Name</th>
-                <td th:text="*{firstName}">Developer First Name 1</td>
+                <th>Skill</th>
+                <th>Version</th>
+                <th>years</th>
+                <th>rating (x of 5)</th>
             </tr>
-            <tr>
-                <th>Last Name</th>
-                <td th:text="*{lastName}">Developer LastName 1</td>
+        </thead>
+        <tbody>
+            <tr th:each="exp : ${developer.experiences}">
+                <td><a th:href="@{/skills/__${exp.skill.skillId}__}"
+                       th:text="${exp.skill.name}">Skill 1</a></td>
+                <td th:text="${exp.skill.version}">Skill Version</td>
+                <td th:text="${exp.years}">years</td>
+                <td th:text="${exp.rating}">rating</td>
             </tr>
-            <tr>
-                <th>Title</th>
-                <td th:text="*{title}">Dr.</td>
-            </tr>
-        </table>
+        </tbody>
+    </table>
 
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Skill</th>
-                    <th>Version</th>
-                    <th>years</th>
-                    <th>rating (x of 5)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="exp : ${developer.experiences}">
-                    <td><a th:href="@{/skills/__${exp.skill.skillId}__}"
-                           th:text="${exp.skill.name}">Skill 1</a></td>
-                    <td th:text="${exp.skill.version}">Skill Version</td>
-                    <td th:text="${exp.years}">years</td>
-                    <td th:text="${exp.rating}">rating</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <hr>
-        <a class="btn btn-default" th:href="@{/experience/{id}/new(id=${developer.developerId})}">Add Skill</a>
-    </body>
+    <hr>
+    <a class="btn btn-default" th:href="@{/experience/{id}/new(id=${developer.developerId})}">Add Skill</a>
+</body>
 </html>

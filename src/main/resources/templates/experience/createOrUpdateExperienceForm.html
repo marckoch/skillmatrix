@@ -27,7 +27,7 @@
         <th>Version</th>
         <th>years</th>
         <th>rating (x of 5)</th>
-        <th></th>
+        <th>x</th>
       </tr>
     </thead>
     <tbody>
@@ -36,7 +36,7 @@
         <td th:text="${exp.skill.version}">Skill Version</td>
         <td th:text="${exp.years}">years</td>
         <td th:text="${exp.rating}">rating</td>
-        <td><a class="btn btn-default" th:href="@{/experience/delete/__${exp.experienceid}__}">X</a></td>
+        <td><a th:href="@{/experience/delete/__${exp.experienceid}__}">X</a></td>
       </tr>
     </tbody>
   </table>
@@ -48,7 +48,7 @@
       <input
               th:replace="~{fragments/inputField :: input ('Years', 'years', 'text')}" />
       <input
-              th:replace="~{fragments/inputField :: input ('Rating', 'rating', 'text')}" />
+              th:replace="~{fragments/selectField :: select ('Rating', 'rating', ${ratings})}" />
     </div>
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">

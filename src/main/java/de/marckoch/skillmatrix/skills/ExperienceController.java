@@ -1,5 +1,6 @@
 package de.marckoch.skillmatrix.skills;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,8 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
+@AllArgsConstructor
 class ExperienceController {
 
     private final ExperienceRepository experienceRepository;
@@ -19,13 +22,6 @@ class ExperienceController {
     private final DeveloperRepository developerRepository;
 
     private final SkillRepository skillRepository;
-
-    public ExperienceController(ExperienceRepository experienceRepository, DeveloperRepository developerRepository,
-                                SkillRepository skillRepository) {
-        this.experienceRepository = experienceRepository;
-        this.developerRepository = developerRepository;
-        this.skillRepository = skillRepository;
-    }
 
     public Map<Integer, String> getFreeSkills(Developer dev) {
         var skillsOfDeveloper = dev.getExperiences()
@@ -39,6 +35,14 @@ class ExperienceController {
                         Skill::getSkillId,
                         skill -> skill.getName() + " " + skill.getVersion()
                 ));
+    }
+
+    @ModelAttribute("ratings")
+    public Map<Integer, String> getRatings() {
+        return IntStream.range(1, 6).boxed().collect(Collectors.toMap(
+                Integer::valueOf,
+                String::valueOf
+        ));
     }
 
     @GetMapping("/experience/{developerId}/new")
@@ -60,13 +64,13 @@ class ExperienceController {
                                       @Valid Experience experience, BindingResult result) {
         Developer dev = developerRepository.findById(developerId).get();
         model.put("developer", dev);
+        experience.setDeveloper(dev);
 
         if (result.hasErrors()) {
             return "/experience/createOrUpdateExperienceForm";
         } else {
-            experience.setDeveloper(dev);
             experienceRepository.save(experience);
-            return "redirect:/developers/" + experience.getDeveloper().getDeveloperId();
+            return "redirect:/developers/" + dev.getDeveloperId();
         }
     }
 

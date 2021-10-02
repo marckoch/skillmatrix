@@ -1,5 +1,6 @@
 package de.marckoch.skillmatrix.skills;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,13 +14,10 @@ import java.util.Collection;
 import java.util.Map;
 
 @Controller
+@AllArgsConstructor
 class DeveloperController {
 
 	private final DeveloperRepository developerRepository;
-
-	public DeveloperController(DeveloperRepository developerRepository) {
-		this.developerRepository = developerRepository;
-	}
 
 	@GetMapping("/developers")
 	public ModelAndView showAll() {

@@ -26,21 +26,23 @@
               <td th:text="${skill.alias}">Alias</td>
 
               <td>
-                  <table id="top-experts" class="table table-striped">
-                      <thead>
+                  <th:block th:if="${skill.topThreeExperts().size() > 0}">
+                      <table id="top-experts" class="table table-striped">
+                          <thead>
                           <tr>
                               <th style="width: 60%;">Developer</th>
                               <th style="width: 20%;">Years</th>
                               <th style="width: 20%;">Rating</th>
                           </tr>
-                      </thead>
-                      <tr th:each="exp : ${skill.topThreeExperts()}">
-                          <td><a th:href="@{/developers/__${exp.developer.developerId}__}"
-                                 th:text="${exp.developer.firstName + ' ' + exp.developer.lastName}">Developer Name</a></td>
-                          <td th:text="${exp.years}">13</td>
-                          <td th:text="${exp.rating}">4</td>
-                      </tr>
-                  </table>
+                          </thead>
+                          <tr th:each="exp : ${skill.topThreeExperts()}">
+                              <td><a th:href="@{/developers/__${exp.developer.developerId}__}"
+                                     th:text="${exp.developer.firstName + ' ' + exp.developer.lastName}">Developer Name</a></td>
+                              <td th:text="${exp.years}">13</td>
+                              <td th:text="${exp.rating}">4</td>
+                          </tr>
+                      </table>
+                  </th:block>
               </td>
           </tr>
         </tbody>
