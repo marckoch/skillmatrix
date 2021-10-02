@@ -3,6 +3,11 @@
 <html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'developers')}">
     <body>
         <h2>Developer Information</h2>
+
+        <a class="btn btn-default" th:href="@{/developers/{id}/edit(id=${developer.developerId})}">Edit Developer</a>
+
+        <hr>
+
         <table class="table table-striped" th:object="${developer}">
             <tr>
                 <th>First Name</th>

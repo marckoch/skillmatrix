@@ -20,4 +20,6 @@ public interface DeveloperRepository extends Repository<Developer, Integer> {
 	@Query("SELECT DISTINCT dev FROM Developer dev")
 	@Transactional(readOnly = true)
 	Collection<Developer> findAll();
+
+	void save(Developer owner);
 }
