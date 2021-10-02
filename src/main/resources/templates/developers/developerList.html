@@ -10,39 +10,39 @@
 
 <table id="developers" class="table table-striped">
     <thead>
-    <tr>
-        <th style="width: 40%;">Name</th>
-        <th style="width: 10%;">Title</th>
-        <th style="width: 50%;">Top 3 Skills</th>
-    </tr>
+        <tr>
+            <th style="width: 40%;">Name</th>
+            <th style="width: 10%;">Title</th>
+            <th style="width: 50%;">Top 3 Skills</th>
+        </tr>
     </thead>
     <tbody>
-    <tr th:each="developer : ${developers}">
-        <td>
-            <a th:href="@{/developers/__${developer.getDeveloperId()}__}"
-               th:text="${developer.firstName + ' ' + developer.lastName}">Developer 1</a>
-        </td>
-        <td th:text="${developer.title}">Dr.</td>
-        <td>
-            <table id="top-skills" class="table table-striped">
-                <thead>
-                    <tr>
-                        <th style="width: 40%;">Skill</th>
-                        <th style="width: 20%;">Version</th>
-                        <th style="width: 20%;">Years</th>
-                        <th style="width: 20%;">Rating</th>
+        <tr th:each="developer : ${developers}">
+            <td>
+                <a th:href="@{/developers/__${developer.getDeveloperId()}__}"
+                   th:text="${developer.firstName + ' ' + developer.lastName}">Developer 1</a>
+            </td>
+            <td th:text="${developer.title}">Dr.</td>
+            <td>
+                <table id="top-skills" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width: 40%;">Skill</th>
+                            <th style="width: 20%;">Version</th>
+                            <th style="width: 20%;">Years</th>
+                            <th style="width: 20%;">Rating</th>
+                        </tr>
+                    </thead>
+                    <tr th:each="exp : ${developer.topThreeExperiences()}">
+                        <td><a th:href="@{/skills/__${exp.skill.skillId}__}"
+                                th:text="${exp.skill.name}">Skill 1</a></td>
+                        <td th:text="${exp.skill.version}">Version </td>
+                        <td th:text="${exp.years}">12</td>
+                        <td th:text="${exp.rating}">3</td>
                     </tr>
-                </thead>
-                <tr th:each="exp : ${developer.topThreeExperiences()}">
-                    <td><a th:href="@{/skills/__${exp.skill.skillId}__}"
-                            th:text="${exp.skill.name}">Skill 1</a></td>
-                    <td th:text="${exp.skill.version}">Version </td>
-                    <td th:text="${exp.years}">12</td>
-                    <td th:text="${exp.rating}">3</td>
-                </tr>
-            </table>
-        </td>
-    </tr>
+                </table>
+            </td>
+        </tr>
     </tbody>
 </table>
 </body>

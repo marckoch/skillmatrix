@@ -25,9 +25,11 @@
 
         <table class="table table-striped">
             <thead>
-            <th>Developer</th>
-            <th>years</th>
-            <th>rating (x of 5)</th>
+                <tr>
+                    <th>Developer</th>
+                    <th>years</th>
+                    <th>rating (x of 5)</th>
+                </tr>
             </thead>
             <tr th:each="exp : ${skill.experiences}">
                 <td><a th:href="@{/developers/__${exp.developer.developerId}__}"

@@ -55,15 +55,15 @@ class DeveloperController {
 	}
 
 	@GetMapping("/developers/{developerId}/edit")
-	public String initUpdateOwnerForm(@PathVariable("developerId") int developerId, Model model) {
+	public String initUpdateDeveloperForm(@PathVariable("developerId") int developerId, Model model) {
 		Developer developer = developerRepository.findById(developerId);
 		model.addAttribute(developer);
 		return "/developers/createOrUpdateDeveloperForm";
 	}
 
 	@PostMapping("/developers/{developerId}/edit")
-	public String processUpdateOwnerForm(@Valid Developer developer, BindingResult result,
-										 @PathVariable("developerId") int developerId) {
+	public String processUpdateDeveloperForm(@Valid Developer developer, BindingResult result,
+										 	 @PathVariable("developerId") int developerId) {
 		if (result.hasErrors()) {
 			return "/developers/createOrUpdateDeveloperForm";
 		} else {

@@ -1,0 +1,60 @@
+<html xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{fragments/layout :: layout (~{::body},'developers')}">
+
+<body>
+
+  <h2>Link a developer to a skill</h2>
+
+  <table class="table table-striped" th:object="${developer}">
+    <tr>
+      <th>First Name</th>
+      <td th:text="*{firstName}">Developer First Name 1</td>
+    </tr>
+    <tr>
+      <th>Last Name</th>
+      <td th:text="*{lastName}">Developer LastName 1</td>
+    </tr>
+    <tr>
+      <th>Title</th>
+      <td th:text="*{title}">Dr.</td>
+    </tr>
+  </table>
+
+  <table id="experiences" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Skill</th>
+        <th>Version</th>
+        <th>years</th>
+        <th>rating (x of 5)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="exp : ${developer.experiences}">
+        <td th:text="${exp.skill.name}">Skill 1</td>
+        <td th:text="${exp.skill.version}">Skill Version</td>
+        <td th:text="${exp.years}">years</td>
+        <td th:text="${exp.rating}">rating</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <form th:object="${experience}" class="form-horizontal" id="add-experience-form" method="post">
+    <div class="form-group has-feedback">
+      <input
+              th:replace="~{fragments/selectField :: select ('Skill + Version', 'skill', ${skillSelectItems})}" />
+      <input
+              th:replace="~{fragments/inputField :: input ('Years', 'years', 'text')}" />
+      <input
+              th:replace="~{fragments/inputField :: input ('Rating', 'rating', 'text')}" />
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button
+                th:with="text=${experience['new']} ? 'Add Skill' : 'Update Skill'"
+                class="btn btn-default" type="submit" th:text="${text}">Add Skill</button>
+      </div>
+    </div>
+  </form>
+</body>
+</html>

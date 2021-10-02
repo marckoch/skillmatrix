@@ -25,18 +25,25 @@
 
         <table class="table table-striped">
             <thead>
-                <th>Skill</th>
-                <th>Version</th>
-                <th>years</th>
-                <th>rating (x of 5)</th>
+                <tr>
+                    <th>Skill</th>
+                    <th>Version</th>
+                    <th>years</th>
+                    <th>rating (x of 5)</th>
+                </tr>
             </thead>
-            <tr th:each="exp : ${developer.experiences}">
-                <td><a th:href="@{/skills/__${exp.skill.skillId}__}"
-                       th:text="${exp.skill.name}">Skill 1</a></td>
-                <td th:text="${exp.skill.version}">Skill Version</td>
-                <td th:text="${exp.years}">years</td>
-                <td th:text="${exp.rating}">rating</td>
-            </tr>
+            <tbody>
+                <tr th:each="exp : ${developer.experiences}">
+                    <td><a th:href="@{/skills/__${exp.skill.skillId}__}"
+                           th:text="${exp.skill.name}">Skill 1</a></td>
+                    <td th:text="${exp.skill.version}">Skill Version</td>
+                    <td th:text="${exp.years}">years</td>
+                    <td th:text="${exp.rating}">rating</td>
+                </tr>
+            </tbody>
         </table>
+
+        <hr>
+        <a class="btn btn-default" th:href="@{/experience/{id}/new(id=${developer.developerId})}">Add Skill</a>
     </body>
 </html>

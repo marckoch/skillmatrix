@@ -55,14 +55,14 @@ class SkillController {
 	}
 
 	@GetMapping("/skills/{skillId}/edit")
-	public String initUpdateOwnerForm(@PathVariable("skillId") int skillId, Model model) {
+	public String initUpdateSkillForm(@PathVariable("skillId") int skillId, Model model) {
 		Skill skill = skillRepository.findById(skillId);
 		model.addAttribute(skill);
 		return "/skills/createOrUpdateSkillForm";
 	}
 
 	@PostMapping("/skills/{skillId}/edit")
-	public String processUpdateOwnerForm(@Valid Skill skill, BindingResult result,
+	public String processUpdateSkillForm(@Valid Skill skill, BindingResult result,
 										 @PathVariable("skillId") int skillId) {
 		if (result.hasErrors()) {
 			return "/skills/createOrUpdateSkillForm";

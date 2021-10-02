@@ -2,6 +2,7 @@ package de.marckoch.skillmatrix.skills;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.core.style.ToStringCreator;
 
 import javax.persistence.*;
 
@@ -34,14 +35,19 @@ public class Experience {
 	@Column(name = "rating")
 	private Integer rating;
 
+	public boolean isNew() {
+		return this.experienceid == null;
+	}
+
 	@Override
 	public String toString() {
-		return "Experience{" +
-				"experienceid=" + experienceid +
-				", developer=" + developer.getFirstName() + " " + developer.getLastName() +
-				", skill=" + skill.getName() + " " + skill.getVersion() +
-				", years=" + years +
-				", rating=" + rating +
-				'}';
+		return new ToStringCreator(this)
+				.append("id", this.experienceid)
+				.append("new", this.isNew())
+				.append("developerId", this.developer != null ? this.developer.getDeveloperId() : "null")
+				.append("skillId", this.skill != null ?  this.skill.getSkillId() : "null")
+				.append("years", this.years)
+				.append("rating", this.rating)
+				.toString();
 	}
 }
