@@ -31,6 +31,7 @@
                 <th>Version</th>
                 <th>years</th>
                 <th>rating (x of 5)</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -40,11 +41,30 @@
                 <td th:text="${exp.skill.version}">Skill Version</td>
                 <td th:text="${exp.years}">years</td>
                 <td th:text="${exp.rating}">rating</td>
+                <td><a th:href="@{/experience/delete/__${exp.experienceid}__}">X</a></td>
             </tr>
         </tbody>
     </table>
 
     <hr>
-    <a class="btn btn-default" th:href="@{/experience/{id}/new(id=${developer.developerId})}">Add Skill</a>
+
+    <th:block th:if="${skillSelectItems.size() > 0}">
+        <form th:action="@{/experience/__${developer.developerId}__/new}" th:object="${newExperience}" class="form-horizontal" id="add-experience-form" method="post">
+            <div class="form-group has-feedback">
+                <input th:replace="~{fragments/selectField :: select ('Skill + Version', 'skill', ${skillSelectItems})}" />
+                <input th:replace="~{fragments/inputField :: input ('Years', 'years', 'text')}" />
+                <input th:replace="~{fragments/selectField :: select ('Rating', 'rating', ${ratings})}" />
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button class="btn btn-default" type="submit">Add Skill</button>
+                </div>
+            </div>
+        </form>
+    </th:block>
+    <th:block th:if="${skillSelectItems.size() == 0}">
+        <th:text>developer has no free skills left!</th:text>
+    </th:block>
+
 </body>
 </html>
