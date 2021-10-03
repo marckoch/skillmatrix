@@ -7,6 +7,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Optional;
+import java.util.Set;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -22,12 +23,25 @@ class DeveloperControllerTest {
     @MockBean
     DeveloperRepository developerRepository;
 
+    @MockBean
+    SkillRepository skillRepository;
+
     @Test
     void testProcessFindFormById() throws Exception {
         Developer peter = new Developer();
         peter.setDeveloperId(123);
         peter.setFirstName("Peter");
         peter.setLastName("Parker");
+
+        Skill java = new Skill();
+        java.setName("Java");
+
+        Experience e1 = new Experience();
+        e1.setDeveloper(peter);
+        e1.setSkill(java);
+        e1.setYears(12);
+        e1.setRating(5);
+        peter.setExperiences(Set.of(e1));
 
         given(developerRepository.findById(peter.getDeveloperId())).willReturn(Optional.of(peter));
 
