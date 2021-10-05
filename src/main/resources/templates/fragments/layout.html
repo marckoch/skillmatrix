@@ -1,5 +1,5 @@
 <!doctype html>
-<html th:fragment="layout (template, menu)">
+<html th:fragment="layout (template)">
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -11,73 +11,55 @@
 
   <title>SkillMatrix :: a Spring Framework demonstration</title>
 
-  <link rel="stylesheet" th:href="@{/resources/css/skillmatrix.css}" />
+  <link rel="stylesheet" href="/webjars/bootstrap/5.1.1/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/webjars/bootstrap-icons/1.5.0/font/bootstrap-icons.css" />
 </head>
 
 <body>
-
-  <nav class="navbar navbar-default" role="navigation">
-    <div class="container">
-      <div class="navbar-header">
-        <a class="navbar-brand" th:href="@{/}"><span></span></a>
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
-          <span class="sr-only">
-            <os-p>Toggle navigation</os-p>
-          </span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-      </div>
-      <div class="navbar-collapse collapse" id="main-navbar">
-
-        <ul class="nav navbar-nav navbar-right" th:remove="all">
-
-          <li th:fragment="menuItem (link,active,title,glyph,text)" class="active"
-            th:class="${active==menu ? 'active' : ''}">
-            <a th:href="@{__${link}__}" th:title="${title}">
-              <span th:class="'glyphicon  glyphicon-'+${glyph}" class="glyphicon glyphicon-home"
-                aria-hidden="true"></span>
-              <span th:text="${text}">Template</span>
-            </a>
-          </li>
-
-        </ul>
-
-        <ul class="nav navbar-nav navbar-right">
-
-          <li th:replace="::menuItem ('/search/init','search','find everything','search','search all')">
-            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-            <span>all</span>
-          </li>
-
-          <li th:replace="::menuItem ('/developers','developers','find developers','search','list developers')">
-            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-            <span>developers</span>
-          </li>
-
-          <li th:replace="::menuItem ('/skills','skills','skills','search','list skills')">
-            <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-            <span>skills</span>
-          </li>
-
-        </ul>
-      </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="#">SkillMatrix</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="/search/init">
+            <span class="bi bi-house"></span>
+            <span>Home</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/developers">
+            <span class="bi bi-search"></span>
+            <span>Developers</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/skills">
+            <span class="bi bi-search"></span>
+            <span>Skills</span>
+          </a>
+        </li>
+      </ul>
+      <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
     </div>
-  </nav>
-  <div class="container-fluid">
-    <div class="container xd-container">
+  </div>
+</nav>
 
-      <th:block th:include="${template}" />
+  <div class="container">
 
-      <br />
-      <br />
-      <div class="container">
-        <div class="row">
-          <div class="col-12 text-center">
-            <img src="../static/resources/images/spring-pivotal-logo.png"
-              th:src="@{/resources/images/spring-pivotal-logo.png}" alt="created by Marc Koch based on Spring PetClinic ❤️" /></div>
-        </div>
+    <th:block th:include="${template}" />
+
+    <br />
+    <br />
+    <div class="row">
+      <div class="col-12 text-center">
+        <span>created by Marc Koch based on Spring PetClinic ❤️</span>
       </div>
     </div>
   </div>

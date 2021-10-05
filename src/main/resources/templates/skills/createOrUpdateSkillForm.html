@@ -1,5 +1,5 @@
 <html xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{fragments/layout :: layout (~{::body},'skills')}">
+  th:replace="~{fragments/layout :: layout (~{::body})}">
 
 <body>
 
@@ -17,7 +17,7 @@
       <div class="col-sm-offset-2 col-sm-10">
         <button
           th:with="text=${skill['new']} ? 'Add Skill' : 'Update Skill'"
-          class="btn btn-default" type="submit" th:text="${text}">Add Skill</button>
+          class="btn btn-primary" type="submit" th:text="${text}">Add Skill</button>
       </div>
     </div>
   </form>

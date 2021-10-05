@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 
-<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'developers')}">
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body})}">
 
 <body>
     <h2>Developer Information</h2>
 
-    <a class="btn btn-default" th:href="@{/developers/{id}/edit(id=${developer.developerId})}">Edit Developer</a>
+    <a class="btn btn-primary" th:href="@{/developers/{id}/edit(id=${developer.developerId})}">Edit Developer</a>
 
     <hr>
 
@@ -41,7 +41,11 @@
                 <td th:text="${exp.skill.version}">Skill Version</td>
                 <td th:text="${exp.years}">years</td>
                 <td th:text="${exp.rating}">rating</td>
-                <td><a th:href="@{/experience/delete/__${exp.experienceid}__}">X</a></td>
+                <td>
+                    <a class="btn btn-danger" th:href="@{/experience/delete/__${exp.experienceid}__}">
+                        <span class="fa fa-ban"></span>
+                    </a>
+                </td>
             </tr>
         </tbody>
     </table>
@@ -57,7 +61,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button class="btn btn-default" type="submit">Add Skill</button>
+                    <button class="btn btn-primary" type="submit">Add Skill</button>
                 </div>
             </div>
         </form>
