@@ -33,14 +33,20 @@ class DeveloperController {
 	}
 
 	@GetMapping("/developers/{developerId}")
-	public ModelAndView showDeveloper(@PathVariable("developerId") int developerId) {
+	public ModelAndView showDeveloper(@PathVariable("developerId") int developerId, Model model) {
 		ModelAndView mav = new ModelAndView("developers/developerDetails");
 		Developer dev = developerRepository.findById(developerId).get();
 		mav.addObject(dev);
 
-		Experience experience = new Experience();
-		experience.setDeveloper(dev);
-		mav.getModel().put("newExperience", experience);
+		// check if we already have a (errournous) experience in model,
+		// this was checked and put there by redirect from ExperienceController
+		if (!model.containsAttribute("experience")) {
+			Experience experience = new Experience();
+			experience.setDeveloper(dev);
+			mav.getModel().put("experience", experience);
+		} else {
+			mav.getModel().put("experience", model.getAttribute("experience"));
+		}
 
 		mav.getModel().put("skillSelectItems", getFreeSkills(dev));
 

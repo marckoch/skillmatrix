@@ -2,24 +2,15 @@
   th:replace="~{fragments/layout :: layout (~{::body})}">
 
 <body>
-
   <h2>Developer</h2>
-  <form th:object="${developer}" class="form-horizontal" id="add-developer-form" method="post">
-    <div class="form-group has-feedback">
-      <input
-        th:replace="~{fragments/inputField :: input ('First Name', 'firstName', 'text')}" />
-      <input
-        th:replace="~{fragments/inputField :: input ('Last Name', 'lastName', 'text')}" />
-      <input
-        th:replace="~{fragments/inputField :: input ('Title', 'title', 'text')}" />
-    </div>
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        <button
-          th:with="text=${developer['new']} ? 'Add Developer' : 'Update Developer'"
-          class="btn btn-primary" type="submit" th:text="${text}">Add Developer</button>
-      </div>
-    </div>
+
+  <form th:object="${developer}" id="add-developer-form" method="post" novalidate>
+    <input th:replace="~{fragments/inputField :: input ('First Name', 'firstName', 'text')}" />
+    <input th:replace="~{fragments/inputField :: input ('Last Name', 'lastName', 'text')}" />
+    <input th:replace="~{fragments/inputField :: input ('Title', 'title', 'text')}" />
+
+    <button th:with="text=${developer['new']} ? 'Add Developer' : 'Update Developer'"
+            class="btn btn-primary" type="submit" th:text="${text}">Add Developer</button>
   </form>
 </body>
 </html>
