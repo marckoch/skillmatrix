@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
@@ -22,6 +23,7 @@ public class Skill {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer skillId;
 
+	@NotEmpty
 	@Column(name = "name")
 	private String name;
 
