@@ -1,11 +1,11 @@
 package de.marckoch.skillmatrix.skills;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collection;
-import java.util.Map;
 
 @Controller
 class SearchController {
@@ -19,32 +19,25 @@ class SearchController {
         this.skillRepo = skillRepo;
     }
 
-    @GetMapping("/search/init")
-    public String initFindForm(Map<String, Object> model) {
-        model.put("searchInput", new SearchInput());
-        return "search/search";
-    }
-
-    @GetMapping("/search/search")
-    public String processFindForm(SearchInput searchInput, BindingResult result, Map<String, Object> model) {
+    @GetMapping("/search")
+    public String processFindForm(@RequestParam String query, Model model) {
 
         // keep it simple: first try developers, then skills
         // we could (should?) refactor this into one query to the database,
         // but for now this is good enough
 
-        Collection<Developer> developers = devRepo.findByQuery(searchInput.getQuery().toUpperCase());
+        Collection<Developer> developers = devRepo.findByQuery(query.toUpperCase());
         if (!developers.isEmpty()) {
-            model.put("developers", developers);
+            model.addAttribute("developers", developers);
             return "developers/developerList";
         }
 
-        Collection<Skill> skills = skillRepo.findByQuery(searchInput.getQuery().toUpperCase());
+        Collection<Skill> skills = skillRepo.findByQuery(query.toUpperCase());
         if (!skills.isEmpty()) {
-            model.put("skills", skills);
+            model.addAttribute("skills", skills);
             return "skills/skillList";
         }
 
-        result.rejectValue("query", "notFound", "nothing found");
-        return "search/search";
+        return "search/emptySearch";
     }
 }
