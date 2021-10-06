@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 import org.springframework.core.style.ToStringCreator;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
 /**
  * Simple JavaBean domain object representing an experience, that is a connection between a person and a skill.
@@ -32,6 +32,8 @@ public class Experience {
 
 	@Column(name = "years")
 	@NotNull
+	@Positive
+	@Max(50)
 	private Integer years;
 
 	@Column(name = "rating")
