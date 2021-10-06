@@ -10,18 +10,20 @@
     <hr>
 
     <table class="table table-striped" th:object="${developer}">
-        <tr>
-            <th>First Name</th>
-            <td th:text="*{firstName}">Developer First Name 1</td>
-        </tr>
-        <tr>
-            <th>Last Name</th>
-            <td th:text="*{lastName}">Developer LastName 1</td>
-        </tr>
-        <tr>
-            <th>Title</th>
-            <td th:text="*{title}">Dr.</td>
-        </tr>
+        <tbody>
+            <tr>
+                <th>First Name</th>
+                <td th:text="*{firstName}">Developer First Name 1</td>
+            </tr>
+            <tr>
+                <th>Last Name</th>
+                <td th:text="*{lastName}">Developer LastName 1</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td th:text="*{title}">Dr.</td>
+            </tr>
+        </tbody>
     </table>
 
     <table class="table table-striped">
@@ -57,40 +59,14 @@
               class="row g-3 needs-validation"
               novalidate id="add-experience-form" method="post">
 
-            <div class="col-md-4" th:with="valid=${!#fields.hasErrors('skill')}">
-                <label for="skillPlusVersion" class="form-label">Skill + Version</label>
-                <select th:field="*{skill}" th:classappend="${valid ? 'is-valid' : 'is-invalid'}"
-                        class="form-select" id="skillPlusVersion" aria-describedby="skillPlusVersionFeedback" required>
-                    <option th:each="item : ${skillSelectItems}" th:value="${item.key}" th:text="${item.value}"></option>
-                </select>
-                <th:block th:if="${!valid}" th:errors="*{skill}">
-                    <div id="skillPlusVersionFeedback" class="invalid-feedback">
-                        Please select a Skill.
-                    </div>
-                </th:block>
+            <div class="col-md-4">
+                <input th:replace="~{fragments/selectField :: select ('Skill + Version', 'skill', ${skillSelectItems})}" />
             </div>
-
-            <div class="col-md-4" th:with="valid=${!#fields.hasErrors('years')}">
-                <label for="years" class="form-label">Years</label>
-                <input th:field="*{years}" th:classappend="${valid ? 'is-valid' : 'is-invalid'}"
-                       type="text" class="form-control" id="years" required>
-                <th:block th:if="${!valid}">
-                    <div class="invalid-feedback" th:errors="*{years}">
-                    </div>
-                </th:block>
+            <div class="col-md-4">
+                <input th:replace="~{fragments/inputField :: input ('Years', 'years')}" />
             </div>
-
-            <div class="col-md-4" th:with="valid=${!#fields.hasErrors('rating')}">
-                <label for="rating" class="form-label">Rating</label>
-                <select th:field="*{rating}" th:classappend="${valid ? 'is-valid' : 'is-invalid'}"
-                        class="form-select" id="rating" aria-describedby="ratingFeedback" required>
-                    <option th:each="item : ${ratings}" th:value="${item.key}" th:text="${item.value}"></option>
-                </select>
-                <th:block th:if="${!valid}" th:errors="*{rating}">
-                    <div id="ratingFeedback" class="invalid-feedback">
-                        Please select a rating.
-                    </div>
-                </th:block>
+            <div class="col-md-4">
+                <input th:replace="~{fragments/selectField :: select ('Rating', 'rating', ${ratings})}" />
             </div>
 
             <div class="col-12">

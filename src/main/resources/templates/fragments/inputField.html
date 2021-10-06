@@ -1,12 +1,13 @@
 <html>
 <body>
     <th:block th:fragment="input (label, name)">
-      <div class="col-md-12" th:with="valid=${!#fields.hasErrors(name)}">
-          <label class="form-label" th:for="${'id' + name}" th:text="${label}">Label</label>
-          <input class="form-control" th:classappend="${valid ? 'is-valid' : 'is-invalid'}" type="text" th:id="${'id' + name}" th:field="*{__${name}__}" required>
+      <div th:with="valid=${!#fields.hasErrors(name)}">
+          <label class="form-label"
+                 th:for="${'id' + name}" th:text="${label}">Label</label>
+          <input class="form-control" type="text"
+                 th:classappend="${valid ? 'is-valid' : 'is-invalid'}" th:id="${'id' + name}" th:field="*{__${name}__}" required>
           <th:block th:if="${!valid}">
-              <div class="invalid-feedback" th:errors="*{__${name}__}">
-              </div>
+              <div class="invalid-feedback" th:errors="*{__${name}__}"></div>
           </th:block>
       </div>
     </th:block>

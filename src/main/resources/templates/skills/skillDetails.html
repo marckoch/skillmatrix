@@ -9,18 +9,20 @@
         <hr>
 
         <table class="table table-striped" th:object="${skill}">
-            <tr>
-                <th>Name</th>
-                <td th:text="*{name}">Skill 1</td>
-            </tr>
-            <tr>
-                <th>Version</th>
-                <td th:text="*{version}">Skill Version 1</td>
-            </tr>
-            <tr>
-                <th>Alias</th>
-                <td th:text="*{alias}">Alias</td>
-            </tr>
+            <tbody>
+                <tr>
+                    <th>Name</th>
+                    <td th:text="*{name}">Skill 1</td>
+                </tr>
+                <tr>
+                    <th>Version</th>
+                    <td th:text="*{version}">Skill Version 1</td>
+                </tr>
+                <tr>
+                    <th>Alias</th>
+                    <td th:text="*{alias}">Alias</td>
+                </tr>
+            </tbody>
         </table>
 
         <table class="table table-striped">
