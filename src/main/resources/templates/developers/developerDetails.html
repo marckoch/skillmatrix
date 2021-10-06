@@ -27,11 +27,11 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Skill</th>
-                <th>Version</th>
-                <th>years</th>
-                <th>rating (x of 5)</th>
-                <th></th>
+                <th style="width: 40%;">Skill</th>
+                <th style="width: 30%;">Version</th>
+                <th style="width: 15%;">years</th>
+                <th style="width: 10%;">rating (x of 5)</th>
+                <th style="width: 5%;"></th>
             </tr>
         </thead>
         <tbody>
@@ -76,7 +76,6 @@
                        type="text" class="form-control" id="years" required>
                 <th:block th:if="${!valid}">
                     <div class="invalid-feedback" th:errors="*{years}">
-                        Please enter a valid number.
                     </div>
                 </th:block>
             </div>

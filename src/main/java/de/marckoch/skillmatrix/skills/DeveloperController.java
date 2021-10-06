@@ -63,6 +63,7 @@ class DeveloperController {
 	@PostMapping("/developers/new")
 	public String processCreationForm(@Valid Developer developer, BindingResult result) {
 		if (result.hasErrors()) {
+			System.out.println(result.getAllErrors());
 			return "/developers/createOrUpdateDeveloperForm";
 		} else {
 			developerRepository.save(developer);

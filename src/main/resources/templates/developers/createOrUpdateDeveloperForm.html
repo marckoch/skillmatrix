@@ -4,13 +4,16 @@
 <body>
   <h2>Developer</h2>
 
-  <form th:object="${developer}" id="add-developer-form" method="post" novalidate>
-    <input th:replace="~{fragments/inputField :: input ('First Name', 'firstName', 'text')}" />
-    <input th:replace="~{fragments/inputField :: input ('Last Name', 'lastName', 'text')}" />
-    <input th:replace="~{fragments/inputField :: input ('Title', 'title', 'text')}" />
+  <form th:object="${developer}" id="add-developer-form" method="post" novalidate
+        class="row g-3 needs-validation">
+    <input th:replace="~{fragments/inputField :: input ('First Name', 'firstName')}" />
+    <input th:replace="~{fragments/inputField :: input ('Last Name', 'lastName')}" />
+    <input th:replace="~{fragments/inputField :: input ('Title', 'title')}" />
 
-    <button th:with="text=${developer['new']} ? 'Add Developer' : 'Update Developer'"
-            class="btn btn-primary" type="submit" th:text="${text}">Add Developer</button>
+    <div class="col-12">
+      <button th:with="text=${developer['new']} ? 'Add Developer' : 'Update Developer'"
+              class="btn btn-primary" type="submit" th:text="${text}">Add Developer</button>
+    </div>
   </form>
 </body>
 </html>
