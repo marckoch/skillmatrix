@@ -1,8 +1,7 @@
+<!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: layout (~{::body})}">
-
 <body>
-
   <h2>Skill</h2>
   <form th:object="${skill}" class="row g-3 needs-validation" id="add-skill-form" method="post" novalidate>
     <input th:replace="~{fragments/inputField :: input ('Name', 'name')}" />
