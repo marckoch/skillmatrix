@@ -7,22 +7,22 @@
 
     <hr>
 
-    <table class="table table-striped" th:object="${developer}">
-        <tbody>
-            <tr>
-                <th>First Name</th>
-                <td th:text="*{firstName}">Developer First Name 1</td>
-            </tr>
-            <tr>
-                <th>Last Name</th>
-                <td th:text="*{lastName}">Developer LastName 1</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td th:text="*{title}">Dr.</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="row g-3" th:object="${developer}">
+        <div class="col-md-4">
+            <label class="form-label" for="idFirstName">First Name</label>
+            <input class="form-control" type="text" id="idFirstName" th:field="*{firstName}" disabled>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label" for="idLastName">Last Name</label>
+            <input class="form-control" type="text" id="idLastName" th:field="*{lastName}" disabled>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label" for="idTitle">Title</label>
+            <input class="form-control" type="text" id="idTitle" th:field="*{title}" disabled>
+        </div>
+    </div>
+
+    <hr>
 
     <th:block th:if="${developer.experiences.size() > 0}">
         <table class="table table-striped">

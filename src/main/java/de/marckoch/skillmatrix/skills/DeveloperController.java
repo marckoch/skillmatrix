@@ -114,7 +114,7 @@ class DeveloperController {
 	}
 
 	private SelectItem skill2SelectItem(Skill skill) {
-		String value = skill.getName() + (skill.getVersion() != null ? skill.getVersion() : "");
+		String value = skill.getName() + (skill.getVersion() != null ? " " + skill.getVersion() : "");
 		return new SelectItem(skill.getSkillId(), value);
 	}
 

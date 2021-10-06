@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body})}">
     <body>
         <h2>Skill Information</h2>
@@ -8,22 +7,22 @@
 
         <hr>
 
-        <table class="table table-striped" th:object="${skill}">
-            <tbody>
-                <tr>
-                    <th>Name</th>
-                    <td th:text="*{name}">Skill 1</td>
-                </tr>
-                <tr>
-                    <th>Version</th>
-                    <td th:text="*{version}">Skill Version 1</td>
-                </tr>
-                <tr>
-                    <th>Alias</th>
-                    <td th:text="*{alias}">Alias</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="row g-3" th:object="${skill}">
+            <div class="col-md-4">
+                <label class="form-label" for="idSkill">Skill</label>
+                <input class="form-control" type="text" id="idSkill" th:field="*{name}" disabled>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="idVersion">Version</label>
+                <input class="form-control" type="text" id="idVersion" th:field="*{version}" disabled>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="idAlias">Alias</label>
+                <input class="form-control" type="text" id="idAlias" th:field="*{alias}" disabled>
+            </div>
+        </div>
+
+        <hr>
 
         <th:block th:if="${skill.experiences.size() > 0}">
             <table class="table table-striped">
