@@ -8,6 +8,18 @@ INSERT INTO skills VALUES (3, 'Spring Boot', '2.5', null);
 INSERT INTO skills VALUES (4, 'Spring Boot', '2.0', null);
 INSERT INTO skills VALUES (5, 'Java', '17', null);
 INSERT INTO skills VALUES (6, 'Java', '8', 'Java SE');
+INSERT INTO skills VALUES (7, 'Java', '13', null);
+INSERT INTO skills VALUES (8, 'Docker', null, null);
+INSERT INTO skills VALUES (9, 'Kubernetes', null, 'K8s');
+INSERT INTO skills VALUES (10, 'Openshift', '3', null);
+INSERT INTO skills VALUES (11, 'Openshift', '4', null);
+INSERT INTO skills VALUES (12, 'React', null, null);
+INSERT INTO skills VALUES (13, 'Angular', null, null);
+INSERT INTO skills VALUES (14, 'PHP', null, null);
+INSERT INTO skills VALUES (15, 'Glassfish', null, null);
+INSERT INTO skills VALUES (16, 'Payara', null, null);
+INSERT INTO skills VALUES (17, 'HTML', '5', 'HTML5');
+INSERT INTO skills VALUES (18, 'CSS', null, null);
 
 INSERT INTO experiences (experience_id, developer_id, skill_id, years, rating) VALUES (1, 1, 1, 5, 4);
 INSERT INTO experiences (experience_id, developer_id, skill_id, years, rating) VALUES (2, 1, 2, 3, 5);
