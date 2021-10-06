@@ -39,7 +39,9 @@
                                    th:text="${exp.skill.name}">Skill 1</a></td>
                             <td th:text="${exp.skill.version}">Version </td>
                             <td th:text="${exp.years}">12</td>
-                            <td th:text="${exp.rating}">3</td>
+                            <td>
+                                <div th:replace="~{fragments/ratingStars :: stars (${exp.rating})}">4</div>
+                            </td>
                         </tr>
                     </table>
                 </th:block>

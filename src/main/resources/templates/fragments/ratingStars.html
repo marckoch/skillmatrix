@@ -1,0 +1,14 @@
+<html>
+<body>
+    <th:block th:fragment="stars (rating)">
+      <div>
+          <th:block th:each="i: ${#numbers.sequence(1, rating)}">
+              <span class="bi bi-star-fill"></span>
+          </th:block>
+          <th:block th:if="${rating < 5}" th:each="i: ${#numbers.sequence(1, 5 - rating)}">
+              <span class="bi bi-star"></span>
+          </th:block>
+      </div>
+    </th:block>
+</body>
+</html>

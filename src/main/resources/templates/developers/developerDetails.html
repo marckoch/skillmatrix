@@ -31,8 +31,8 @@
             <tr>
                 <th style="width: 40%;">Skill</th>
                 <th style="width: 30%;">Version</th>
-                <th style="width: 15%;">years</th>
-                <th style="width: 10%;">rating (x of 5)</th>
+                <th style="width: 15%;">Years</th>
+                <th style="width: 10%;">Rating</th>
                 <th style="width: 5%;"></th>
             </tr>
         </thead>
@@ -42,7 +42,9 @@
                        th:text="${exp.skill.name}">Skill 1</a></td>
                 <td th:text="${exp.skill.version}">Skill Version</td>
                 <td th:text="${exp.years}">years</td>
-                <td th:text="${exp.rating}">rating</td>
+                <td>
+                    <div th:replace="~{fragments/ratingStars :: stars (${exp.rating})}">2</div>
+                </td>
                 <td>
                     <a class="btn btn-danger" th:href="@{/experience/delete/__${exp.experienceid}__}">
                         <span class="bi bi-trash"></span>
@@ -77,6 +79,5 @@
     <th:block th:if="${skillSelectItems.size() == 0}">
         <th:text>developer has no free skills left!</th:text>
     </th:block>
-
 </body>
 </html>
