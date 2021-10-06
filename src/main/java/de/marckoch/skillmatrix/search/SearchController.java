@@ -1,5 +1,9 @@
-package de.marckoch.skillmatrix.skills;
+package de.marckoch.skillmatrix.search;
 
+import de.marckoch.skillmatrix.skills.Developer;
+import de.marckoch.skillmatrix.skills.DeveloperRepository;
+import de.marckoch.skillmatrix.skills.Skill;
+import de.marckoch.skillmatrix.skills.SkillRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
