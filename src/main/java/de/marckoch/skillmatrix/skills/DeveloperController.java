@@ -101,7 +101,7 @@ class DeveloperController {
 
 		return skillRepository.findAll().stream()
 				.filter(skill -> !skillsOfDeveloper.contains(skill.getSkillId()))
-				.map(skill -> new SelectItem(skill.getSkillId(), skill.getName() + " " + skill.getVersion()))
+				.map(this::skill2SelectItem)
 				.sorted(Comparator.comparing(SelectItem::getValue))
 				.collect(Collectors.toList());
 	}
@@ -111,6 +111,11 @@ class DeveloperController {
 		return IntStream.range(1, 6).boxed()
 				.map(i -> new SelectItem(i, i + " stars"))
 				.collect(Collectors.toList());
+	}
+
+	private SelectItem skill2SelectItem(Skill skill) {
+		String value = skill.getName() + (skill.getVersion() != null ? skill.getVersion() : "");
+		return new SelectItem(skill.getSkillId(), value);
 	}
 
 	@Getter
