@@ -1,6 +1,7 @@
 package de.marckoch.skillmatrix.skills;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -90,7 +93,7 @@ class DeveloperController {
 		}
 	}
 
-	public Map<Integer, String> getFreeSkills(Developer dev) {
+	public List<SelectItem> getFreeSkills(Developer dev) {
 		var skillsOfDeveloper = dev.getExperiences()
 				.stream()
 				.map(exp -> exp.getSkill().getSkillId())
@@ -98,17 +101,22 @@ class DeveloperController {
 
 		return skillRepository.findAll().stream()
 				.filter(skill -> !skillsOfDeveloper.contains(skill.getSkillId()))
-				.collect(Collectors.toMap(
-						Skill::getSkillId,
-						skill -> skill.getName() + " " + skill.getVersion()
-				));
+				.map(skill -> new SelectItem(skill.getSkillId(), skill.getName() + " " + skill.getVersion()))
+				.sorted(Comparator.comparing(SelectItem::getValue))
+				.collect(Collectors.toList());
 	}
 
 	@ModelAttribute("ratings")
-	public Map<Integer, String> getRatings() {
-		return IntStream.range(1, 6).boxed().collect(Collectors.toMap(
-				Integer::valueOf,
-				String::valueOf
-		));
+	public List<SelectItem> getRatings() {
+		return IntStream.range(1, 6).boxed()
+				.map(i -> new SelectItem(i, i + " stars"))
+				.collect(Collectors.toList());
+	}
+
+	@Getter
+	@AllArgsConstructor
+	static class SelectItem {
+		Integer key;
+		String value;
 	}
 }
