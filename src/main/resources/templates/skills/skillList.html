@@ -11,7 +11,13 @@
     <table id="skills" class="table table-striped">
         <thead>
             <tr>
-                <th style="width: 30%;">Name</th>
+                <th style="width: 30%;">
+                    <a th:href="@{'/skills/page/' + ${currentPage} + '?sort-field=name&sort-dir=' + ${reverseSortDir}}">Name </a>
+                    <th:block th:switch="${sortDir}">
+                        <span th:case="'asc'" class="bi bi-arrow-up"></span>
+                        <span th:case="'desc'" class="bi bi-arrow-down"></span>
+                    </th:block>
+                </th>
                 <th style="width: 10%;">Version</th>
                 <th style="width: 10%;">Alias</th>
                 <th style="width: 50%;">Top 3 Experts</th>
@@ -49,5 +55,19 @@
           </tr>
         </tbody>
     </table>
+
+    <div th:if="${totalPages > 1}">
+        <div class="row col-12">
+            <div class="col-2">
+                Total: <strong>[[${totalItems}]]</strong>
+            </div>
+            <div class="col-10">
+                <span th:each="i: ${#numbers.sequence(0, totalPages - 1)}">
+                    <a th:if="${currentPage != i}" th:href="@{'/skills/page/' + ${i} + '?sort-field=name&sort-dir=asc'}" >[[${i+1}]]</a>
+                    <span th:unless="${currentPage != i}">[[${i+1}]]</span>
+                </span>
+            </div>
+        </div>
+    </div>
   </body>
 </html>
