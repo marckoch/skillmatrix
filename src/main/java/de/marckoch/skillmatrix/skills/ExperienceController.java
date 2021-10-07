@@ -20,15 +20,16 @@ class ExperienceController {
     private final DeveloperRepository developerRepository;
 
     @PostMapping("/experience/{developerId}/new")
-    public String processCreationForm(Map<String, Object> model, @PathVariable("developerId") int developerId,
-                                      @Valid Experience experience, BindingResult result,
-                                      final RedirectAttributes redirectAttributes) {
+    public String processAddSkillToDeveloperForm(Map<String, Object> model,
+                                                 @PathVariable("developerId") int developerId,
+                                                 @Valid Experience experience, BindingResult result,
+                                                 final RedirectAttributes redirectAttributes) {
         Developer dev = developerRepository.findById(developerId).get();
         model.put("developer", dev);
         experience.setDeveloper(dev);
 
         if (result.hasErrors()) {
-            // save (errornous model) for redirect
+            // save (erroneous model) for redirect
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.experience", result);
             redirectAttributes.addFlashAttribute("experience", experience);
         } else {
@@ -39,7 +40,7 @@ class ExperienceController {
     }
 
     @GetMapping("/experience/delete/{experienceId}")
-    public String delete(Map<String, Object> model, @PathVariable("experienceId") int experienceId) {
+    public String delete(@PathVariable("experienceId") int experienceId) {
         Developer dev = experienceRepository.findById(experienceId).get().getDeveloper();
         dev.getExperiences().removeIf(e -> e.getExperienceid().equals(experienceId));
         developerRepository.save(dev);

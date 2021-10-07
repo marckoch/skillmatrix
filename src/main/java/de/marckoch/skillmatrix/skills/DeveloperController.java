@@ -41,7 +41,7 @@ class DeveloperController {
 		Developer dev = developerRepository.findById(developerId).get();
 		mav.addObject(dev);
 
-		// check if we already have a (errournous) experience in model,
+		// check if we already have a (erroneous) experience in model,
 		// this was checked and put there by redirect from ExperienceController
 		if (!model.containsAttribute("experience")) {
 			Experience experience = new Experience();

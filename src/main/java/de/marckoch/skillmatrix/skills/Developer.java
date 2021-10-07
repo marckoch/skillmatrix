@@ -36,6 +36,7 @@ public class Developer {
 
 	@EqualsAndHashCode.Exclude
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "developer", fetch = FetchType.EAGER, orphanRemoval = true)
+	@OrderBy("rating DESC")
 	private Set<Experience> experiences;
 
 	public List<Experience> topThreeExperiences() {
