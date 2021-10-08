@@ -123,7 +123,7 @@ class SkillController {
 
             // sort all experiences again by developer weight
 			skill.getExperiences().sort(Comparator.comparing(o -> -o.getDeveloper().getWeight()));
-		});
+        });
 
         model.addAttribute("skills", allSkillsRanked);
         return "/skills/matrix";
@@ -150,8 +150,8 @@ class SkillController {
         Comparator<Developer> devWeightComp = Comparator.comparing(HasExperiences::getWeight);
         Comparator<Developer> devNameComp = Comparator.comparing(Developer::getLastName);
 
-        List<Developer> devs = developerRepository.findAll();
-        return devs.stream()
+        return developerRepository.findAll()
+                .stream()
                 .sorted(devWeightComp.reversed().thenComparing(devNameComp))
                 .collect(Collectors.toList());
     }
@@ -160,8 +160,8 @@ class SkillController {
         Comparator<Skill> skillWeightComp = Comparator.comparing(HasExperiences::getWeight);
         Comparator<Skill> skillNameComp = Comparator.comparing(Skill::getName);
 
-        List<Skill> skills = skillRepository.findAll();
-        return skills.stream()
+        return skillRepository.findAll()
+                .stream()
                 .sorted(skillWeightComp.reversed().thenComparing(skillNameComp))
                 .collect(Collectors.toList());
     }

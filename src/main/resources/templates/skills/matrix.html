@@ -14,8 +14,10 @@
                     <td>
                         <a th:href="@{/developers/__${exp.developer.developerId}__}"
                            th:text="${exp.developer.getFullName()}">Developer Name</a>
+                        <span th:text="${' (' + exp.developer.getWeight() + ')'}"></span>
                     </td>
                 </th:block>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -25,9 +27,13 @@
               </td>
 
               <th:block th:each="exp : ${skill.getExperiences()}">
-                  <td><span th:if="${exp.getWeight() > 0}" th:text="${exp.getWeight()}">3</span>
+                  <td>
+                      <span th:if="${exp.getWeight() > 0}" th:text="${exp.getWeight()}">3</span>
                   </td>
               </th:block>
+              <td>
+                  <span th:text="${skill.getWeight()}"></span>
+              </td>
           </tr>
         </tbody>
     </table>
