@@ -48,4 +48,8 @@ public class Skill {
 				.limit(3)
 				.toList();
 	}
+
+	public String getNameAndVersion() {
+		return getName() + (getVersion() != null ? " " + getVersion() : "");
+	}
 }
