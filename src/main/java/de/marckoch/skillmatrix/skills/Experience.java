@@ -55,4 +55,8 @@ public class Experience {
 				.append("rating", this.rating)
 				.toString();
 	}
+
+	public int getWeight() {
+		return getRating() * getYears();
+	}
 }

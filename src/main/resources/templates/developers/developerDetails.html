@@ -28,8 +28,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th style="width: 40%;">Skill</th>
-                    <th style="width: 30%;">Version</th>
+                    <th style="width: 70%;">Skill</th>
                     <th style="width: 15%;">Years</th>
                     <th style="width: 10%;">Rating</th>
                     <th style="width: 5%;"></th>
@@ -38,8 +37,7 @@
             <tbody>
                 <tr th:each="exp : ${developer.experiences}">
                     <td><a th:href="@{/skills/__${exp.skill.skillId}__}"
-                           th:text="${exp.skill.name}">Skill 1</a></td>
-                    <td th:text="${exp.skill.version}">Skill Version</td>
+                           th:text="${exp.skill.getNameAndVersion()}">Skill 1</a></td>
                     <td th:text="${exp.years}">years</td>
                     <td>
                         <div th:replace="~{fragments/ratingStars :: stars (${exp.rating})}">2</div>

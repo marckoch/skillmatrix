@@ -35,7 +35,7 @@
                 </thead>
                 <tr th:each="exp : ${skill.experiences}">
                     <td><a th:href="@{/developers/__${exp.developer.developerId}__}"
-                           th:text="${exp.developer.firstName + ' ' + exp.developer.lastName}">Developer Name</a></td>
+                           th:text="${exp.developer.getFullName()}">Developer Name</a></td>
                     <td th:text="${exp.years}">years</td>
                     <td>
                         <div th:replace="~{fragments/ratingStars :: stars (${exp.rating})}">2</div>

@@ -6,8 +6,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -41,7 +41,7 @@ class DeveloperControllerTest {
         e1.setSkill(java);
         e1.setYears(12);
         e1.setRating(5);
-        peter.setExperiences(Set.of(e1));
+        peter.setExperiences(List.of(e1));
 
         given(developerRepository.findById(peter.getDeveloperId())).willReturn(Optional.of(peter));
 

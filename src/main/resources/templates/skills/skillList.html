@@ -25,14 +25,13 @@
     <table id="skills" class="table table-striped">
         <thead>
             <tr>
-                <th style="width: 30%;">
+                <th style="width: 40%;">
                     <a th:href="@{'/skills/page/' + ${currentPage} + '?sort-field=name&sort-dir=' + ${reverseSortDir}}">Name </a>
                     <th:block th:switch="${sortDir}">
                         <span th:case="'asc'" class="bi bi-arrow-up"></span>
                         <span th:case="'desc'" class="bi bi-arrow-down"></span>
                     </th:block>
                 </th>
-                <th style="width: 10%;">Version</th>
                 <th style="width: 10%;">Alias</th>
                 <th style="width: 50%;">Top 3 Experts</th>
             </tr>
@@ -40,9 +39,8 @@
         <tbody>
           <tr th:each="skill : ${skills}">
               <td>
-                  <a th:href="@{/skills/__${skill.getSkillId()}__}" th:text="${skill.name}">Skill 1</a>
+                  <a th:href="@{/skills/__${skill.getSkillId()}__}" th:text="${skill.getNameAndVersion()}">Skill 1</a>
               </td>
-              <td th:text="${skill.version}">Version 33</td>
               <td th:text="${skill.alias}">Alias</td>
 
               <td>
@@ -57,7 +55,7 @@
                           </thead>
                           <tr th:each="exp : ${skill.topThreeExperts()}">
                               <td><a th:href="@{/developers/__${exp.developer.developerId}__}"
-                                     th:text="${exp.developer.firstName + ' ' + exp.developer.lastName}">Developer Name</a></td>
+                                     th:text="${exp.developer.getFullName()}">Developer Name</a></td>
                               <td th:text="${exp.years}">13</td>
                               <td>
                                   <div th:replace="~{fragments/ratingStars :: stars (${exp.rating})}">4</div>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body})}">
+  <body>
+    <h2>Skill Matrix</h2>
+    <p>Here you see all skills and all developers. Each experience is weighted by rating * years.<br>
+        Skills which a lot of developers have good knowledge about are at the top, lesser known skills are at the bottom.<br>
+        Developers with a lot of knowledge are positioned on the left, developers with fewer skills are at the right.</p>
+    <table id="skills" class="table table-striped">
+        <thead>
+            <tr>
+                <th style="width: 20%;"></th>
+                <th:block th:each="exp : ${skills.get(0).getExperiences()}">
+                    <td>
+                        <a th:href="@{/developers/__${exp.developer.developerId}__}"
+                           th:text="${exp.developer.getFullName()}">Developer Name</a>
+                    </td>
+                </th:block>
+            </tr>
+        </thead>
+        <tbody>
+          <tr th:each="skill : ${skills}">
+              <td>
+                  <a th:href="@{/skills/__${skill.getSkillId()}__}" th:text="${skill.nameAndVersion}">Skill V1</a>
+              </td>
+
+              <th:block th:each="exp : ${skill.getExperiences()}">
+                  <td><span th:if="${exp.getWeight() > 0}" th:text="${exp.getWeight()}">3</span>
+                  </td>
+              </th:block>
+          </tr>
+        </tbody>
+    </table>
+
+  </body>
+</html>

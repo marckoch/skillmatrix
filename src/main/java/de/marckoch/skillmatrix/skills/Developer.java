@@ -8,7 +8,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Simple JavaBean domain object representing someone that has skills.
@@ -16,7 +15,7 @@ import java.util.Set;
 @Entity
 @Data
 @Table(name = "developers")
-public class Developer {
+public class Developer implements HasExperiences{
 
 	@Id
 	@Column(name = "developer_id")
@@ -37,7 +36,7 @@ public class Developer {
 	@EqualsAndHashCode.Exclude
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "developer", fetch = FetchType.EAGER, orphanRemoval = true)
 	@OrderBy("rating DESC")
-	private Set<Experience> experiences;
+	private List<Experience> experiences;
 
 	public List<Experience> topThreeExperiences() {
 		return experiences.stream()
@@ -62,4 +61,7 @@ public class Developer {
 				.toString();
 	}
 
+	public String getFullName() {
+		return getFirstName() + " " + getLastName();
+	}
 }

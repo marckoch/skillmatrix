@@ -8,7 +8,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Simple business object representing a skill.
@@ -16,7 +15,7 @@ import java.util.Set;
 @Entity
 @Data
 @Table(name = "skills")
-public class Skill {
+public class Skill implements HasExperiences {
 
 	@Id
 	@Column(name = "skill_id")
@@ -36,7 +35,7 @@ public class Skill {
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	@OneToMany(mappedBy = "skill", fetch = FetchType.EAGER)
-	private Set<Experience> experiences;
+	private List<Experience> experiences;
 
 	public boolean isNew() {
 		return this.skillId == null;
