@@ -66,7 +66,6 @@ class DeveloperController {
 	@PostMapping("/developers/new")
 	public String processCreationForm(@Valid Developer developer, BindingResult result) {
 		if (result.hasErrors()) {
-			System.out.println(result.getAllErrors());
 			return "/developers/createOrUpdateDeveloperForm";
 		} else {
 			developerRepository.save(developer);
@@ -93,6 +92,7 @@ class DeveloperController {
 		}
 	}
 
+	// find all Skills that this developer does NOT have
 	public List<SelectItem> getFreeSkills(Developer dev) {
 		var skillsOfDeveloper = dev.getExperiences()
 				.stream()
