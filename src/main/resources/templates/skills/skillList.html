@@ -10,14 +10,18 @@
 
     <div th:if="${totalPages > 1}">
         <div class="row col-12">
-            <div class="col-2">
+            <div class="col-3">
                 Total: <strong>[[${totalItems}]]</strong>
             </div>
-            <div class="col-10">
-                <span th:each="i: ${#numbers.sequence(0, totalPages - 1)}">
-                    <a th:if="${currentPage != i}" th:href="@{'/skills/page/' + ${i} + '?sort-field=name&sort-dir=' + ${sortDir}}" >[[${i+1}]]</a>
-                    <span th:unless="${currentPage != i}">[[${i+1}]]</span>
-                </span>
+            <div class="col-9">
+                <nav>
+                    <ul class="pagination pagination-sm justify-content-end">
+                        <li th:each="i: ${#numbers.sequence(0, totalPages - 1)}"
+                            class="page-item" th:classappend="${currentPage == i ? 'active' : ''}">
+                            <a class="page-link" th:href="@{'/skills/page/' + ${i} + '?sort-field=name&sort-dir=' + ${sortDir}}">[[${i+1}]]</a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
