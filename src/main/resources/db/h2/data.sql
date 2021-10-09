@@ -1,6 +1,8 @@
 INSERT INTO developers VALUES (1, 'Peter', 'Parker', null);
 INSERT INTO developers VALUES (2, 'Tony', 'Stark', 'Dr.');
 INSERT INTO developers VALUES (3, 'Kann', 'Nix', null);
+INSERT INTO developers VALUES (4, 'Thorsten', 'Hansen', null);
+INSERT INTO developers VALUES (5, 'Mirco', 'Pehler', null);
 
 INSERT INTO skills VALUES (1, 'Java', '11', 'Java SE');
 INSERT INTO skills VALUES (2, 'Spring', '5', null);
@@ -20,6 +22,9 @@ INSERT INTO skills VALUES (15, 'Glassfish', null, null);
 INSERT INTO skills VALUES (16, 'Payara', null, null);
 INSERT INTO skills VALUES (17, 'HTML', '5', 'HTML5');
 INSERT INTO skills VALUES (18, 'CSS', null, null);
+INSERT INTO skills VALUES (19, 'SQL', null, null);
+INSERT INTO skills VALUES (20, 'JPA', null, null);
+INSERT INTO skills VALUES (21, 'Hibernate', null, null);
 
 INSERT INTO experiences (experience_id, developer_id, skill_id, years, rating) VALUES (1, 1, 1, 5, 4);
 INSERT INTO experiences (experience_id, developer_id, skill_id, years, rating) VALUES (2, 1, 2, 3, 5);
@@ -29,3 +34,8 @@ INSERT INTO experiences (experience_id, developer_id, skill_id, years, rating) V
 INSERT INTO experiences (experience_id, developer_id, skill_id, years, rating) VALUES (6, 1, 5, 1, 3);
 INSERT INTO experiences (experience_id, developer_id, skill_id, years, rating) VALUES (7, 1, 6, 4, 5);
 INSERT INTO experiences (experience_id, developer_id, skill_id, years, rating) VALUES (8, 1, 13, 2, 3);
+INSERT INTO experiences (experience_id, developer_id, skill_id, years, rating) VALUES (9, 4, 20, 8, 5);
+INSERT INTO experiences (experience_id, developer_id, skill_id, years, rating) VALUES (10, 4, 21, 9, 5);
+INSERT INTO experiences (experience_id, developer_id, skill_id, years, rating) VALUES (11, 4, 19, 19, 4);
+INSERT INTO experiences (experience_id, developer_id, skill_id, years, rating) VALUES (12, 5, 2, 9, 5);
+INSERT INTO experiences (experience_id, developer_id, skill_id, years, rating) VALUES (13, 5, 3, 8, 5);
