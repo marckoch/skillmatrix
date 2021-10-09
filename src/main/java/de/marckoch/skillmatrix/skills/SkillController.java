@@ -38,11 +38,8 @@ class SkillController {
                           @RequestParam(name = "sort-field") final String sortField,
                           @RequestParam(name = "sort-dir") final String sortDir,
                           Model model) {
-        Sort sort = ("desc".equalsIgnoreCase(sortDir)) ?
-                Sort.by(sortField).descending() :
-                Sort.by(sortField).ascending();
-
-        Pageable p = PageRequest.of(pagenumber, 5, sort);
+        Sort sort = build(sortDir, sortField);
+        Pageable p = PageRequest.of(pagenumber, 10, sort);
         Page<Skill> resultPage = skillRepository.findAll(p);
 
         model.addAttribute("skills", resultPage);
@@ -55,9 +52,19 @@ class SkillController {
         // sorting
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", sortDir.equalsIgnoreCase("asc") ? "desc" : "asc");
+        model.addAttribute("reverseSortDir", reverse(sortDir));
 
         return "skills/skillList";
+    }
+
+    private Sort build(String sortDir, String sortField) {
+        return "desc".equalsIgnoreCase(sortDir) ?
+                Sort.by(sortField).descending() :
+                Sort.by(sortField).ascending();
+    }
+
+    private String reverse(String sortDir) {
+        return sortDir.equalsIgnoreCase("asc") ? "desc" : "asc";
     }
 
     @GetMapping("/skills/{skillId}")
@@ -112,17 +119,17 @@ class SkillController {
 
         List<Integer> idsOfAllDevelopers = allDevsRanked.stream().map(Developer::getDeveloperId).toList();
 
-		allSkillsRanked.forEach(skill -> {
-			List<Experience> experiences = skill.getExperiences();
+        allSkillsRanked.forEach(skill -> {
+            List<Experience> experiences = skill.getExperiences();
             List<Integer> idsOfMissingDevs = findIdsOfMissingDevs(idsOfAllDevelopers, experiences);
 
             idsOfMissingDevs.forEach(devId -> {
                 Experience e = createEmptyExperienceForDeveloper(devId);
                 experiences.add(e);
-			});
+            });
 
             // sort all experiences again by developer weight
-			skill.getExperiences().sort(Comparator.comparing(o -> -o.getDeveloper().getWeight()));
+            skill.getExperiences().sort(Comparator.comparing(o -> -o.getDeveloper().getWeight()));
         });
 
         model.addAttribute("skills", allSkillsRanked);
