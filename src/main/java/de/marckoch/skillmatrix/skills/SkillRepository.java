@@ -17,7 +17,7 @@ public interface SkillRepository extends JpaRepository<Skill, Integer> {
 
 	@Query("SELECT DISTINCT s FROM Skill s WHERE UPPER(s.name) LIKE %:queryInUpperCase% OR UPPER(s.alias) LIKE %:queryInUpperCase%")
 	@Transactional(readOnly = true)
-	Collection<Skill> findByQuery(@Param("queryInUpperCase") String queryInUpperCase);
+	List<Skill> findByQuery(@Param("queryInUpperCase") String queryInUpperCase);
 
 	@Query("SELECT DISTINCT s FROM Skill s")
 	@Transactional(readOnly = true)

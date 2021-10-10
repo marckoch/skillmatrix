@@ -39,3 +39,4 @@ INSERT INTO experiences (experience_id, developer_id, skill_id, years, rating) V
 INSERT INTO experiences (experience_id, developer_id, skill_id, years, rating) VALUES (11, 4, 19, 19, 4);
 INSERT INTO experiences (experience_id, developer_id, skill_id, years, rating) VALUES (12, 5, 2, 9, 5);
 INSERT INTO experiences (experience_id, developer_id, skill_id, years, rating) VALUES (13, 5, 3, 8, 5);
+INSERT INTO experiences (experience_id, developer_id, skill_id, years, rating) VALUES (14, 1, 4, 2, 3);

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body})}">
+  <body>
+    <h2>Skill Sets</h2>
+
+    <form class="d-flex" th:action="@{/skills/sets}">
+        <input class="form-control me-2" type="search" name="query" th:value="${query}" placeholder="Search for skills" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+
+    <th:block th:if="${skills.size() > 0}">
+        <table id="skillSets" class="table table-striped">
+            <thead>
+            <tr>
+                <th style="width: 20%;"></th>
+                <th:block th:each="exp : ${skills.get(0).getExperiences()}">
+                    <td>
+                        <a th:href="@{/developers/__${exp.developer.developerId}__}"
+                           th:text="${exp.developer.getFullName()}">Developer Name</a>
+                        <span th:text="${' (' + exp.developer.getWeightForSkills(skills) + ')'}"></span>
+                    </td>
+                </th:block>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="skill : ${skills}">
+                <td>
+                    <a th:href="@{/skills/__${skill.getSkillId()}__}" th:text="${skill.nameAndVersion}">Skill V1</a>
+                </td>
+
+                <th:block th:each="exp : ${skill.getExperiences()}">
+                    <td>
+                        <span th:if="${exp.getWeight() > 0}" th:text="${exp.getWeight()}">3</span>
+                    </td>
+                </th:block>
+                <td>
+                    <span th:text="${skill.getWeight()}"></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </th:block>
+    <th:block  th:unless="${skills.size() > 0}">
+        <p><span class="bi bi-emoji-neutral"></span> No Skills found!</p>
+    </th:block>
+
+  </body>
+</html>

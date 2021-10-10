@@ -64,4 +64,12 @@ public class Developer implements HasExperiences{
 	public String getFullName() {
 		return getFirstName() + " " + getLastName();
 	}
+
+	public Integer getWeightForSkills(List<Skill> skills) {
+		return getExperiences()
+				.stream()
+				.filter(experience -> skills.contains(experience.getSkill()))
+				.mapToInt(Experience::getWeight)
+				.sum();
+	}
 }
