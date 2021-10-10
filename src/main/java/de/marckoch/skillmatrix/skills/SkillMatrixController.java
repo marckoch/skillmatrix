@@ -39,7 +39,7 @@ class SkillMatrixController {
         });
 
         model.addAttribute("skills", allSkillsRanked);
-        return "/skills/matrix";
+        return "/skills/skillMatrix";
     }
 
     private List<Integer> findIdsOfMissingDevs(List<Integer> idsOfAllDevelopers, List<Experience> experiences) {
