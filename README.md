@@ -15,3 +15,11 @@ You can run it from Maven directly using the Spring Boot Maven plugin.
 ```
 
 You can then access it here: http://localhost:8080/
+
+## Tech Stack
+- Java 17
+- Maven 3.8.2
+- Spring Boot 2.5.5
+- Thymeleaf
+- Bootstrap 5
+- Tokeninput: https://loopj.com/jquery-tokeninput/ (Demos: https://loopj.com/jquery-tokeninput/demo.html)
