@@ -11,8 +11,15 @@
 
   <title>SkillMatrix :: a Spring Framework demonstration</title>
 
-  <link rel="stylesheet" href="/webjars/bootstrap/5.1.1/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="/webjars/bootstrap-icons/1.5.0/font/bootstrap-icons.css" />
+  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.1.1/css/bootstrap.min.css}" />
+  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.5.0/font/bootstrap-icons.css}" />
+  <link th:rel="stylesheet" th:href="@{/assets/styles/token-input.css}" />
+  <link th:rel="stylesheet" th:href="@{/assets/styles/token-input-facebook.css}" />
+
+  <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
+  <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+  <script th:src="@{/assets/js/jquery.tokeninput.js}"></script>
 </head>
 
 <body>
@@ -69,10 +76,6 @@
       </div>
     </div>
   </div>
-
-  <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-  <script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
-  <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 
 </body>
 

@@ -23,6 +23,9 @@ class SkillSetsController {
 
         final Set<Integer> developerIds = getDeveloperIds(skills);
 
+        // TODO: search by JPA and boot gives an error! (Hansens column is empty!)
+        // he and pehler both have weight of 40? maybe that is the reason?
+
         skills.forEach(skill -> {
             addEmptyExperienceForMissingDevelopers(skill, developerIds);
 
