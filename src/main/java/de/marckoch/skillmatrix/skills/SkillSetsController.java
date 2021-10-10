@@ -6,9 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -20,8 +18,8 @@ class SkillSetsController {
     private final DeveloperRepository developerRepository;
 
     @GetMapping("/skills/sets")
-    public String skillSets(@RequestParam(required = false) String query, Model model) {
-        final List<Skill> skills = sortSkills(getSkills(query));
+    public String skillSets(@RequestParam(required = false) String skillSetQuery, Model model) {
+        final List<Skill> skills = sortSkills(getSkills(skillSetQuery));
 
         final Set<Integer> developerIds = getDeveloperIds(skills);
 
@@ -33,7 +31,7 @@ class SkillSetsController {
         });
 
         model.addAttribute("skills", skills);
-        model.addAttribute("query", query);
+        model.addAttribute("skillSetQuery", skillSetQuery);
         return "/skills/skillSets";
     }
 
@@ -65,9 +63,20 @@ class SkillSetsController {
     }
 
     private List<Skill> getSkills(String query) {
-        return query == null ?
-                skillRepository.findAll() :
-                skillRepository.findByQuery(query.toUpperCase());
+        if (query == null)
+            return skillRepository.findAll();
+
+        // this should/could be done in one query, but for now this is good enough.
+        // user will enter only a handful of search terms, so we do a query for each of them.
+        if (query.contains(",")) {
+            List<String> searchTerms = Arrays.stream(query.split(",")).map(s -> s.trim().toUpperCase()).toList();
+            return searchTerms.stream()
+                    .map(skillRepository::findByQuery)
+                    .flatMap(Collection::stream)
+                    .distinct()
+                    .collect(Collectors.toList());
+        } else
+            return skillRepository.findByQuery(query.toUpperCase());
     }
 
     private List<Skill> sortSkills(List<Skill> skills) {

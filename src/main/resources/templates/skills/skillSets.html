@@ -3,9 +3,11 @@
 <html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body})}">
   <body>
     <h2>Skill Sets</h2>
+    <p class="text-secondary">Here you can search developers by skill set.<br>
+        Common use case: Customer requires one or more developers with skills A, B and C. Can we match that?</p>
 
     <form class="d-flex" th:action="@{/skills/sets}">
-        <input class="form-control me-2" type="search" name="query" th:value="${query}" placeholder="Search for skills" aria-label="Search">
+        <input class="form-control me-2" type="search" name="skillSetQuery" th:value="${skillSetQuery}" placeholder="Search for skills, comma separated" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
 
