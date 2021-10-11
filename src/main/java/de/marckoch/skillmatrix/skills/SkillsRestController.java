@@ -21,12 +21,12 @@ public class SkillsRestController {
     public List<Map<String, String>> skillsAsJson(@RequestParam String q) {
         List<Skill> allSkills = skillRepository.findByQuery(q.toUpperCase());
         allSkills.forEach(skill -> skill.setExperiences(new ArrayList<>()));
-        return allSkills.stream().map(this::toMap).toList();
+        return allSkills.stream().map(this::toMap).distinct().toList();
     }
 
     private Map<String, String> toMap(Skill skill) {
         Map<String, String> m = new HashMap<>();
-        m.put("id", skill.getSkillId().toString());
+        m.put("id", skill.getName());
         m.put("name", skill.getName());
         return m;
     }
