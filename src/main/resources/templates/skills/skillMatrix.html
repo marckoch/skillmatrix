@@ -6,6 +6,23 @@
     <p class="text-secondary">Here you see all skills and all developers. Each experience is weighted by rating * years.<br>
         Skills which a lot of developers have good knowledge about are at the top, lesser known skills are at the bottom.<br>
         Developers with a lot of knowledge are positioned on the left, developers with fewer skills are at the right.</p>
+
+    <script type="text/javascript" th:inline="javascript">
+        $(document).ready(function () {
+            $("#skillSetSearchInput").tokenInput("/skills/json", {
+                theme: "bootstrap",
+                hintText: "Just start typing for skill names...",
+                tokenValue: "name",
+                prePopulate: [[${skillSetQuery}]]
+            });
+
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            })
+        });
+    </script>
+
     <table id="skills" class="table table-striped">
         <thead>
             <tr>
@@ -28,7 +45,8 @@
 
               <th:block th:each="exp : ${skill.getExperiences()}">
                   <td>
-                      <span th:if="${exp.getWeight() > 0}" th:text="${exp.getWeight()}">3</span>
+                      <span th:if="${exp.getWeight() > 0}" th:text="${exp.getWeight()}"
+                            data-bs-toggle="tooltip" data-bs-html="true" th:title="${exp.getYears() + ' years<br>' + exp.getRating() + ' stars'}">3</span>
                   </td>
               </th:block>
               <td>
