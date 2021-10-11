@@ -23,14 +23,13 @@ class SkillSetsController {
 
         final Set<Integer> developerIds = getDeveloperIds(skills);
 
-        // TODO: search by JPA and boot gives an error! (Hansens column is empty!)
-        // he and pehler both have weight of 40? maybe that is the reason?
-
         skills.forEach(skill -> {
             addEmptyExperienceForMissingDevelopers(skill, developerIds);
 
-            // sort all experiences again by developer weight of selected skills descending
-            skill.getExperiences().sort(Comparator.comparing(o -> -o.getDeveloper().getWeightForSkills(skills)));
+            // sort all experiences again by developer weight of selected skills descending, then by name
+            Comparator<Experience> weightComp = Comparator.comparing(o -> o.getDeveloper().getWeight());
+            Comparator<Experience> devNameComp = Comparator.comparing(o -> o.getDeveloper().getLastName());
+            skill.getExperiences().sort(weightComp.reversed().thenComparing(devNameComp));
         });
 
         model.addAttribute("skills", skills);

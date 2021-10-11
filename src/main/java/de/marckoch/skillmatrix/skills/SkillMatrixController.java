@@ -27,8 +27,10 @@ class SkillMatrixController {
         skills.forEach(skill -> {
             addEmptyExperienceForMissingDevelopers(skill, developerIds);
 
-            // sort all experiences again by developer weight descending
-            skill.getExperiences().sort(Comparator.comparing(o -> -o.getDeveloper().getWeight()));
+            // sort all experiences again by developer weight of selected skills descending, then by name
+            Comparator<Experience> weightComp = Comparator.comparing(o -> o.getDeveloper().getWeight());
+            Comparator<Experience> devNameComp = Comparator.comparing(o -> o.getDeveloper().getLastName());
+            skill.getExperiences().sort(weightComp.reversed().thenComparing(devNameComp));
         });
 
         model.addAttribute("skills", skills);
