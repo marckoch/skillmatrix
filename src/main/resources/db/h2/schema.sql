@@ -4,14 +4,14 @@ DROP TABLE experiences IF EXISTS;
 
 CREATE TABLE developers (
   developer_id  INTEGER IDENTITY PRIMARY KEY,
-  first_name VARCHAR(30) NOT NULL,
-  last_name  VARCHAR_IGNORECASE(30) NOT NULL,
+  first_name VARCHAR(80) NOT NULL,
+  last_name  VARCHAR_IGNORECASE(80) NOT NULL,
   title  VARCHAR(30)
 );
 
 CREATE TABLE skills (
   skill_id  INTEGER IDENTITY PRIMARY KEY,
-  name       VARCHAR(30) NOT NULL,
+  name       VARCHAR(80) NOT NULL,
   version    VARCHAR(30),
   alias      VARCHAR(30)
 );
