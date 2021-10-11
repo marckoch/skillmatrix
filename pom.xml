@@ -22,6 +22,9 @@
 		<webjars-bootstrap.version>5.1.1</webjars-bootstrap.version>
 		<webjars-jquery-ui.version>1.12.0</webjars-jquery-ui.version>
 		<webjars-jquery.version>3.6.0</webjars-jquery.version>
+
+		<sonar.organization>marckoch</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 
 	<dependencies>
