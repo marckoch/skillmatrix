@@ -7,26 +7,20 @@
         Common use case: Customer requires one or more developers with skills A, B and C. Can we match that?</p>
 
     <form class="d-flex" th:action="@{/skills/sets}">
-        <input id="skillSetSearchInput1" class="form-control me-2" type="search" name="skillSetQuery"
-               th:value="${skillSetQuery}" placeholder="Search for skills, comma separated" aria-label="Search">
+        <input id="skillSetSearchInput" class="form-control me-2" type="search" name="skillSetQuery" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
 
-    <form class="d-flex" th:action="@{/skills/sets}">
-        <input id="skillSetSearchInput2" class="form-control me-2" type="search" name="skillSetQuery"
-               th:value="${skillSetQuery}" placeholder="Search for skills, comma separated" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-    </form>
-
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $("#skillSetSearchInput2").tokenInput("/skills/json", {
-                    theme: "bootstrap",
-                    hintText: "Just start typing for skill names...",
-                    tokenValue: "name"
-                });
+    <script type="text/javascript" th:inline="javascript">
+        $(document).ready(function () {
+            $("#skillSetSearchInput").tokenInput("/skills/json", {
+                theme: "bootstrap",
+                hintText: "Just start typing for skill names...",
+                tokenValue: "name",
+                prePopulate: [[${skillSetQuery}]]
             });
-        </script>
+        });
+    </script>
 
     <th:block th:if="${skills.size() > 0}">
         <table id="skillSets" class="table table-striped">

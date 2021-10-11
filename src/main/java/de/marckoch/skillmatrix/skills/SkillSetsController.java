@@ -34,8 +34,18 @@ class SkillSetsController {
         });
 
         model.addAttribute("skills", skills);
-        model.addAttribute("skillSetQuery", skillSetQuery);
+        model.addAttribute("skillSetQuery", buildJsonOfSkillSetQuery(skillSetQuery));
         return "/skills/skillSets";
+    }
+
+    // return search terms so token input can show them again (via its prePopulate mechanism)
+    private List<Map<String, String>> buildJsonOfSkillSetQuery(String skillSetQuery) {
+        if (skillSetQuery==null || skillSetQuery.isEmpty()) return Collections.emptyList();
+        return Arrays.stream(skillSetQuery.split(",")).map(this::toMap).toList();
+    }
+
+    private Map<String, String> toMap(String s) {
+        return Map.of("id", s, "name", s);
     }
 
     private void addEmptyExperienceForMissingDevelopers(Skill skill, Set<Integer> devIdsOfSkills) {

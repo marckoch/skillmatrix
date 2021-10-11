@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +16,9 @@ public class SkillsRestController {
 
     private final SkillRepository skillRepository;
 
+    /**
+     * used so tokeninput can suggest items in its list
+     */
     @GetMapping(value = "/skills/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Map<String, String>> skillsAsJson(@RequestParam String q) {
         List<Skill> allSkills = skillRepository.findByQuery(q.toUpperCase());
@@ -24,10 +26,8 @@ public class SkillsRestController {
         return allSkills.stream().map(this::toMap).distinct().toList();
     }
 
+    // tokeninput wants id/name, but we only use name in both fields
     private Map<String, String> toMap(Skill skill) {
-        Map<String, String> m = new HashMap<>();
-        m.put("id", skill.getName());
-        m.put("name", skill.getName());
-        return m;
+        return Map.of("id", skill.getName(), "name", skill.getName());
     }
 }
