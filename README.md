@@ -1,5 +1,7 @@
 # Skill Matrix
 
+[![CI](https://github.com/marckoch/skillmatrix/actions/workflows/main.yml/badge.svg)](https://github.com/marckoch/skillmatrix/actions/workflows/main.yml)
+
 A refactoring of the beloved [Spring Petclinic](https://github.com/spring-projects/spring-petclinic) to a skill matrix project.
 
 ## What is a skill matrix?
