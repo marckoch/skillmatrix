@@ -31,7 +31,7 @@ class SearchControllerTest {
     private SkillRepository skillRepository;
 
     @Test
-    public void searchingDeveloperNameShouldReturnDeveloperList() throws Exception {
+    void searchingDeveloperNameShouldReturnDeveloperList() throws Exception {
         Developer dev1 = new Developer();
         dev1.setLastName("developer1lastName");
         dev1.setExperiences(Collections.emptyList());
@@ -46,7 +46,7 @@ class SearchControllerTest {
     }
 
     @Test
-    public void searchingSkillNameShouldReturnSkillList() throws Exception {
+    void searchingSkillNameShouldReturnSkillList() throws Exception {
         Skill skill1 = new Skill();
         skill1.setName("skillName1");
         skill1.setExperiences(Collections.emptyList());
@@ -61,7 +61,7 @@ class SearchControllerTest {
     }
 
     @Test
-    public void noResultShouldReturnEmptySearchPage() throws Exception {
+    void noResultShouldReturnEmptySearchPage() throws Exception {
         when(developerRepository.findByQuery(anyString())).thenReturn(Collections.emptyList());
         when(skillRepository.findByQuery(anyString())).thenReturn(Collections.emptyList());
 

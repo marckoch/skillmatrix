@@ -2,7 +2,7 @@ package de.marckoch.skillmatrix.skills;
 
 import org.junit.jupiter.api.Test;
 
-public class SkillsTest {
+class SkillsTest {
 
 	@Test
 	void create() {

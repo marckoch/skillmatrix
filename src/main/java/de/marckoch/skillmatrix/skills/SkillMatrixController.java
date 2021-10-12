@@ -71,7 +71,7 @@ class SkillMatrixController {
         return skillRepository.findAll()
                 .stream()
                 .sorted(skillWeightComp.reversed().thenComparing(skillNameComp))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public Set<Integer> getDeveloperIds() {

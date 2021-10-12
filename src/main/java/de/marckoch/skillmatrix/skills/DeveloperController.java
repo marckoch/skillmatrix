@@ -23,6 +23,8 @@ import java.util.stream.IntStream;
 @AllArgsConstructor
 class DeveloperController {
 
+	private static final String CREATE_OR_UPDATE_DEVELOPER_VIEW = "/developers/createOrUpdateDeveloperForm";
+
 	private final DeveloperRepository developerRepository;
 
 	private final SkillRepository skillRepository;
@@ -41,14 +43,16 @@ class DeveloperController {
 		Developer dev = developerRepository.findById(developerId).orElseThrow();
 		mav.addObject(dev);
 
+		final String EXPERIENCE = "experience";
+
 		// check if we already have a (erroneous) experience in model,
 		// this was checked and put there by redirect from ExperienceController
-		if (!model.containsAttribute("experience")) {
+		if (!model.containsAttribute(EXPERIENCE)) {
 			Experience experience = new Experience();
 			experience.setDeveloper(dev);
-			mav.getModel().put("experience", experience);
+			mav.getModel().put(EXPERIENCE, experience);
 		} else {
-			mav.getModel().put("experience", model.getAttribute("experience"));
+			mav.getModel().put(EXPERIENCE, model.getAttribute(EXPERIENCE));
 		}
 
 		mav.getModel().put("skillSelectItems", getFreeSkills(dev));
@@ -60,13 +64,13 @@ class DeveloperController {
 	public String initCreationForm(Map<String, Object> model) {
 		Developer developer = new Developer();
 		model.put("developer", developer);
-		return "/developers/createOrUpdateDeveloperForm";
+		return CREATE_OR_UPDATE_DEVELOPER_VIEW;
 	}
 
 	@PostMapping("/developers/new")
 	public String processCreationForm(@Valid Developer developer, BindingResult result) {
 		if (result.hasErrors()) {
-			return "/developers/createOrUpdateDeveloperForm";
+			return CREATE_OR_UPDATE_DEVELOPER_VIEW;
 		} else {
 			Developer savedDev = developerRepository.save(developer);
 			return "redirect:/developers/" + savedDev.getDeveloperId();
@@ -77,14 +81,14 @@ class DeveloperController {
 	public String initUpdateDeveloperForm(@PathVariable("developerId") int developerId, Model model) {
 		Developer developer = developerRepository.findById(developerId).orElseThrow();
 		model.addAttribute(developer);
-		return "/developers/createOrUpdateDeveloperForm";
+		return CREATE_OR_UPDATE_DEVELOPER_VIEW;
 	}
 
 	@PostMapping("/developers/{developerId}/edit")
 	public String processUpdateDeveloperForm(@Valid Developer developer, BindingResult result,
 										 	 @PathVariable("developerId") int developerId) {
 		if (result.hasErrors()) {
-			return "/developers/createOrUpdateDeveloperForm";
+			return CREATE_OR_UPDATE_DEVELOPER_VIEW;
 		} else {
 			developer.setDeveloperId(developerId);
 			developerRepository.save(developer);
@@ -110,7 +114,7 @@ class DeveloperController {
 	public List<SelectItem> getRatings() {
 		return IntStream.range(1, 6).boxed()
 				.map(i -> new SelectItem(i, i + " stars"))
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	private SelectItem skill2SelectItem(Skill skill) {

@@ -86,7 +86,7 @@ class SkillSetsController {
                     .map(skillRepository::findByQuery)
                     .flatMap(Collection::stream)
                     .distinct()
-                    .collect(Collectors.toList());
+                    .toList();
         } else
             return skillRepository.findByQuery(query.toUpperCase());
     }
