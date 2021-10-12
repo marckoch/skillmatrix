@@ -91,8 +91,8 @@ class DeveloperController {
 			return CREATE_OR_UPDATE_DEVELOPER_VIEW;
 		} else {
 			developer.setDeveloperId(developerId);
-			developerRepository.save(developer);
-			return "redirect:/developers/{developerId}";
+			Developer savedDev = developerRepository.save(developer);
+			return "redirect:/developers/" + savedDev.getDeveloperId();
 		}
 	}
 

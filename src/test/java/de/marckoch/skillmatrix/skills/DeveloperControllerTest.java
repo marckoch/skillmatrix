@@ -17,6 +17,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
@@ -77,7 +78,7 @@ class DeveloperControllerTest {
     void processCreationFormWithWrongDataShouldShowError() throws Exception {
         // error because first and last name is missing in post!
         mockMvc.perform(post("/developers/new"))
-                .andDo(MockMvcResultHandlers.print())
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(model().hasErrors())
                 .andExpect(model().errorCount(2))
@@ -94,7 +95,52 @@ class DeveloperControllerTest {
         mockMvc.perform(post("/developers/new")
                         .param("firstName", "first")
                         .param("lastName", "last"))
-                .andDo(MockMvcResultHandlers.print())
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(model().hasNoErrors())
+                .andExpect(view().name("redirect:/developers/123"));
+    }
+
+    @Test
+    void initUpdateDeveloperFormShouldShowExistingDeveloper() throws Exception {
+        Developer dev1 = new Developer();
+        dev1.setDeveloperId(123);
+        dev1.setFirstName("firstName123");
+        dev1.setLastName("lastName123");
+
+        when(developerRepository.findById(dev1.getDeveloperId())).thenReturn(Optional.of(dev1));
+
+        mockMvc.perform(get("/developers/{developerId}/edit", 123))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model().hasNoErrors())
+                .andExpect(view().name("/developers/createOrUpdateDeveloperForm"))
+                .andExpect(content().string(containsString("firstName123")))
+                .andExpect(content().string(containsString("lastName123")));
+    }
+
+    @Test
+    void processUpdateFormWithWrongDataShouldShowError() throws Exception {
+        // error because first and last name is missing in post!
+        mockMvc.perform(post("/developers/123/edit"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model().hasErrors())
+                .andExpect(model().errorCount(2))
+                .andExpect(view().name("/developers/createOrUpdateDeveloperForm"));
+    }
+
+    @Test
+    void processUpdateFormWithCorrectDataShouldSaveData() throws Exception {
+        Developer dev1 = new Developer();
+        dev1.setDeveloperId(123);
+
+        when(developerRepository.save(ArgumentMatchers.any(Developer.class))).thenReturn(dev1);
+
+        mockMvc.perform(post("/developers/123/edit")
+                        .param("firstName", "first")
+                        .param("lastName", "last"))
+                .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
                 .andExpect(view().name("redirect:/developers/123"));
