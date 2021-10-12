@@ -1,8 +1,6 @@
 package de.marckoch.skillmatrix.skills;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -14,6 +12,9 @@ import java.util.List;
  */
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "skills")
 public class Skill implements HasExperiences {
 

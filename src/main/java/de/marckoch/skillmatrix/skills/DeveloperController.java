@@ -1,7 +1,6 @@
 package de.marckoch.skillmatrix.skills;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,10 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
@@ -27,7 +24,7 @@ class DeveloperController {
 
 	private final DeveloperRepository developerRepository;
 
-	private final SkillRepository skillRepository;
+	private final SkillsService skillsService;
 
 	@GetMapping("/developers")
 	public ModelAndView showAll() {
@@ -55,7 +52,7 @@ class DeveloperController {
 			mav.getModel().put(EXPERIENCE, model.getAttribute(EXPERIENCE));
 		}
 
-		mav.getModel().put("skillSelectItems", getFreeSkills(dev));
+		mav.getModel().put("skillSelectItems", skillsService.getFreeSkills(dev));
 
 		return mav;
 	}
@@ -96,35 +93,10 @@ class DeveloperController {
 		}
 	}
 
-	// find all Skills that this developer does NOT have
-	public List<SelectItem> getFreeSkills(Developer dev) {
-		var skillsOfDeveloper = dev.getExperiences()
-				.stream()
-				.map(exp -> exp.getSkill().getSkillId())
-				.toList();
-
-		return skillRepository.findAll().stream()
-				.filter(skill -> !skillsOfDeveloper.contains(skill.getSkillId()))
-				.map(this::skill2SelectItem)
-				.sorted(Comparator.comparing(SelectItem::getValue))
-				.collect(Collectors.toList());
-	}
-
 	@ModelAttribute("ratings")
 	public List<SelectItem> getRatings() {
 		return IntStream.range(1, 6).boxed()
 				.map(i -> new SelectItem(i, i + " stars"))
 				.toList();
-	}
-
-	private SelectItem skill2SelectItem(Skill skill) {
-		return new SelectItem(skill.getSkillId(), skill.getNameAndVersion());
-	}
-
-	@Getter
-	@AllArgsConstructor
-	static class SelectItem {
-		Integer key;
-		String value;
 	}
 }

@@ -1,7 +1,6 @@
 package de.marckoch.skillmatrix.skills;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import org.springframework.core.style.ToStringCreator;
 
 import javax.persistence.*;
@@ -12,6 +11,9 @@ import javax.validation.constraints.*;
  */
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "experiences")
 public class Experience {
 

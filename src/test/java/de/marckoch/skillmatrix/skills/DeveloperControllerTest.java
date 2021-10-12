@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import java.util.Collections;
 import java.util.List;
@@ -32,6 +31,9 @@ class DeveloperControllerTest {
 
     @MockBean
     SkillRepository skillRepository;
+
+    @MockBean
+    SkillsService skillsService;
 
     @Test
     void findAllShouldReturnDeveloperList() throws Exception {
@@ -144,29 +146,5 @@ class DeveloperControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
                 .andExpect(view().name("redirect:/developers/123"));
-    }
-
-    @Test
-    void testProcessFindFormById() throws Exception {
-        Developer peter = new Developer();
-        peter.setDeveloperId(123);
-        peter.setFirstName("Peter");
-        peter.setLastName("Parker");
-
-        Skill java = new Skill();
-        java.setName("Java");
-
-        Experience e1 = new Experience();
-        e1.setDeveloper(peter);
-        e1.setSkill(java);
-        e1.setYears(12);
-        e1.setRating(5);
-        peter.setExperiences(List.of(e1));
-
-        given(developerRepository.findById(peter.getDeveloperId())).willReturn(Optional.of(peter));
-
-        mockMvc.perform(get("/developers/{developerId}", 123))
-                .andExpect(status().isOk())
-                .andExpect(view().name("developers/developerDetails"));
     }
 }
