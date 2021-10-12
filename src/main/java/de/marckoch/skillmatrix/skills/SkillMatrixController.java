@@ -41,8 +41,8 @@ class SkillMatrixController {
         List<Experience> experiences = skill.getExperiences();
         List<Integer> idsOfMissingDevs = findIdsOfMissingDevs(devIdsOfSkills, experiences);
 
-        idsOfMissingDevs.forEach(devId -> {
-            Experience e = createEmptyExperienceForDeveloper(devId);
+        idsOfMissingDevs.forEach(developerId -> {
+            Experience e = createEmptyExperienceForDeveloper(developerId);
             experiences.add(e);
         });
     }
@@ -56,9 +56,9 @@ class SkillMatrixController {
                 .toList();
     }
 
-    private Experience createEmptyExperienceForDeveloper(Integer id) {
+    private Experience createEmptyExperienceForDeveloper(Integer developerId) {
         final Experience e = new Experience();
-        e.setDeveloper(developerRepository.findById(id).get());
+        e.setDeveloper(developerRepository.findById(developerId).orElseThrow());
         e.setRating(0);
         e.setYears(0);
         return e;

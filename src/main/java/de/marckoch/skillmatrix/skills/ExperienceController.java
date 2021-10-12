@@ -24,7 +24,7 @@ class ExperienceController {
                                                  @PathVariable("developerId") int developerId,
                                                  @Valid Experience experience, BindingResult result,
                                                  final RedirectAttributes redirectAttributes) {
-        Developer dev = developerRepository.findById(developerId).get();
+        Developer dev = developerRepository.findById(developerId).orElseThrow();
         model.put("developer", dev);
         experience.setDeveloper(dev);
 
@@ -41,7 +41,7 @@ class ExperienceController {
 
     @GetMapping("/experience/delete/{experienceId}")
     public String delete(@PathVariable("experienceId") int experienceId) {
-        Developer dev = experienceRepository.findById(experienceId).get().getDeveloper();
+        Developer dev = experienceRepository.findById(experienceId).orElseThrow().getDeveloper();
         dev.getExperiences().removeIf(e -> e.getExperienceid().equals(experienceId));
         developerRepository.save(dev);
 

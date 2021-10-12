@@ -38,7 +38,7 @@ class DeveloperController {
 	@GetMapping("/developers/{developerId}")
 	public ModelAndView showDeveloper(@PathVariable("developerId") int developerId, Model model) {
 		ModelAndView mav = new ModelAndView("developers/developerDetails");
-		Developer dev = developerRepository.findById(developerId).get();
+		Developer dev = developerRepository.findById(developerId).orElseThrow();
 		mav.addObject(dev);
 
 		// check if we already have a (erroneous) experience in model,
@@ -75,7 +75,7 @@ class DeveloperController {
 
 	@GetMapping("/developers/{developerId}/edit")
 	public String initUpdateDeveloperForm(@PathVariable("developerId") int developerId, Model model) {
-		Developer developer = developerRepository.findById(developerId).get();
+		Developer developer = developerRepository.findById(developerId).orElseThrow();
 		model.addAttribute(developer);
 		return "/developers/createOrUpdateDeveloperForm";
 	}

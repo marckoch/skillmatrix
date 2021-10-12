@@ -66,9 +66,9 @@ class SkillSetsController {
                 .toList();
     }
 
-    private Experience createEmptyExperienceForDeveloper(Integer id) {
+    private Experience createEmptyExperienceForDeveloper(Integer developerId) {
         final Experience e = new Experience();
-        e.setDeveloper(developerRepository.findById(id).get());
+        e.setDeveloper(developerRepository.findById(developerId).orElseThrow());
         e.setRating(0);
         e.setYears(0);
         return e;
