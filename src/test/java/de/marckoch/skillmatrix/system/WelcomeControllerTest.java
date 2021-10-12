@@ -16,7 +16,7 @@ class WelcomeControllerTest {
 
     @Test
     public void shouldReturnWelcomeMessage() throws Exception {
-        this.mockMvc.perform(get("/"))
+        mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("welcome"))
                 .andExpect(content().string(containsString("<p>Welcome to SkillMatrix!</p>")));

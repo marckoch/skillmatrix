@@ -68,8 +68,8 @@ class DeveloperController {
 		if (result.hasErrors()) {
 			return "/developers/createOrUpdateDeveloperForm";
 		} else {
-			developerRepository.save(developer);
-			return "redirect:/developers/" + developer.getDeveloperId();
+			Developer savedDev = developerRepository.save(developer);
+			return "redirect:/developers/" + savedDev.getDeveloperId();
 		}
 	}
 

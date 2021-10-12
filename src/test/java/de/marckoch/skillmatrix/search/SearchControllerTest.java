@@ -10,7 +10,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -39,8 +38,9 @@ class SearchControllerTest {
 
         when(developerRepository.findByQuery("dev1".toUpperCase())).thenReturn(List.of(dev1));
 
-        this.mockMvc.perform(get("/search").param("query", "dev1"))
+        mockMvc.perform(get("/search").param("query", "dev1"))
                 .andExpect(status().isOk())
+                .andExpect(model().attributeExists("developers"))
                 .andExpect(view().name("developers/developerList"))
                 .andExpect(content().string(containsString(dev1.getLastName())));
     }
@@ -53,8 +53,9 @@ class SearchControllerTest {
 
         when(skillRepository.findByQuery("skillName1".toUpperCase())).thenReturn(List.of(skill1));
 
-        this.mockMvc.perform(get("/search").param("query", "skillName1"))
+        mockMvc.perform(get("/search").param("query", "skillName1"))
                 .andExpect(status().isOk())
+                .andExpect(model().attributeExists("skills"))
                 .andExpect(view().name("skills/skillList"))
                 .andExpect(content().string(containsString(skill1.getName())));
     }
@@ -64,8 +65,9 @@ class SearchControllerTest {
         when(developerRepository.findByQuery(anyString())).thenReturn(Collections.emptyList());
         when(skillRepository.findByQuery(anyString())).thenReturn(Collections.emptyList());
 
-        this.mockMvc.perform(get("/search").param("query", "xxx"))
+        mockMvc.perform(get("/search").param("query", "xxx"))
                 .andExpect(status().isOk())
+                .andExpect(model().attributeDoesNotExist("developers", "skills"))
                 .andExpect(view().name("search/emptySearch"))
                 .andExpect(content().string(containsString("Nothing found!")));
     }
