@@ -22,6 +22,6 @@ class WelcomeControllerTest {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("welcome"))
-                .andExpect(content().string(containsString("<p>Welcome to SkillMatrix!</p>")));
+                .andExpect(content().string(containsString("Welcome to SkillMatrix!")));
     }
 }
