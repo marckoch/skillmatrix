@@ -34,20 +34,20 @@ class SkillsServiceTest {
     void getFreeSkills() {
         dev1.setExperiences(List.of(Experience.builder().skill(skill1).build()));
 
-        List<SelectItem> freeSkills = skillsService.getFreeSkills(dev1);
+        List<Skill> freeSkills = skillsService.getFreeSkills(dev1);
 
-        assertThat(freeSkills).extracting(selectItem -> selectItem.key).containsExactly(2, 3);
-        assertThat(freeSkills).extracting(selectItem -> selectItem.value).containsExactly("skill2", "skill3");
+        assertThat(freeSkills).extracting(Skill::getSkillId).containsExactly(2, 3);
+        assertThat(freeSkills).extracting(Skill::getName).containsExactly("skill2", "skill3");
     }
 
     @Test
     void getFreeSkillsWhenDeveloperHasNoSkills() {
         // dev gets no experiences!
 
-        List<SelectItem> freeSkills = skillsService.getFreeSkills(dev1);
+        List<Skill> freeSkills = skillsService.getFreeSkills(dev1);
 
-        assertThat(freeSkills).extracting(selectItem -> selectItem.key).containsExactly(1, 2, 3);
-        assertThat(freeSkills).extracting(selectItem -> selectItem.value).containsExactly("skill1", "skill2", "skill3");
+        assertThat(freeSkills).extracting(Skill::getSkillId).containsExactly(1, 2, 3);
+        assertThat(freeSkills).extracting(Skill::getName).containsExactly("skill1", "skill2", "skill3");
     }
 
     @Test
@@ -57,7 +57,7 @@ class SkillsServiceTest {
                 Experience.builder().skill(skill2).build(),
                 Experience.builder().skill(skill3).build()));
 
-        List<SelectItem> freeSkills = skillsService.getFreeSkills(dev1);
+        List<Skill> freeSkills = skillsService.getFreeSkills(dev1);
 
         assertThat(freeSkills).isEmpty();
     }

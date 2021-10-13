@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
@@ -52,9 +53,18 @@ class DeveloperController {
 			mav.getModel().put(EXPERIENCE, model.getAttribute(EXPERIENCE));
 		}
 
-		mav.getModel().put("skillSelectItems", skillsService.getFreeSkills(dev));
+		List<Skill> freeSkills = skillsService.getFreeSkills(dev);
+		List<SelectItem> selectItems = freeSkills.stream()
+				.map(this::skill2SelectItem)
+				.sorted(Comparator.comparing(SelectItem::getValue))
+				.toList();
+		mav.getModel().put("skillSelectItems", selectItems);
 
 		return mav;
+	}
+
+	private SelectItem skill2SelectItem(Skill skill) {
+		return new SelectItem(skill.getSkillId(), skill.getNameAndVersion());
 	}
 
 	@GetMapping("/developers/new")
