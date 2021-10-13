@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @WebMvcTest(SkillController.class)
-public class SkillControllerTest {
+class SkillControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
