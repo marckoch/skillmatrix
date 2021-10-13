@@ -84,8 +84,8 @@ class SkillController {
         if (result.hasErrors()) {
             return CREATE_OR_UPDATE_SKILL_VIEW;
         } else {
-            skillRepository.save(skill);
-            return "redirect:/skills/" + skill.getSkillId();
+            Skill savedSkill = skillRepository.save(skill);
+            return "redirect:/skills/" + savedSkill.getSkillId();
         }
     }
 
@@ -103,8 +103,8 @@ class SkillController {
             return CREATE_OR_UPDATE_SKILL_VIEW;
         } else {
             skill.setSkillId(skillId);
-            skillRepository.save(skill);
-            return "redirect:/skills/{skillId}";
+            Skill savedSkill = skillRepository.save(skill);
+            return "redirect:/skills/" + savedSkill.getSkillId();
         }
     }
 }

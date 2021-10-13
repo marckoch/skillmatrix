@@ -76,7 +76,6 @@ class DeveloperControllerTest {
         when(developerRepository.findById(anyInt())).thenReturn(Optional.empty());
 
         mockMvc.perform(get("/developers/{developerId}", 123))
-                .andDo(print())
                 .andExpect(status().isNotFound());
     }
 
@@ -94,7 +93,6 @@ class DeveloperControllerTest {
     void processCreationFormWithWrongDataShouldShowError() throws Exception {
         // error because first and last name is missing in post!
         mockMvc.perform(post("/developers/new"))
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(model().hasErrors())
                 .andExpect(model().errorCount(2))
