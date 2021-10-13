@@ -20,7 +20,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<webjars-bootstrap.version>5.1.2</webjars-bootstrap.version>
-		<webjars-jquery-ui.version>1.12.0</webjars-jquery-ui.version>
+		<webjars-jquery-ui.version>1.12.1</webjars-jquery-ui.version>
 		<webjars-jquery.version>3.6.0</webjars-jquery.version>
 
 		<sonar.organization>marckoch</sonar.organization>
