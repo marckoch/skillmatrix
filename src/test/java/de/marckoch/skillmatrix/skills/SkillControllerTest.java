@@ -23,7 +23,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -57,7 +56,6 @@ class SkillControllerTest {
                         .param("sort-field", "name")
                         .param("sort-dir", "asc"))
                 .andExpect(status().isOk())
-                .andDo(MockMvcResultHandlers.print())
                 .andExpect(model().hasNoErrors())
                 .andExpect(model().attributeExists("skills"))
                 .andExpect(model().attribute("skills", instanceOf(PageImpl.class)))
@@ -122,7 +120,6 @@ class SkillControllerTest {
     void processCreationFormWithWrongDataShouldShowError() throws Exception {
         // error because first and last name is missing in post!
         mockMvc.perform(post("/skills/new"))
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(model().hasErrors())
                 .andExpect(model().errorCount(1))
@@ -138,7 +135,6 @@ class SkillControllerTest {
 
         mockMvc.perform(post("/skills/new")
                         .param("name", "newTestSkill"))
-                .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
                 .andExpect(view().name("redirect:/skills/333"));
@@ -152,7 +148,6 @@ class SkillControllerTest {
         when(skillRepository.findById(skill1.getSkillId())).thenReturn(Optional.of(skill1));
 
         mockMvc.perform(get("/skills/{skillId}/edit", skill1.getSkillId()))
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(model().hasNoErrors())
                 .andExpect(view().name("/skills/createOrUpdateSkillForm"))
@@ -163,7 +158,6 @@ class SkillControllerTest {
     void processUpdateFormWithWrongDataShouldShowError() throws Exception {
         // error because name is missing in post!
         mockMvc.perform(post("/skills/123/edit"))
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(model().hasErrors())
                 .andExpect(model().errorCount(1))
@@ -176,7 +170,6 @@ class SkillControllerTest {
 
         mockMvc.perform(post("/skills/1/edit")
                         .param("name", "nnn"))
-                .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
                 .andExpect(view().name("redirect:/skills/1"));

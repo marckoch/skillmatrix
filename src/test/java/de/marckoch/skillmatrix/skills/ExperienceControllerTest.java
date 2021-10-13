@@ -17,7 +17,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -42,7 +41,6 @@ class ExperienceControllerTest {
         when(developerRepository.findById(dev1.getDeveloperId())).thenReturn(Optional.of(dev1));
 
         mockMvc.perform(post("/experience/{developerId}/new", 123))
-                .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
                 .andExpect(flash().attributeExists("experience", "org.springframework.validation.BindingResult.experience"))
@@ -61,7 +59,6 @@ class ExperienceControllerTest {
         mockMvc.perform(post("/experience/{developerId}/new", 123)
                     .param("years", "5")
                     .param("rating", "4"))
-                .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
                 .andExpect(view().name("redirect:/developers/123"));
@@ -83,7 +80,6 @@ class ExperienceControllerTest {
         when(experienceRepository.findById(exp1.getExperienceid())).thenReturn(Optional.of(exp1));
 
         mockMvc.perform(get("/experience/delete/{experienceId}", exp1.getExperienceid()))
-                .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
                 .andExpect(view().name("redirect:/developers/123"));
@@ -95,7 +91,6 @@ class ExperienceControllerTest {
     @Test
     void deletingNoneExistingExperienceThrowsError() throws Exception {
         mockMvc.perform(get("/experience/delete/{experienceId}", "1111"))
-                .andDo(print())
                 .andExpect(status().isNotFound());
 
         verify(developerRepository, never()).save(any(Developer.class));

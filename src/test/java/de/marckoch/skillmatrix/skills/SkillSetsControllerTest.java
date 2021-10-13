@@ -49,7 +49,6 @@ class SkillSetsControllerTest {
         when(developerRepository.findById(dev2.getDeveloperId())).thenReturn(Optional.of(dev2));
 
         mockMvc.perform(get("/skills/sets"))
-                .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("skills", Matchers.hasSize(3)))
                 .andExpect(view().name("/skills/skillSets"));
@@ -66,7 +65,6 @@ class SkillSetsControllerTest {
         when(developerRepository.findById(dev2.getDeveloperId())).thenReturn(Optional.of(dev2));
 
         mockMvc.perform(get("/skills/sets").param("skillSetQuery", "skill1"))
-                .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("skills", Matchers.hasSize(1)))
                 .andExpect(view().name("/skills/skillSets"));
@@ -84,7 +82,6 @@ class SkillSetsControllerTest {
         when(developerRepository.findById(dev2.getDeveloperId())).thenReturn(Optional.of(dev2));
 
         mockMvc.perform(get("/skills/sets").param("skillSetQuery", "skill1,skill2"))
-                .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("skills", Matchers.hasSize(2)))
                 .andExpect(view().name("/skills/skillSets"));

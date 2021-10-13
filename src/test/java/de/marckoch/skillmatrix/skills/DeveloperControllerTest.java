@@ -19,7 +19,6 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -109,7 +108,6 @@ class DeveloperControllerTest {
         mockMvc.perform(post("/developers/new")
                         .param("firstName", "first")
                         .param("lastName", "last"))
-                .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
                 .andExpect(view().name("redirect:/developers/123"));
@@ -125,7 +123,6 @@ class DeveloperControllerTest {
         when(developerRepository.findById(dev1.getDeveloperId())).thenReturn(Optional.of(dev1));
 
         mockMvc.perform(get("/developers/{developerId}/edit", 123))
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(model().hasNoErrors())
                 .andExpect(view().name("/developers/createOrUpdateDeveloperForm"))
@@ -137,7 +134,6 @@ class DeveloperControllerTest {
     void processUpdateFormWithWrongDataShouldShowError() throws Exception {
         // error because first and last name is missing in post!
         mockMvc.perform(post("/developers/123/edit"))
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(model().hasErrors())
                 .andExpect(model().errorCount(2))
@@ -154,7 +150,6 @@ class DeveloperControllerTest {
         mockMvc.perform(post("/developers/123/edit")
                         .param("firstName", "first")
                         .param("lastName", "last"))
-                .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
                 .andExpect(view().name("redirect:/developers/123"));

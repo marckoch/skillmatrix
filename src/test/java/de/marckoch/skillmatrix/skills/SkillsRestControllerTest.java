@@ -12,7 +12,6 @@ import java.util.List;
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -35,7 +34,6 @@ class SkillsRestControllerTest {
         when(skillRepository.findByQuery("S")).thenReturn(List.of(skill1, skill2, skill3));
 
         mockMvc.perform(get("/skills/json").param("q", "s"))
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.*", Matchers.hasSize(3)))
                 .andExpect(content().string(containsString("\"name\":\"skill1\"")))
