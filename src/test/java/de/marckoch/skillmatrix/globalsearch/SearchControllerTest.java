@@ -1,4 +1,4 @@
-package de.marckoch.skillmatrix.search;
+package de.marckoch.skillmatrix.globalsearch;
 
 import de.marckoch.skillmatrix.skills.Developer;
 import de.marckoch.skillmatrix.skills.DeveloperRepository;
@@ -41,7 +41,7 @@ class SearchControllerTest {
 
         when(developerRepository.findByQuery("dev1".toUpperCase())).thenReturn(List.of(dev1));
 
-        mockMvc.perform(get("/search").param("query", "dev1"))
+        mockMvc.perform(get("/globalsearch").param("query", "dev1"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("developers"))
                 .andExpect(view().name("developers/developerList"))
@@ -56,7 +56,7 @@ class SearchControllerTest {
 
         when(skillRepository.findByQuery("skillName1".toUpperCase())).thenReturn(List.of(skill1));
 
-        mockMvc.perform(get("/search").param("query", "skillName1"))
+        mockMvc.perform(get("/globalsearch").param("query", "skillName1"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("skills"))
                 .andExpect(view().name("skills/skillList"))
@@ -68,10 +68,10 @@ class SearchControllerTest {
         when(developerRepository.findByQuery(anyString())).thenReturn(Collections.emptyList());
         when(skillRepository.findByQuery(anyString())).thenReturn(Collections.emptyList());
 
-        mockMvc.perform(get("/search").param("query", "xxx"))
+        mockMvc.perform(get("/globalsearch").param("query", "xxx"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeDoesNotExist("developers", "skills"))
-                .andExpect(view().name("search/emptySearch"))
+                .andExpect(view().name("globalsearch/emptySearch"))
                 .andExpect(content().string(containsString("Nothing found!")));
     }
 }

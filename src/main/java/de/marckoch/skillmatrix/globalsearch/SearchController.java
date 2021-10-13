@@ -1,4 +1,4 @@
-package de.marckoch.skillmatrix.search;
+package de.marckoch.skillmatrix.globalsearch;
 
 import de.marckoch.skillmatrix.skills.Developer;
 import de.marckoch.skillmatrix.skills.DeveloperRepository;
@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collection;
 
+/**
+ * Controller for the global search box at the top right.
+ * We search developers first. When we don't find anything we try searching skills.
+ */
 @Controller
 class SearchController {
 
@@ -23,7 +27,7 @@ class SearchController {
         this.skillRepo = skillRepo;
     }
 
-    @GetMapping("/search")
+    @GetMapping("/globalsearch")
     public String processFindForm(@RequestParam String query, Model model) {
 
         // keep it simple: first try developers, then skills
@@ -42,6 +46,6 @@ class SearchController {
             return "skills/skillList";
         }
 
-        return "search/emptySearch";
+        return "globalsearch/emptySearch";
     }
 }
