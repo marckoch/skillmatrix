@@ -15,6 +15,7 @@
   <link th:rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.5.0/font/bootstrap-icons.css}" />
   <link th:rel="stylesheet" th:href="@{/assets/tokeninput/styles/token-input.css}" />
   <link th:rel="stylesheet" th:href="@{/assets/tokeninput/styles/token-input-bootstrap.css}" />
+  <link rel="stylesheet" id="dark-theme-style" />
 
   <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
   <script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
@@ -55,7 +56,13 @@
             <span>Skill Sets</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" id="theme-toggler" onclick="toggleTheme()"></a>
+        </li>
       </ul>
+
+      <script th:src="@{/assets/darktheme/js/darkmode.js}"></script>
+
       <form class="d-flex" th:action="@{/search}">
         <input class="form-control me-2" type="search" name="query" th:value="${query}" placeholder="Search developers or skills" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>

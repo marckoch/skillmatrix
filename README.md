@@ -26,3 +26,4 @@ You can then access it here: http://localhost:8080/
 - Thymeleaf
 - Bootstrap 5
 - Tokeninput: https://loopj.com/jquery-tokeninput/ (Demos: https://loopj.com/jquery-tokeninput/demo.html)
+- darkmode from https://blog.shhdharmen.me/toggle-light-and-dark-themes-in-bootstrap and https://bootswatch.com/cyborg/
