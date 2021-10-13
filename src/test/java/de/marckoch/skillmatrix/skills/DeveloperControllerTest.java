@@ -11,14 +11,19 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.hamcrest.Matchers.*;
-import static org.mockito.BDDMockito.given;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @WebMvcTest(DeveloperController.class)
 class DeveloperControllerTest {
@@ -64,6 +69,15 @@ class DeveloperControllerTest {
                 .andExpect(model().attributeExists("developer", "experience"))
                 .andExpect(view().name("developers/developerDetails"))
                 .andExpect(content().string(containsString(dev1.getLastName())));
+    }
+
+    @Test
+    void showDeveloperThrowsExceptionForUnknownDeveloper() throws Exception {
+        when(developerRepository.findById(anyInt())).thenReturn(Optional.empty());
+
+        mockMvc.perform(get("/developers/{developerId}", 123))
+                .andDo(print())
+                .andExpect(status().isNotFound());
     }
 
     @Test
