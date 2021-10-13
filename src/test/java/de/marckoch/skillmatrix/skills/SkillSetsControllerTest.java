@@ -1,5 +1,6 @@
 package de.marckoch.skillmatrix.skills;
 
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -37,7 +39,7 @@ class SkillSetsControllerTest {
     Experience expDev1Skill1 = Experience.builder().experienceid(1).developer(dev1).skill(skill1).years(3).rating(5).build();
 
     @Test
-    void skillSetsWorks() throws Exception {
+    void skillSetsWorksWithNoQueryParam() throws Exception {
         dev1.getExperiences().add(expDev1Skill1);
         skill1.getExperiences().add(expDev1Skill1);
 
@@ -49,6 +51,42 @@ class SkillSetsControllerTest {
         mockMvc.perform(get("/skills/sets"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
+                .andExpect(model().attribute("skills", Matchers.hasSize(3)))
+                .andExpect(view().name("/skills/skillSets"));
+    }
+
+    @Test
+    void skillSetsWorksWithOneQueryParam() throws Exception {
+        dev1.getExperiences().add(expDev1Skill1);
+        skill1.getExperiences().add(expDev1Skill1);
+
+        when(skillRepository.findByQuery("SKILL1")).thenReturn(List.of(skill1));
+        when(developerRepository.findAll()).thenReturn(List.of(dev1, dev2));
+        when(developerRepository.findById(dev1.getDeveloperId())).thenReturn(Optional.of(dev1));
+        when(developerRepository.findById(dev2.getDeveloperId())).thenReturn(Optional.of(dev2));
+
+        mockMvc.perform(get("/skills/sets").param("skillSetQuery", "skill1"))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("skills", Matchers.hasSize(1)))
+                .andExpect(view().name("/skills/skillSets"));
+    }
+
+    @Test
+    void skillSetsWorksWithMultipleQueryParams() throws Exception {
+        dev1.getExperiences().add(expDev1Skill1);
+        skill1.getExperiences().add(expDev1Skill1);
+
+        when(skillRepository.findByQuery("SKILL1")).thenReturn(List.of(skill1));
+        when(skillRepository.findByQuery("SKILL2")).thenReturn(List.of(skill2));
+        when(developerRepository.findAll()).thenReturn(List.of(dev1, dev2));
+        when(developerRepository.findById(dev1.getDeveloperId())).thenReturn(Optional.of(dev1));
+        when(developerRepository.findById(dev2.getDeveloperId())).thenReturn(Optional.of(dev2));
+
+        mockMvc.perform(get("/skills/sets").param("skillSetQuery", "skill1,skill2"))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("skills", Matchers.hasSize(2)))
                 .andExpect(view().name("/skills/skillSets"));
     }
 }
