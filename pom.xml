@@ -28,6 +28,10 @@
 		<sonar.coverage.jacoco.xmlReportPaths>
 			${project.basedir}/target/site/jacoco/jacoco.xml
 		</sonar.coverage.jacoco.xmlReportPaths>
+		<sonar.exclusions>
+			**/SkillMatrixApplication.java,
+			**/entity/*.java
+		</sonar.exclusions>
 	</properties>
 
 	<dependencies>
