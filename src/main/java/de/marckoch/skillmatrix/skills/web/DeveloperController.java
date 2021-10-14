@@ -6,6 +6,10 @@ import de.marckoch.skillmatrix.skills.entity.Experience;
 import de.marckoch.skillmatrix.skills.entity.Skill;
 import de.marckoch.skillmatrix.skills.service.SkillsService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,10 +17,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -33,11 +37,24 @@ class DeveloperController {
 	private final SkillsService skillsService;
 
 	@GetMapping("/developers")
-	public ModelAndView showAll() {
-		ModelAndView mav = new ModelAndView("developers/developerList");
-		Collection<Developer> devs = developerRepository.findAll();
-		mav.getModel().put("developers", devs);
-		return mav;
+	public String showAll() {
+		return "redirect:developers/page/0?sort-field=lastName&sort-dir=asc";
+	}
+
+	@GetMapping("/developers/page/{pagenumber}")
+	public String showAll(@PathVariable int pagenumber,
+						  @RequestParam(name = "sort-field") final String sortField,
+						  @RequestParam(name = "sort-dir") final String sortDir,
+						  Model model) {
+		Sort sort = SortUtil.build(sortDir, sortField);
+		Pageable p = PageRequest.of(pagenumber, 10, sort);
+		Page<Developer> resultPage = developerRepository.findAll(p);
+
+		model.addAttribute("developers", resultPage);
+
+		SortUtil.addPagingAndSortAttributesToModel(model, resultPage, pagenumber, sortField, sortDir);
+
+		return "developers/developerList";
 	}
 
 	@GetMapping("/developers/{developerId}")

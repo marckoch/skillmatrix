@@ -14,10 +14,34 @@
 
 <hr>
 
+<div th:if="${totalPages > 1}">
+    <div class="row col-12">
+        <div class="col-3">
+            Total: <strong>[[${totalItems}]]</strong>
+        </div>
+        <div class="col-9">
+            <nav>
+                <ul class="pagination pagination-sm justify-content-end">
+                    <li th:each="i: ${#numbers.sequence(0, totalPages - 1)}"
+                        class="page-item" th:classappend="${currentPage == i ? 'active' : ''}">
+                        <a class="page-link" th:href="@{'/developers/page/' + ${i} + '?sort-field=lastName&sort-dir=' + ${sortDir}}">[[${i+1}]]</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
 <table id="developers" class="table table-striped">
     <thead>
         <tr>
-            <th style="width: 40%;">Name</th>
+            <th style="width: 40%;">
+                <a th:href="@{'/developers/page/' + ${currentPage} + '?sort-field=lastName&sort-dir=' + ${reverseSortDir}}">Name </a>
+                <th:block th:switch="${sortDir}">
+                    <span th:case="'asc'" class="bi bi-arrow-up"></span>
+                    <span th:case="'desc'" class="bi bi-arrow-down"></span>
+                </th:block>
+            </th>
             <th style="width: 10%;">Title</th>
             <th style="width: 50%;">Top 3 Skills</th>
         </tr>

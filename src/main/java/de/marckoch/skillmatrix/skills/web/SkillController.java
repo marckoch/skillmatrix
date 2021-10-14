@@ -37,33 +37,15 @@ class SkillController {
                           @RequestParam(name = "sort-field") final String sortField,
                           @RequestParam(name = "sort-dir") final String sortDir,
                           Model model) {
-        Sort sort = build(sortDir, sortField);
+        Sort sort = SortUtil.build(sortDir, sortField);
         Pageable p = PageRequest.of(pagenumber, 10, sort);
         Page<Skill> resultPage = skillRepository.findAll(p);
 
         model.addAttribute("skills", resultPage);
 
-        // paging
-        model.addAttribute("currentPage", pagenumber);
-        model.addAttribute("totalPages", resultPage.getTotalPages());
-        model.addAttribute("totalItems", resultPage.getTotalElements());
-
-        // sorting
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", reverse(sortDir));
+        SortUtil.addPagingAndSortAttributesToModel(model, resultPage, pagenumber, sortField, sortDir);
 
         return "skills/skillList";
-    }
-
-    private Sort build(String sortDir, String sortField) {
-        return "desc".equalsIgnoreCase(sortDir) ?
-                Sort.by(sortField).descending() :
-                Sort.by(sortField).ascending();
-    }
-
-    private String reverse(String sortDir) {
-        return sortDir.equalsIgnoreCase("asc") ? "desc" : "asc";
     }
 
     @GetMapping("/skills/{skillId}")
