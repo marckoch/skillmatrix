@@ -35,14 +35,14 @@
     <table id="skills" class="table table-striped">
         <thead>
             <tr>
-                <th style="width: 40%;">
+                <th style="width: 30%;">
                     <a th:href="@{'/skills/page/' + ${currentPage} + '?sort-field=name&sort-dir=' + ${reverseSortDir}}">Name </a>
                     <th:block th:switch="${sortDir}">
                         <span th:case="'asc'" class="bi bi-arrow-up"></span>
                         <span th:case="'desc'" class="bi bi-arrow-down"></span>
                     </th:block>
                 </th>
-                <th style="width: 10%;">Alias</th>
+                <th style="width: 20%;">Alias</th>
                 <th style="width: 50%;">Top 3 Experts</th>
             </tr>
         </thead>
