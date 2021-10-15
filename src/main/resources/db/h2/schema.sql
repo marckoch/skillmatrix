@@ -24,3 +24,14 @@ CREATE TABLE experiences (
   rating INTEGER NOT NULL
 );
 
+CREATE TABLE projects (
+    project_id  INTEGER IDENTITY PRIMARY KEY,
+    name VARCHAR(80) NOT NULL,
+    since  VARCHAR(10) NOT NULL,
+    until  VARCHAR(10) NOT NULL
+);
+
+CREATE TABLE developers_to_projects (
+    developer_id INTEGER,
+    project_id  INTEGER
+);

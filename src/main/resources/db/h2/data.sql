@@ -66,3 +66,7 @@ INSERT INTO experiences (experience_id, developer_id, skill_id, years, rating) V
 INSERT INTO experiences (experience_id, developer_id, skill_id, years, rating) VALUES (27, 7, 11, 1, 4);
 INSERT INTO experiences (experience_id, developer_id, skill_id, years, rating) VALUES (28, 10, 1, 20, 5);
 INSERT INTO experiences (experience_id, developer_id, skill_id, years, rating) VALUES (29, 11, 20, 15, 5);
+
+INSERT INTO projects VALUES (1, 'VKB', '2019-03', '2025-12');
+
+INSERT INTO developers_to_projects VALUES (1, 1);

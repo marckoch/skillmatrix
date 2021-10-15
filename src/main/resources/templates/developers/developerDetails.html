@@ -7,18 +7,34 @@
 
     <hr>
 
-    <div class="row g-3" th:object="${developer}">
-        <div class="col-md-4">
-            <label class="form-label" for="idFirstName">First Name</label>
-            <input class="form-control" type="text" id="idFirstName" th:field="*{firstName}" disabled>
+    <div class="container-fluid" th:object="${developer}">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label class="form-label" for="idFirstName">First Name</label>
+                <input class="form-control" type="text" id="idFirstName" th:field="*{firstName}" disabled>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="idLastName">Last Name</label>
+                <input class="form-control" type="text" id="idLastName" th:field="*{lastName}" disabled>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="idTitle">Title</label>
+                <input class="form-control" type="text" id="idTitle" th:field="*{title}" disabled>
+            </div>
         </div>
-        <div class="col-md-4">
-            <label class="form-label" for="idLastName">Last Name</label>
-            <input class="form-control" type="text" id="idLastName" th:field="*{lastName}" disabled>
-        </div>
-        <div class="col-md-4">
-            <label class="form-label" for="idTitle">Title</label>
-            <input class="form-control" type="text" id="idTitle" th:field="*{title}" disabled>
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label class="form-label" for="idCurrentProjectName">Current Project</label>
+                <input class="form-control" type="text" id="idCurrentProjectName" th:field="*{currentProject.name}" disabled>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="idCurrentProjectSince">since</label>
+                <input class="form-control" type="text" id="idCurrentProjectSince" th:field="*{currentProject.since}" disabled>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="idCurrentProjectUntil">until</label>
+                <input class="form-control" type="text" id="idCurrentProjectUntil" th:field="*{currentProject.until}" disabled>
+            </div>
         </div>
     </div>
 
