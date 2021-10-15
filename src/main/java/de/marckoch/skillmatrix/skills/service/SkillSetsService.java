@@ -33,7 +33,7 @@ public class SkillSetsService {
             addEmptyExperienceForMissingDevelopers(skill, developerIds);
 
             // sort all experiences again by developer weight of selected skills descending, then by name
-            Comparator<Experience> weightComp = Comparator.comparing(o -> o.getDeveloper().getWeight());
+            Comparator<Experience> weightComp = Comparator.comparing(o -> o.getDeveloper().getWeightForSkills(skills));
             Comparator<Experience> devNameComp = Comparator.comparing(o -> o.getDeveloper().getLastName());
             skill.getExperiences().sort(weightComp.reversed().thenComparing(devNameComp));
         });
