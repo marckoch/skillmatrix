@@ -23,7 +23,7 @@ public class SkillMatrixService {
     private final DeveloperRepository developerRepository;
 
     public List<Skill> buildSkillMatrix() {
-        final List<Skill> skills = getAllSkillsRanked();
+        final List<Skill> skills = sortSkills(getAllSkills());
 
         final Set<Integer> developerIds = getDeveloperIds();
 
@@ -59,19 +59,22 @@ public class SkillMatrixService {
     }
 
     private Experience createEmptyExperienceForDeveloper(Integer developerId) {
-        final Experience e = new Experience();
-        e.setDeveloper(developerRepository.findById(developerId).orElseThrow());
-        e.setRating(0);
-        e.setYears(0);
-        return e;
+        return Experience.builder()
+                .developer(developerRepository.findById(developerId).orElseThrow())
+                .rating(0)
+                .years(0)
+                .build();
     }
 
-    private List<Skill> getAllSkillsRanked() {
+    private List<Skill> getAllSkills() {
+        return skillRepository.findAll();
+    }
+
+    private List<Skill> sortSkills(List<Skill> skills) {
         Comparator<Skill> skillWeightComp = Comparator.comparing(HasExperiences::getWeight);
         Comparator<Skill> skillNameComp = Comparator.comparing(Skill::getName);
 
-        return skillRepository.findAll()
-                .stream()
+        return skills.stream()
                 .sorted(skillWeightComp.reversed().thenComparing(skillNameComp))
                 .toList();
     }

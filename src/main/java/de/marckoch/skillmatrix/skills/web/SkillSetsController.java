@@ -78,11 +78,11 @@ class SkillSetsController {
     }
 
     private Experience createEmptyExperienceForDeveloper(Integer developerId) {
-        final Experience e = new Experience();
-        e.setDeveloper(developerRepository.findById(developerId).orElseThrow());
-        e.setRating(0);
-        e.setYears(0);
-        return e;
+        return Experience.builder()
+                .developer(developerRepository.findById(developerId).orElseThrow())
+                .rating(0)
+                .years(0)
+                .build();
     }
 
     private List<Skill> getSkills(String query) {
@@ -113,8 +113,7 @@ class SkillSetsController {
 
     public Set<Integer> getDeveloperIds(List<Skill> skills) {
         return skills.stream()
-                .flatMap(s -> s.getExperiences().stream()
-                        .map(exp -> exp.getDeveloper().getDeveloperId()))
+                .flatMap(s -> s.getDeveloperIds().stream())
                 .collect(Collectors.toSet());
     }
 }
