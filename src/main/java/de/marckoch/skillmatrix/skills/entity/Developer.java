@@ -50,7 +50,7 @@ public class Developer implements HasExperiences{
 	private String title;
 
 	@EqualsAndHashCode.Exclude
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "developer", fetch = FetchType.EAGER, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "developer", fetch = FetchType.LAZY, orphanRemoval = true)
 	@OrderBy("rating DESC")
 	private List<Experience> experiences;
 
@@ -73,7 +73,7 @@ public class Developer implements HasExperiences{
 				.append("lastName", this.lastName)
 				.append("firstName", this.firstName)
 				.append("title", this.title)
-				.append("experiences", this.experiences)
+//				.append("experiences", this.experiences)
 				.toString();
 	}
 

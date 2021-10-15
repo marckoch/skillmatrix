@@ -48,7 +48,7 @@ public class Skill implements HasExperiences {
 
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
-	@OneToMany(mappedBy = "skill", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "skill", fetch = FetchType.LAZY)
 	private List<Experience> experiences;
 
 	public boolean isNew() {
