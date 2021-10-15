@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -86,5 +87,13 @@ public class Developer implements HasExperiences{
 				.filter(experience -> skills.contains(experience.getSkill()))
 				.mapToInt(Experience::getWeight)
 				.sum();
+	}
+
+	public List<Integer> getSkillIds() {
+		if (getExperiences() == null || getExperiences().isEmpty())
+			return Collections.emptyList();
+		return getExperiences().stream()
+				.map(exp -> exp.getSkill().getSkillId())
+				.toList();
 	}
 }

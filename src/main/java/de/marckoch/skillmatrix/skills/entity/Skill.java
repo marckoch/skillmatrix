@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -63,5 +64,13 @@ public class Skill implements HasExperiences {
 
 	public String getNameAndVersion() {
 		return getName() + (getVersion() != null ? " " + getVersion() : "");
+	}
+
+	public List<Integer> getDeveloperIds() {
+		if (getExperiences() == null || getExperiences().isEmpty())
+			return Collections.emptyList();
+		return getExperiences().stream()
+				.map(exp -> exp.getDeveloper().getDeveloperId())
+				.toList();
 	}
 }

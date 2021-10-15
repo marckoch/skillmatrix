@@ -36,11 +36,6 @@ public class SkillMatrixService {
             skill.getExperiences().sort(weightComp.reversed().thenComparing(devNameComp));
         });
 
-//        skills.forEach(skill -> {
-//            System.out.println(skill + " " + skill.getExperiences().size());
-//            skill.getExperiences().forEach(experience -> System.out.println("  " + experience));
-//        });
-//        System.out.println(skills.size());
         return skills;
     }
 
