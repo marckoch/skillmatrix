@@ -39,6 +39,8 @@
                 <th style="width: 20%;"></th>
                 <th:block th:each="exp : ${skills.get(0).getExperiences()}">
                     <td>
+                        <span th:if="${exp.developer.currentProject != null}" class="bi bi-exclamation-circle"
+                              data-bs-toggle="tooltip" data-bs-html="true" th:title="'in a project until ' + ${exp.developer.currentProject.until}"></span>
                         <a th:href="@{/developers/__${exp.developer.developerId}__}"
                            th:text="${exp.developer.getFullName()}">Developer Name</a>
                         <span th:text="${' (' + exp.developer.getWeightForSkills(skills) + ')'}"></span>
