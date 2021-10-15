@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.random.RandomGenerator;
 
-import static java.util.Comparator.*;
+import static java.util.Comparator.comparingInt;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
