@@ -107,9 +107,9 @@ class DeveloperControllerTest {
     void initCreationFormShouldShowNewDeveloper() throws Exception {
         mockMvc.perform(get("/developers/new"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("developer"))
-                .andExpect(model().attribute("developer", hasProperty("new", is(true))))
-                .andExpect(model().attribute("developer", not(hasProperty("id"))))
+                .andExpect(model().attributeExists("developerDTO"))
+                .andExpect(model().attribute("developerDTO", hasProperty("new", is(true))))
+                .andExpect(model().attribute("developerDTO", not(hasProperty("id"))))
                 .andExpect(view().name("/developers/createOrUpdateDeveloperForm"));
     }
 
@@ -170,6 +170,7 @@ class DeveloperControllerTest {
         Developer dev1 = new Developer();
         dev1.setDeveloperId(123);
 
+        when(developerRepository.findById(123)).thenReturn(Optional.of(dev1));
         when(developerRepository.save(ArgumentMatchers.any(Developer.class))).thenReturn(dev1);
 
         mockMvc.perform(post("/developers/123/edit")

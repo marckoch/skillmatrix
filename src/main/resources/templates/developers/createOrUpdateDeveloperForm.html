@@ -3,14 +3,14 @@
   th:replace="~{fragments/layout :: layout (~{::body})}">
 <body>
   <h2>Developer</h2>
-  <form th:object="${developer}" id="add-developer-form" method="post" novalidate
+  <form th:object="${developerDTO}" id="add-developer-form" method="post" novalidate
         class="row g-3 needs-validation">
     <input th:replace="~{fragments/inputField :: input ('First Name', 'firstName')}" />
     <input th:replace="~{fragments/inputField :: input ('Last Name', 'lastName')}" />
     <input th:replace="~{fragments/inputField :: input ('Title', 'title')}" />
 
     <div class="col-12">
-      <button th:with="text=${developer['new']} ? 'Add Developer' : 'Update Developer'"
+      <button th:with="text=${developerDTO['new']} ? 'Add Developer' : 'Update Developer'"
               class="btn btn-primary" type="submit" th:text="${text}">Add Developer</button>
     </div>
   </form>

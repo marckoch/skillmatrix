@@ -23,7 +23,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.IntStream;
 
 @Controller
@@ -90,18 +89,20 @@ class DeveloperController {
 	}
 
 	@GetMapping("/developers/new")
-	public String initCreationForm(Map<String, Object> model) {
-		Developer developer = new Developer();
-		model.put("developer", developer);
+	public String initCreationForm(Model model) {
+		DeveloperDTO developer = new DeveloperDTO();
+		model.addAttribute("developerDTO", developer);
 		return CREATE_OR_UPDATE_DEVELOPER_VIEW;
 	}
 
 	@PostMapping("/developers/new")
-	public String processCreationForm(@Valid Developer developer, BindingResult result) {
+	public String processCreationForm(@Valid DeveloperDTO developerDTO, BindingResult result) {
 		if (result.hasErrors()) {
 			return CREATE_OR_UPDATE_DEVELOPER_VIEW;
 		} else {
-			Developer savedDev = developerRepository.save(developer);
+			Developer newDev = new Developer();
+			updateEntityFromDTO(developerDTO, newDev);
+			Developer savedDev = developerRepository.save(newDev);
 			return "redirect:/developers/" + savedDev.getDeveloperId();
 		}
 	}
@@ -109,18 +110,24 @@ class DeveloperController {
 	@GetMapping("/developers/{developerId}/edit")
 	public String initUpdateDeveloperForm(@PathVariable("developerId") int developerId, Model model) {
 		Developer developer = developerRepository.findById(developerId).orElseThrow();
-		model.addAttribute(developer);
+
+		DeveloperDTO dto = buildDeveloperDTO(developer);
+		model.addAttribute("developerDTO", dto);
 		return CREATE_OR_UPDATE_DEVELOPER_VIEW;
 	}
 
 	@PostMapping("/developers/{developerId}/edit")
-	public String processUpdateDeveloperForm(@Valid Developer developer, BindingResult result,
-										 	 @PathVariable("developerId") int developerId) {
+	public String processUpdateDeveloperForm(@Valid DeveloperDTO developerDTO, BindingResult result,
+										 	 @PathVariable("developerId") int developerId, Model model) {
 		if (result.hasErrors()) {
 			return CREATE_OR_UPDATE_DEVELOPER_VIEW;
 		} else {
-			developer.setDeveloperId(developerId);
-			Developer savedDev = developerRepository.save(developer);
+			Developer existingDev = developerRepository.findById(developerId).orElseThrow();
+
+			updateEntityFromDTO(developerDTO, existingDev);
+
+			Developer savedDev = developerRepository.save(existingDev);
+			model.addAttribute("developer", savedDev);
 			return "redirect:/developers/" + savedDev.getDeveloperId();
 		}
 	}
@@ -130,5 +137,20 @@ class DeveloperController {
 		return IntStream.range(1, 6).boxed()
 				.map(i -> new SelectItem(i, i + " stars"))
 				.toList();
+	}
+
+	private DeveloperDTO buildDeveloperDTO(Developer developer) {
+		return DeveloperDTO.builder()
+				.developerId(developer.getDeveloperId())
+				.firstName(developer.getFirstName())
+				.lastName(developer.getLastName())
+				.title(developer.getTitle())
+				.build();
+	}
+
+	private void updateEntityFromDTO(DeveloperDTO developer, Developer existingDev) {
+		existingDev.setLastName(developer.getLastName());
+		existingDev.setFirstName(developer.getFirstName());
+		existingDev.setTitle(developer.getTitle());
 	}
 }
