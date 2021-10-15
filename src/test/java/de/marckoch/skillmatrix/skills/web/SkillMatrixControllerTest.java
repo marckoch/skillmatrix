@@ -39,7 +39,7 @@ class SkillMatrixControllerTest {
     Developer dev1 = Developer.builder().developerId(1).firstName("fn1").lastName("ln1").experiences(new ArrayList<>()).build();
     Developer dev2 = Developer.builder().developerId(2).firstName("fn2").lastName("ln2").experiences(new ArrayList<>()).build();
 
-    Experience expDev1Skill1 = Experience.builder().experienceid(1).developer(dev1).skill(skill1).years(3).rating(5).build();
+    Experience expDev1Skill1 = Experience.builder().experienceId(1).developer(dev1).skill(skill1).years(3).rating(5).build();
 
     @Test
     void skillMatrixWorks() throws Exception {

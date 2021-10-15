@@ -34,7 +34,7 @@ public class Experience {
 	@Id
 	@Column(name = "experience_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer experienceid;
+	private Integer experienceId;
 
 	@EqualsAndHashCode.Exclude
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -57,13 +57,13 @@ public class Experience {
 	private Integer rating;
 
 	public boolean isNew() {
-		return this.experienceid == null;
+		return this.experienceId == null;
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringCreator(this)
-				.append("id", this.experienceid)
+				.append("id", this.experienceId)
 				.append("new", this.isNew())
 				.append("developerId", this.developer != null ? this.developer.getDeveloperId() : "null")
 				.append("skillId", this.skill != null ?  this.skill.getSkillId() : "null")

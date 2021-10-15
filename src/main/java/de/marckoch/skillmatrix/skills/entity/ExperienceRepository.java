@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface ExperienceRepository extends JpaRepository<Experience, Integer> {
 
-	@Query("SELECT e FROM Experience e WHERE e.experienceid =:id")
+	@Query("SELECT e FROM Experience e WHERE e.experienceId =:id")
 	@Transactional(readOnly = true)
 	Optional<Experience> findById(@Param("id") Integer id);
 

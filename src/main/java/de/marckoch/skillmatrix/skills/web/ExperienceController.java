@@ -46,7 +46,7 @@ class ExperienceController {
     @GetMapping("/experience/delete/{experienceId}")
     public String delete(@PathVariable("experienceId") int experienceId) {
         Developer dev = experienceRepository.findById(experienceId).orElseThrow().getDeveloper();
-        dev.getExperiences().removeIf(e -> e.getExperienceid().equals(experienceId));
+        dev.getExperiences().removeIf(e -> e.getExperienceId().equals(experienceId));
         developerRepository.save(dev);
 
         return "redirect:/developers/" + dev.getDeveloperId();

@@ -93,7 +93,7 @@ class SkillMatrixServiceTest {
             }
 
             Experience exp = new Experience();
-            exp.setExperienceid(countExp);
+            exp.setExperienceId(countExp);
             exp.setRating(randomGenerator.nextInt(5) + 1);
             exp.setYears(randomGenerator.nextInt(20) + 1);
 

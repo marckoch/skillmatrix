@@ -77,13 +77,13 @@ class ExperienceControllerTest {
         dev1.setExperiences(new ArrayList<>());
 
         Experience exp1 = new Experience();
-        exp1.setExperienceid(111);
+        exp1.setExperienceId(111);
         exp1.setDeveloper(dev1);
         dev1.getExperiences().add(exp1);
 
-        when(experienceRepository.findById(exp1.getExperienceid())).thenReturn(Optional.of(exp1));
+        when(experienceRepository.findById(exp1.getExperienceId())).thenReturn(Optional.of(exp1));
 
-        mockMvc.perform(get("/experience/delete/{experienceId}", exp1.getExperienceid()))
+        mockMvc.perform(get("/experience/delete/{experienceId}", exp1.getExperienceId()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
                 .andExpect(view().name("redirect:/developers/123"));
