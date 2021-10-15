@@ -50,7 +50,7 @@ class SkillSetsController {
 
     // return search terms so token input can show them again (via its prePopulate mechanism)
     private List<Map<String, String>> buildJsonOfSkillSetQuery(String skillSetQuery) {
-        if (skillSetQuery==null || skillSetQuery.isEmpty()) return Collections.emptyList();
+        if (skillSetQuery == null || skillSetQuery.isEmpty()) return Collections.emptyList();
         return Arrays.stream(skillSetQuery.split(",")).map(this::toMap).toList();
     }
 
@@ -86,8 +86,8 @@ class SkillSetsController {
     }
 
     private List<Skill> getSkills(String query) {
-        if (query == null)
-            return skillRepository.findAll();
+        if (query == null || query.isEmpty())
+            return Collections.emptyList();
 
         // this should/could be done in one query, but for now this is good enough.
         // user will enter only a handful of search terms, so we do a query for each of them.

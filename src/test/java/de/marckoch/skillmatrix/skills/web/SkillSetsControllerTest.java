@@ -54,7 +54,7 @@ class SkillSetsControllerTest {
 
         mockMvc.perform(get("/skills/sets"))
                 .andExpect(status().isOk())
-                .andExpect(model().attribute("skills", Matchers.hasSize(3)))
+                .andExpect(model().attribute("skills", Matchers.hasSize(0)))
                 .andExpect(view().name("/skills/skillSets"));
     }
 
