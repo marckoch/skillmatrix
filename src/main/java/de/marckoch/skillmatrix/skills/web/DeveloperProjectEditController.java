@@ -20,13 +20,15 @@ import java.time.YearMonth;
 class DeveloperProjectEditController {
 
     private static final String CREATE_OR_UPDATE_PROJECT_VIEW = "/developers/createOrUpdateProjectForm";
+    private static final String DEVELOPER_ATTRIBUTE_NAME = "developer";
+    private static final String REDIRECT_DEVELOPERS = "redirect:/developers/";
 
     private final DeveloperRepository developerRepository;
 
     @GetMapping("/developers/{developerId}/project/add")
     public String initCreationForm(@PathVariable("developerId") int developerId, Model model) {
         Developer developer = developerRepository.findById(developerId).orElseThrow();
-        model.addAttribute("developer", developer);
+        model.addAttribute(DEVELOPER_ATTRIBUTE_NAME, developer);
 
         ProjectDTO projectDTO = new ProjectDTO();
         model.addAttribute("projectDTO", projectDTO);
@@ -38,7 +40,7 @@ class DeveloperProjectEditController {
                                       @PathVariable("developerId") int developerId, Model model) {
         if (result.hasErrors()) {
             Developer developer = developerRepository.findById(developerId).orElseThrow();
-            model.addAttribute("developer", developer);
+            model.addAttribute(DEVELOPER_ATTRIBUTE_NAME, developer);
 
             return CREATE_OR_UPDATE_PROJECT_VIEW;
         } else {
@@ -47,14 +49,14 @@ class DeveloperProjectEditController {
             Developer developer = developerRepository.findById(developerId).orElseThrow();
             developer.setCurrentProject(newProject);
             Developer savedDev = developerRepository.save(developer);
-            return "redirect:/developers/" + savedDev.getDeveloperId();
+            return REDIRECT_DEVELOPERS + savedDev.getDeveloperId();
         }
     }
 
     @GetMapping("/developers/{developerId}/project/edit")
     public String initUpdateProjectForm(@PathVariable("developerId") int developerId, Model model) {
         Developer developer = developerRepository.findById(developerId).orElseThrow();
-        model.addAttribute("developer", developer);
+        model.addAttribute(DEVELOPER_ATTRIBUTE_NAME, developer);
 
         ProjectDTO dto = buildProjectDTO(developer.getCurrentProject());
         model.addAttribute("projectDTO", dto);
@@ -66,7 +68,7 @@ class DeveloperProjectEditController {
                                            @PathVariable("developerId") int developerId, Model model) {
         if (result.hasErrors()) {
             Developer developer = developerRepository.findById(developerId).orElseThrow();
-            model.addAttribute("developer", developer);
+            model.addAttribute(DEVELOPER_ATTRIBUTE_NAME, developer);
 
             return CREATE_OR_UPDATE_PROJECT_VIEW;
         } else {
@@ -75,8 +77,8 @@ class DeveloperProjectEditController {
             updateEntityFromDTO(developerDTO, existingDev.getCurrentProject());
 
             Developer savedDev = developerRepository.save(existingDev);
-            model.addAttribute("developer", savedDev);
-            return "redirect:/developers/" + savedDev.getDeveloperId();
+            model.addAttribute(DEVELOPER_ATTRIBUTE_NAME, savedDev);
+            return REDIRECT_DEVELOPERS + savedDev.getDeveloperId();
         }
     }
 
@@ -85,8 +87,8 @@ class DeveloperProjectEditController {
         Developer existingDev = developerRepository.findById(developerId).orElseThrow();
         existingDev.setCurrentProject(null);
         Developer savedDev = developerRepository.save(existingDev);
-        model.addAttribute("developer", savedDev);
-        return "redirect:/developers/" + savedDev.getDeveloperId();
+        model.addAttribute(DEVELOPER_ATTRIBUTE_NAME, savedDev);
+        return REDIRECT_DEVELOPERS + savedDev.getDeveloperId();
     }
 
     private ProjectDTO buildProjectDTO(Project project) {
