@@ -45,6 +45,13 @@ class DeveloperProjectEditControllerTest {
 
     @Test
     void initCreationFormShouldShowNewProject() throws Exception {
+        Developer dev1 = new Developer();
+        dev1.setDeveloperId(123);
+        dev1.setFirstName("firstName");
+        dev1.setLastName("lastName");
+
+        when(developerRepository.findById(dev1.getDeveloperId())).thenReturn(Optional.of(dev1));
+
         mockMvc.perform(get("/developers/123/project/add"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("projectDTO"))
@@ -55,6 +62,13 @@ class DeveloperProjectEditControllerTest {
 
     @Test
     void processCreationFormWithWrongDataShouldShowError() throws Exception {
+        Developer dev1 = new Developer();
+        dev1.setDeveloperId(123);
+        dev1.setFirstName("firstName");
+        dev1.setLastName("lastName");
+
+        when(developerRepository.findById(dev1.getDeveloperId())).thenReturn(Optional.of(dev1));
+
         // error because name, since and until are missing in post!
         mockMvc.perform(post("/developers/123/project/add"))
                 .andExpect(status().isOk())
@@ -103,6 +117,13 @@ class DeveloperProjectEditControllerTest {
 
     @Test
     void processUpdateFormWithWrongDataShouldShowError() throws Exception {
+        Developer dev1 = new Developer();
+        dev1.setDeveloperId(123);
+        dev1.setFirstName("firstName");
+        dev1.setLastName("lastName");
+
+        when(developerRepository.findById(dev1.getDeveloperId())).thenReturn(Optional.of(dev1));
+
         // error because name is missing in post!
         mockMvc.perform(post("/developers/123/project/edit"))
                 .andExpect(status().isOk())

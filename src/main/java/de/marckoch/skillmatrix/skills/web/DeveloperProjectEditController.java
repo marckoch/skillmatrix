@@ -23,7 +23,10 @@ class DeveloperProjectEditController {
     private final DeveloperRepository developerRepository;
 
     @GetMapping("/developers/{developerId}/project/add")
-    public String initCreationForm(Model model) {
+    public String initCreationForm(@PathVariable("developerId") int developerId, Model model) {
+        Developer developer = developerRepository.findById(developerId).orElseThrow();
+        model.addAttribute("developer", developer);
+
         ProjectDTO projectDTO = new ProjectDTO();
         model.addAttribute("projectDTO", projectDTO);
         return CREATE_OR_UPDATE_PROJECT_VIEW;
@@ -31,8 +34,11 @@ class DeveloperProjectEditController {
 
     @PostMapping("/developers/{developerId}/project/add")
     public String processCreationForm(@Valid ProjectDTO projectDTO, BindingResult result,
-                                      @PathVariable("developerId") int developerId) {
+                                      @PathVariable("developerId") int developerId, Model model) {
         if (result.hasErrors()) {
+            Developer developer = developerRepository.findById(developerId).orElseThrow();
+            model.addAttribute("developer", developer);
+
             return CREATE_OR_UPDATE_PROJECT_VIEW;
         } else {
             Project newProject = new Project();
@@ -47,6 +53,7 @@ class DeveloperProjectEditController {
     @GetMapping("/developers/{developerId}/project/edit")
     public String initUpdateProjectForm(@PathVariable("developerId") int developerId, Model model) {
         Developer developer = developerRepository.findById(developerId).orElseThrow();
+        model.addAttribute("developer", developer);
 
         ProjectDTO dto = buildProjectDTO(developer.getCurrentProject());
         model.addAttribute("projectDTO", dto);
@@ -57,6 +64,9 @@ class DeveloperProjectEditController {
     public String processUpdateProjectForm(@Valid ProjectDTO developerDTO, BindingResult result,
                                            @PathVariable("developerId") int developerId, Model model) {
         if (result.hasErrors()) {
+            Developer developer = developerRepository.findById(developerId).orElseThrow();
+            model.addAttribute("developer", developer);
+
             return CREATE_OR_UPDATE_PROJECT_VIEW;
         } else {
             Developer existingDev = developerRepository.findById(developerId).orElseThrow();

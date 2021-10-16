@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.YearMonth;
@@ -16,6 +15,7 @@ import java.time.YearMonth;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ProjectDatesValidation
 public class ProjectDTO {
 
     private Integer projectId;
@@ -28,12 +28,6 @@ public class ProjectDTO {
 
     @NotNull
     private YearMonth until;
-
-    @AssertTrue(message = "'since' must be before 'until'")
-    private boolean isSinceIsBeforeUntil() {
-        if (since == null || until == null) return true; // dont validate
-        return since.isBefore(until);
-    }
 
     public boolean isNew() {
         return this.projectId == null;

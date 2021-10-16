@@ -2,14 +2,16 @@
 <html xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: layout (~{::body})}">
 <body>
-  <h2>Current Project</h2>
-  <form th:object="${projectDTO}" id="add-developer-form" method="post" novalidate
-        class="row g-3 needs-validation">
-    <div class="card mb-2">
-      <h6 class="card-header d-flex justify-content-between align-items-center">
-        Details
-      </h6>
-      <div class="card-body">
+  <h2 th:text="${developer.getFullName()}">Developer Name</h2>
+
+  <div class="card mb-2">
+    <h6 class="card-header d-flex justify-content-between align-items-center">
+      Current Project
+    </h6>
+    <div class="card-body">
+      <form th:object="${projectDTO}" id="add-developer-form" method="post" novalidate
+            class="row g-3 needs-validation">
+
         <div class="row g-3">
           <div class="col-md-4">
             <input th:replace="~{fragments/inputField :: input ('Name', 'name')}" />
@@ -24,14 +26,15 @@
             <button th:with="text=${projectDTO['new']} ? 'Add Project' : 'Update Project'"
                     class="btn btn-primary" type="submit" th:text="${text}">Add Project</button>
           </div>
+
+          <th:block th:if="${#fields.hasGlobalErrors()}">
+            <ul style="list-style-type: none;">
+              <li class="alert alert-danger" role="alert" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></li>
+            </ul>
+          </th:block>
         </div>
-      </div>
-      <th:block th:if="${#fields.hasErrors()}">
-        <ul style="list-style-type: none;">
-          <li class="alert alert-danger" role="alert" th:each="err : ${#fields.allErrors()}" th:text="${err}"></li>
-        </ul>
-      </th:block>
+      </form>
     </div>
-  </form>
+  </div>
 </body>
 </html>
