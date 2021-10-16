@@ -2,16 +2,31 @@
 <html xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: layout (~{::body})}">
 <body>
-  <h2>Skill</h2>
-  <form th:object="${skill}" class="row g-3 needs-validation" id="add-skill-form" method="post" novalidate>
-    <input th:replace="~{fragments/inputField :: input ('Name', 'name')}" />
-    <input th:replace="~{fragments/inputField :: input ('Version', 'version')}" />
-    <input th:replace="~{fragments/inputField :: input ('Alias', 'alias')}" />
+  <h2 th:with="text=${skill['new']} ? 'New Skill' : ${skill.getNameAndVersion()}"
+      th:text="${text}">Skill</h2>
 
-    <div class="col-12">
-      <button th:with="text=${skill['new']} ? 'Add Skill' : 'Update Skill'"
-              class="btn btn-primary" type="submit" th:text="${text}">Add Skill</button>
+  <div class="card mb-2">
+    <h6 class="card-header d-flex justify-content-between align-items-center">
+      Details
+    </h6>
+    <div class="card-body">
+      <form th:object="${skill}" id="add-skill-form" method="post" novalidate
+            class="row g-3 needs-validation">
+        <div class="col-md-4">
+          <input th:replace="~{fragments/inputField :: input ('Name', 'name')}" />
+        </div>
+        <div class="col-md-4">
+          <input th:replace="~{fragments/inputField :: input ('Version', 'version')}" />
+        </div>
+        <div class="col-md-4">
+          <input th:replace="~{fragments/inputField :: input ('Alias', 'alias')}" />
+        </div>
+        <div class="col-12">
+          <button th:with="text=${skill['new']} ? 'Add Skill' : 'Update Skill'"
+                  class="btn btn-primary" type="submit" th:text="${text}">Add Skill</button>
+        </div>
+      </form>
     </div>
-  </form>
+  </div>
 </body>
 </html>

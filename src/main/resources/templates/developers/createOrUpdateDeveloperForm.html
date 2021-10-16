@@ -12,7 +12,6 @@
     <div class="card-body">
       <form th:object="${developerDTO}" id="add-developer-form" method="post" novalidate
             class="row g-3 needs-validation">
-        <div class="row g-3">
           <div class="col-md-4">
             <input th:replace="~{fragments/inputField :: input ('First Name', 'firstName')}" />
           </div>
@@ -26,7 +25,6 @@
             <button th:with="text=${developerDTO['new']} ? 'Add Developer' : 'Update Developer'"
                     class="btn btn-primary" type="submit" th:text="${text}">Add Developer</button>
           </div>
-        </div>
       </form>
     </div>
   </div>
