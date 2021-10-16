@@ -105,4 +105,8 @@ public class Developer implements HasExperiences {
                 .map(exp -> exp.getSkill().getSkillId())
                 .toList();
     }
+
+    public boolean hasProject() {
+        return currentProject != null;
+    }
 }
