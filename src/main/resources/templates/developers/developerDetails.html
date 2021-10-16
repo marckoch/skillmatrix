@@ -79,27 +79,27 @@
             <th:block th:if="${developer.experiences.size() > 0}">
                 <table class="table table-striped">
                     <thead>
-                    <tr>
-                        <th style="width: 70%;">Skill</th>
-                        <th style="width: 15%;">Years</th>
-                        <th style="width: 10%;">Rating</th>
-                        <th style="width: 5%;"></th>
-                    </tr>
+                        <tr>
+                            <th style="width: 70%;">Skill</th>
+                            <th style="width: 15%;">Years</th>
+                            <th style="width: 10%;">Rating</th>
+                            <th style="width: 5%;"></th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="exp : ${developer.experiences}">
-                        <td><a th:href="@{/skills/__${exp.skill.skillId}__}"
-                               th:text="${exp.skill.getNameAndVersion()}">Skill 1</a></td>
-                        <td th:text="${exp.years}">years</td>
-                        <td>
-                            <div th:replace="~{fragments/ratingStars :: stars (${exp.rating})}">2</div>
-                        </td>
-                        <td>
-                            <a class="btn btn-sm btn-danger" th:href="@{/experience/delete/__${exp.experienceId}__}">
-                                <span class="bi bi-trash"></span>
-                            </a>
-                        </td>
-                    </tr>
+                        <tr th:each="exp : ${developer.experiences}">
+                            <td><a th:href="@{/skills/__${exp.skill.skillId}__}"
+                                   th:text="${exp.skill.getNameAndVersion()}">Skill 1</a></td>
+                            <td th:text="${exp.years}">years</td>
+                            <td>
+                                <div th:replace="~{fragments/ratingStars :: stars (${exp.rating})}">2</div>
+                            </td>
+                            <td>
+                                <a class="btn btn-sm btn-danger" th:href="@{/experience/delete/__${exp.experienceId}__}">
+                                    <span class="bi bi-trash"></span>
+                                </a>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </th:block>

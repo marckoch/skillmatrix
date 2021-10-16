@@ -1,50 +1,65 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body})}">
-    <body>
-        <h2>Skill Information</h2>
+<body>
+    <h2 th:text="${skill.getNameAndVersion()}">Skill Information</h2>
 
-        <a class="btn btn-primary" th:href="@{/skills/{id}/edit(id=${skill.skillId})}">Edit Skill</a>
-
-        <hr>
-
-        <div class="row g-3" th:object="${skill}">
-            <div class="col-md-4">
-                <label class="form-label" for="idSkill">Skill</label>
-                <input class="form-control" type="text" id="idSkill" th:field="*{name}" disabled>
+    <div class="card mb-2">
+        <h6 class="card-header d-flex justify-content-between align-items-center">
+            Details
+            <div>
+                <a class="btn btn-sm btn-primary" th:href="@{/skills/{id}/edit(id=${skill.skillId})}">Edit</a>
             </div>
-            <div class="col-md-4">
-                <label class="form-label" for="idVersion">Version</label>
-                <input class="form-control" type="text" id="idVersion" th:field="*{version}" disabled>
-            </div>
-            <div class="col-md-4">
-                <label class="form-label" for="idAlias">Alias</label>
-                <input class="form-control" type="text" id="idAlias" th:field="*{alias}" disabled>
+        </h6>
+        <div class="card-body" th:object="${developer}">
+            <div class="row g-3" th:object="${skill}">
+                <div class="col-md-4">
+                    <label class="form-label" for="idSkill">Skill</label>
+                    <input class="form-control" type="text" id="idSkill" th:field="*{name}" disabled>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label" for="idVersion">Version</label>
+                    <input class="form-control" type="text" id="idVersion" th:field="*{version}" disabled>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label" for="idAlias">Alias</label>
+                    <input class="form-control" type="text" id="idAlias" th:field="*{alias}" disabled>
+                </div>
             </div>
         </div>
+    </div>
 
-        <hr>
-
-        <th:block th:if="${skill.experiences.size() > 0}">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Developer</th>
-                    <th>Years</th>
-                    <th>Rating</th>
-                </tr>
-                </thead>
-                <tr th:each="exp : ${skill.experiences}">
-                    <td><a th:href="@{/developers/__${exp.developer.developerId}__}"
-                           th:text="${exp.developer.getFullName()}">Developer Name</a></td>
-                    <td th:text="${exp.years}">years</td>
-                    <td>
-                        <div th:replace="~{fragments/ratingStars :: stars (${exp.rating})}">2</div>
-                    </td>
-                </tr>
-            </table>
-        </th:block>
-        <th:block th:if="${skill.experiences.size() == 0}">
-            <p><span class="bi bi-emoji-frown"></span> No developer has this skill! Train them!</p>
-        </th:block>
-    </body>
+    <div class="card mb-2">
+        <h6 class="card-header d-flex justify-content-between align-items-center">
+            Developers
+        </h6>
+        <div class="card-body">
+            <th:block th:if="${skill.experiences.size() > 0}">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width: 70%;">Name</th>
+                            <th style="width: 15%;">Years</th>
+                            <th style="width: 15%;">Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="exp : ${skill.experiences}">
+                            <td><a th:href="@{/developers/__${exp.developer.developerId}__}"
+                                   th:text="${exp.developer.getFullName()}">Developer Name</a></td>
+                            <td th:text="${exp.years}">years</td>
+                            <td>
+                                <div th:replace="~{fragments/ratingStars :: stars (${exp.rating})}">2</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </th:block>
+            <th:block th:if="${skill.experiences.size() == 0}">
+                <div class="alert alert-danger" role="alert">
+                    <span class="bi bi-emoji-neutral"></span> No developer has this skill! Train them!
+                </div>
+            </th:block>
+        </div>
+    </div>
+</body>
 </html>
