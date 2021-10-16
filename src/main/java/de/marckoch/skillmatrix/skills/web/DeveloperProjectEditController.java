@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.time.YearMonth;
 
 // maybe use this: https://qawithexperts.com/article/bootstrap/showing-month-and-year-only-in-bootstrap-datepicker/292
 @Controller
@@ -92,14 +93,14 @@ class DeveloperProjectEditController {
         return ProjectDTO.builder()
                 .projectId(project.getProjectId())
                 .name(project.getName())
-                .since(project.getSince())
-                .until(project.getUntil())
+                .since(project.getSince().toString())
+                .until(project.getUntil().toString())
                 .build();
     }
 
     private void updateEntityFromDTO(ProjectDTO dto, Project entity) {
         entity.setName(dto.getName());
-        entity.setSince(dto.getSince());
-        entity.setUntil(dto.getUntil());
+        entity.setSince(YearMonth.parse(dto.getSince()));
+        entity.setUntil(YearMonth.parse(dto.getUntil()));
     }
 }

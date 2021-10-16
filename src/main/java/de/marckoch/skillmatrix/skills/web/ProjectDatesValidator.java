@@ -2,6 +2,7 @@ package de.marckoch.skillmatrix.skills.web;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.time.YearMonth;
 
 // https://linuxtut.com/en/eb3bf3b5301bae398cc2/
 public class ProjectDatesValidator implements ConstraintValidator<ProjectDatesValidation, ProjectDTO> {
@@ -9,6 +10,11 @@ public class ProjectDatesValidator implements ConstraintValidator<ProjectDatesVa
     public boolean isValid(ProjectDTO value, ConstraintValidatorContext context) {
         if (value == null || value.getSince() == null || value.getUntil() == null)
             return true;
-        return (value.getSince().isBefore(value.getUntil()));
+        if (value.getSince().isEmpty() || value.getUntil().isEmpty())
+            return true;
+
+        YearMonth since = YearMonth.parse(value.getSince());
+        YearMonth until = YearMonth.parse(value.getUntil());
+        return (since.isBefore(until));
     }
 }

@@ -26,8 +26,8 @@ class ValidateProjectDTOTest {
     void testSinceBeforeUntilViolationIsDetected() {
         ProjectDTO p = ProjectDTO.builder()
                 .name("test")
-                .since(YearMonth.of(2020,3))
-                .until(YearMonth.of(2014,4))
+                .since("2020-03")
+                .until("2014-04")
                 .build();
 
         Set<ConstraintViolation<ProjectDTO>> violations = validator.validate(p);
@@ -40,8 +40,8 @@ class ValidateProjectDTOTest {
     void testNoViolationWhenSinceIsBeforeUntil() {
         ProjectDTO p = ProjectDTO.builder()
                 .name("test")
-                .since(YearMonth.of(2020,3))
-                .until(YearMonth.of(2021,4))
+                .since("2020-03")
+                .until("2021-04")
                 .build();
 
         Set<ConstraintViolation<ProjectDTO>> violations = validator.validate(p);

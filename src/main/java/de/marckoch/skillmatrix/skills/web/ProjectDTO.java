@@ -5,10 +5,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.time.YearMonth;
+import javax.validation.constraints.Pattern;
 
 @Builder
 @Getter
@@ -24,10 +25,14 @@ public class ProjectDTO {
     private String name;
 
     @NotNull
-    private YearMonth since;
+    @Pattern(regexp = "^\\d{4}-(0[1-9]|1[0-2])$", message = "must match yyyy-MM, e.g. 2006-11")
+    @DateTimeFormat(pattern = "yyyy-MM")
+    private String since;
 
     @NotNull
-    private YearMonth until;
+    @Pattern(regexp = "^\\d{4}-(0[1-9]|1[0-2])$", message = "must match yyyy-MM, e.g. 2006-11")
+    @DateTimeFormat(pattern = "yyyy-MM")
+    private String until;
 
     public boolean isNew() {
         return this.projectId == null;
