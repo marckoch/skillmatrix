@@ -59,7 +59,7 @@ class ValidateProjectDTOTest {
 
         assertThat(violations).hasSize(1);
         violations.forEach(v -> {
-            assertThat(v.getPropertyPath().toString()).isEqualTo("since");
+            assertThat(v.getPropertyPath()).hasToString("since");
             assertThat(v.getMessage()).isEqualTo("must not be null");
         });
 
@@ -77,7 +77,7 @@ class ValidateProjectDTOTest {
 
         assertThat(violations).hasSize(1);
         violations.forEach(v -> {
-            assertThat(v.getPropertyPath().toString()).isEqualTo("since");
+            assertThat(v.getPropertyPath()).hasToString("since");
             assertThat(v.getMessage()).isEqualTo("must match yyyy-MM, e.g. 2006-11");
         });
     }
@@ -94,7 +94,7 @@ class ValidateProjectDTOTest {
 
         assertThat(violations).hasSize(1);
         violations.forEach(v -> {
-            assertThat(v.getPropertyPath().toString()).isEqualTo("since");
+            assertThat(v.getPropertyPath()).hasToString("since");
             assertThat(v.getMessage()).isEqualTo("must match yyyy-MM, e.g. 2006-11");
         });
     }
