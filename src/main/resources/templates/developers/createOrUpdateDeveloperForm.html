@@ -20,13 +20,12 @@
           <div class="col-md-4">
             <input th:replace="~{fragments/inputField :: input ('Title', 'title')}" />
           </div>
+          <div class="col-12">
+            <button th:with="text=${developerDTO['new']} ? 'Add Developer' : 'Update Developer'"
+                    class="btn btn-primary" type="submit" th:text="${text}">Add Developer</button>
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="col-12">
-      <button th:with="text=${developerDTO['new']} ? 'Add Developer' : 'Update Developer'"
-              class="btn btn-primary" type="submit" th:text="${text}">Add Developer</button>
     </div>
   </form>
 </body>
