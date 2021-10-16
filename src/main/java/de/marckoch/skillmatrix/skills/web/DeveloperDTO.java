@@ -28,4 +28,8 @@ public class DeveloperDTO {
     public boolean isNew() {
         return this.developerId == null;
     }
+
+    public String getFullName() {
+        return getFirstName() + " " + getLastName();
+    }
 }
