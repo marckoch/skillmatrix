@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.YearMonth;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
@@ -132,5 +133,29 @@ class DeveloperProjectEditControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
                 .andExpect(view().name("redirect:/developers/123"));
+    }
+
+    @Test
+    void deleteProjectWorks() throws Exception {
+        Project p = Project.builder()
+                .name("my project")
+                .since(YearMonth.of(2019, 3))
+                .until(YearMonth.of(2021, 11))
+                .build();
+        Developer dev1 = Developer.builder()
+                .developerId(123)
+                .currentProject(p)
+                .build();
+
+        when(developerRepository.findById(123)).thenReturn(Optional.of(dev1));
+        when(developerRepository.save(dev1)).thenReturn(dev1);
+
+        mockMvc.perform(get("/developers/{developerId}/project/delete", dev1.getDeveloperId()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(model().hasNoErrors())
+                .andExpect(view().name("redirect:/developers/123"));
+
+        // project has been set null
+        assertThat(dev1.hasProject()).isFalse();
     }
 }

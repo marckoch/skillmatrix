@@ -69,8 +69,18 @@ class DeveloperProjectEditController {
         }
     }
 
+    @GetMapping("/developers/{developerId}/project/delete")
+    public String deleteProject(@PathVariable("developerId") int developerId, Model model) {
+        Developer existingDev = developerRepository.findById(developerId).orElseThrow();
+        existingDev.setCurrentProject(null);
+        Developer savedDev = developerRepository.save(existingDev);
+        model.addAttribute("developer", savedDev);
+        return "redirect:/developers/" + savedDev.getDeveloperId();
+    }
+
     private ProjectDTO buildProjectDTO(Project project) {
         return ProjectDTO.builder()
+                .projectId(project.getProjectId())
                 .name(project.getName())
                 .since(project.getSince())
                 .until(project.getUntil())

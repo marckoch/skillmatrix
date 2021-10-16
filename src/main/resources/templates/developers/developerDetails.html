@@ -6,7 +6,9 @@
     <div class="card mb-2">
         <h6 class="card-header d-flex justify-content-between align-items-center">
             Details
-            <a class="btn btn-sm btn-primary" th:href="@{/developers/{id}/edit(id=${developer.developerId})}">Edit</a>
+            <div>
+                <a class="btn btn-sm btn-primary" th:href="@{/developers/{id}/edit(id=${developer.developerId})}">Edit</a>
+            </div>
         </h6>
         <div class="card-body" th:object="${developer}">
             <div class="row g-3">
@@ -30,8 +32,14 @@
         <h6 class="card-header d-flex justify-content-between align-items-center">
             Current Project
             <th:block th:if="${developer.hasProject()}">
-                <a class="btn btn-sm btn-primary" th:href="'/developers/' + ${developer.developerId} + '/project/edit'"
-                >Edit</a>
+                <div>
+                    <a class="btn btn-sm btn-primary" th:href="'/developers/' + ${developer.developerId} + '/project/edit'">
+                        Edit
+                    </a>
+                    <a class="btn btn-sm btn-danger" th:href="'/developers/' + ${developer.developerId} + '/project/delete'">
+                        <span class="bi bi-trash"></span>
+                    </a>
+                </div>
             </th:block>
             <th:block th:unless="${developer.hasProject()}">
                 <a class="btn btn-sm btn-primary" th:href="'/developers/' + ${developer.developerId} + '/project/add'"
@@ -87,7 +95,7 @@
                             <div th:replace="~{fragments/ratingStars :: stars (${exp.rating})}">2</div>
                         </td>
                         <td>
-                            <a class="btn btn-danger" th:href="@{/experience/delete/__${exp.experienceId}__}">
+                            <a class="btn btn-sm btn-danger" th:href="@{/experience/delete/__${exp.experienceId}__}">
                                 <span class="bi bi-trash"></span>
                             </a>
                         </td>
