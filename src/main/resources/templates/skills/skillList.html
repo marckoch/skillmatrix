@@ -2,15 +2,15 @@
 
 <html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body})}">
   <body>
-    <h2>Skills</h2>
+    <h2 class="d-flex justify-content-between align-items-center">
+      Skills
+      <a class="btn btn-sm btn-primary" th:href="@{/skills/new}">Add Skill</a>
+    </h2>
 
     <details class="text-secondary">
         <summary class="bi bi-exclamation-circle"> Info</summary>
         <p>Here we have a list of all our skills and their top 3 experts. Want to find something quickly? Use the search box at the top right!</p>
     </details>
-    <hr>
-
-    <a class="btn btn-primary" th:href="@{/skills/new}">Add Skill</a>
 
     <hr>
 

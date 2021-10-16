@@ -17,10 +17,12 @@
             <input th:replace="~{fragments/inputField :: input ('Name', 'name')}" />
           </div>
           <div class="col-md-4">
-            <input th:replace="~{fragments/inputField :: input ('Since (yyyy-mm)', 'since')}" />
+            <input th:replace="~{fragments/inputField :: input ('Since', 'since')}" />
+            <div id="sinceHelp" class="form-text">format: yyyy-MM, e.g. 2019-11, must be before until</div>
           </div>
           <div class="col-md-4">
-            <input th:replace="~{fragments/inputField :: input ('Until (yyyy-mm)', 'until')}" />
+            <input th:replace="~{fragments/inputField :: input ('Until', 'until')}" />
+            <div id="untilHelp" class="form-text">format: yyyy-MM, e.g. 2019-11, must be after since</div>
           </div>
           <div class="col-12">
             <button th:with="text=${projectDTO['new']} ? 'Add Project' : 'Update Project'"
