@@ -42,7 +42,7 @@
                         <a th:href="@{/developers/__${exp.developer.developerId}__}"
                            th:text="${exp.developer.getFullName()}"
                            data-bs-toggle="tooltip" data-bs-html="true" th:title="${'weight: ' + exp.developer.getWeightForSkills(skills)}">Developer Name</a>
-                        <span th:if="${exp.developer.currentProject != null}" class="bi bi-exclamation-circle"
+                        <span th:if="${exp.developer.currentProject != null}" class="bi bi-exclamation-circle text-danger"
                               data-bs-toggle="tooltip" data-bs-html="true" th:title="'in a project until ' + ${exp.developer.currentProject.until}"></span>
                     </td>
                 </th:block>
