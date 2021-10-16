@@ -11,7 +11,7 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class ValidateProjectDTOTest {
+class ValidateProjectDTOTest {
 
     protected Validator validator;
 
@@ -46,6 +46,6 @@ public class ValidateProjectDTOTest {
 
         Set<ConstraintViolation<ProjectDTO>> violations = validator.validate(p);
 
-        assertThat(violations).hasSize(0);
+        assertThat(violations).isEmpty();
     }
 }

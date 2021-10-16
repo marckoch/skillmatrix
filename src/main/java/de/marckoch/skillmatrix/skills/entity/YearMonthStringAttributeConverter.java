@@ -3,7 +3,7 @@ package de.marckoch.skillmatrix.skills.entity;
 import javax.persistence.AttributeConverter;
 import java.time.YearMonth;
 
-public class YearMonthStringAttributeConverter implements AttributeConverter<YearMonth, String> {
+class YearMonthStringAttributeConverter implements AttributeConverter<YearMonth, String> {
 
     @Override
     public String convertToDatabaseColumn(YearMonth attribute) {
