@@ -26,6 +26,11 @@
           </div>
         </div>
       </div>
+      <th:block th:if="${#fields.hasErrors()}">
+        <ul style="list-style-type: none;">
+          <li class="alert alert-danger" role="alert" th:each="err : ${#fields.allErrors()}" th:text="${err}"></li>
+        </ul>
+      </th:block>
     </div>
   </form>
 </body>
