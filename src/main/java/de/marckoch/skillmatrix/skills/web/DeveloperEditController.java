@@ -73,9 +73,9 @@ class DeveloperEditController {
 				.build();
 	}
 
-	private void updateEntityFromDTO(DeveloperDTO developer, Developer existingDev) {
-		existingDev.setLastName(developer.getLastName());
-		existingDev.setFirstName(developer.getFirstName());
-		existingDev.setTitle(developer.getTitle());
+	private void updateEntityFromDTO(DeveloperDTO dto, Developer entity) {
+		entity.setLastName(dto.getLastName());
+		entity.setFirstName(dto.getFirstName());
+		entity.setTitle(dto.getTitle());
 	}
 }

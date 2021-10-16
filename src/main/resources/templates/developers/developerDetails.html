@@ -4,10 +4,10 @@
     <h2 th:text="${developer.getFullName()}">Developer Information</h2>
 
     <div class="card mb-2">
-        <h5 class="card-header d-flex justify-content-between align-items-center">
+        <h6 class="card-header d-flex justify-content-between align-items-center">
             Details
             <a class="btn btn-sm btn-primary" th:href="@{/developers/{id}/edit(id=${developer.developerId})}">Edit</a>
-        </h5>
+        </h6>
         <div class="card-body" th:object="${developer}">
             <div class="row g-3">
                 <div class="col-md-4">
@@ -27,17 +27,20 @@
     </div>
 
     <div class="card mb-2">
-        <h5 class="card-header d-flex justify-content-between align-items-center">
+        <h6 class="card-header d-flex justify-content-between align-items-center">
             Current Project
-            <a class="btn btn-sm btn-primary"
-               th:with="text=${developer.hasProject()} ? 'Edit' : 'Add'"
-               th:text="${text}"
-               th:href="@{/developers/{id}/edit(id=${developer.developerId})}"
-            >Edit</a>
-        </h5>
+            <th:block th:if="${developer.hasProject()}">
+                <a class="btn btn-sm btn-primary" th:href="'/developers/' + ${developer.developerId} + '/project/edit'"
+                >Edit</a>
+            </th:block>
+            <th:block th:unless="${developer.hasProject()}">
+                <a class="btn btn-sm btn-primary" th:href="'/developers/' + ${developer.developerId} + '/project/add'"
+                >Add</a>
+            </th:block>
+        </h6>
         <div class="card-body" th:object="${developer.currentProject}">
             <th:block th:if="${developer.hasProject()}">
-                <div class="row g-3 pt-2">
+                <div class="row g-3">
                     <div class="col-md-4">
                         <label class="form-label" for="idCurrentProjectName">Name</label>
                         <input class="form-control" type="text" id="idCurrentProjectName" th:field="*{name}" disabled>
@@ -61,9 +64,9 @@
     </div>
 
     <div class="card mb-2">
-        <h5 class="card-header d-flex justify-content-between align-items-center">
+        <h6 class="card-header d-flex justify-content-between align-items-center">
             Skills
-        </h5>
+        </h6>
         <div class="card-body">
             <th:block th:if="${developer.experiences.size() > 0}">
                 <table class="table table-striped">

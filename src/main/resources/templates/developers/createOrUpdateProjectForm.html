@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{fragments/layout :: layout (~{::body})}">
+<body>
+  <h2>Current Project</h2>
+  <form th:object="${projectDTO}" id="add-developer-form" method="post" novalidate
+        class="row g-3 needs-validation">
+    <div class="card mb-2">
+      <h6 class="card-header d-flex justify-content-between align-items-center">
+        Details
+      </h6>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-4">
+            <input th:replace="~{fragments/inputField :: input ('Name', 'name')}" />
+          </div>
+          <div class="col-md-4">
+            <input th:replace="~{fragments/inputField :: input ('Since (yyyy-mm)', 'since')}" />
+          </div>
+          <div class="col-md-4">
+            <input th:replace="~{fragments/inputField :: input ('Until (yyyy-mm)', 'until')}" />
+          </div>
+          <div class="col-12">
+            <button th:with="text=${projectDTO['new']} ? 'Add Project' : 'Update Project'"
+                    class="btn btn-primary" type="submit" th:text="${text}">Add Project</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</body>
+</html>
