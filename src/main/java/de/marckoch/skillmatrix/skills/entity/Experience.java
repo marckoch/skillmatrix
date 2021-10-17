@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.core.style.ToStringCreator;
 
 import javax.persistence.Column;
@@ -54,6 +55,7 @@ public class Experience {
 
 	@Column(name = "rating")
 	@NotNull
+	@Range(min = 1, max = 5)
 	private Integer rating;
 
 	public boolean isNew() {

@@ -82,7 +82,6 @@ public class Developer implements HasExperiences {
                 .append("lastName", this.lastName)
                 .append("firstName", this.firstName)
                 .append("title", this.title)
-//				.append("experiences", this.experiences)
                 .toString();
     }
 
