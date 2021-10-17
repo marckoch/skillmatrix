@@ -16,14 +16,15 @@ import javax.validation.Valid;
 @AllArgsConstructor
 class DeveloperEditController {
 
-	private static final String CREATE_OR_UPDATE_DEVELOPER_VIEW = "/developers/createOrUpdateDeveloperForm";
+	public static final String CREATE_OR_UPDATE_DEVELOPER_VIEW = "/developers/createOrUpdateDeveloperForm";
+	public static final String REDIRECT_DEVELOPERS = "redirect:/developers/";
 
 	private final DeveloperRepository developerRepository;
 
 	@GetMapping("/developers/new")
 	public String initCreationForm(Model model) {
-		DeveloperDTO developer = new DeveloperDTO();
-		model.addAttribute("developerDTO", developer);
+		DeveloperDTO developerDTO = new DeveloperDTO();
+		model.addAttribute("developerDTO", developerDTO);
 		return CREATE_OR_UPDATE_DEVELOPER_VIEW;
 	}
 

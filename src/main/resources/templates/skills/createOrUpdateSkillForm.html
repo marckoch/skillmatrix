@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: layout (~{::body})}">
 <body>
-  <h2 th:with="text=${skill['new']} ? 'New Skill' : ${skill.getNameAndVersion()}"
+  <h2 th:with="text=${skillDTO['new']} ? 'New Skill' : ${skillDTO.getNameAndVersion()}"
       th:text="${text}">Skill</h2>
 
   <div class="card mb-2">
@@ -10,7 +10,7 @@
       Details
     </h6>
     <div class="card-body">
-      <form th:object="${skill}" id="add-skill-form" method="post" novalidate
+      <form th:object="${skillDTO}" id="add-skill-form" method="post" novalidate
             class="row g-3 needs-validation">
         <div class="col-md-4">
           <input th:replace="~{fragments/inputField :: input ('Name', 'name')}" />
@@ -22,7 +22,7 @@
           <input th:replace="~{fragments/inputField :: input ('Alias', 'alias')}" />
         </div>
         <div class="col-12">
-          <button th:with="text=${skill['new']} ? 'Add Skill' : 'Update Skill'"
+          <button th:with="text=${skillDTO['new']} ? 'Add Skill' : 'Update Skill'"
                   class="btn btn-primary" type="submit" th:text="${text}">Add Skill</button>
         </div>
       </form>

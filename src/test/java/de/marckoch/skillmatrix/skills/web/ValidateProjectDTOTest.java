@@ -1,5 +1,6 @@
 package de.marckoch.skillmatrix.skills.web;
 
+import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -58,11 +59,9 @@ class ValidateProjectDTOTest {
         Set<ConstraintViolation<ProjectDTO>> violations = validator.validate(p);
 
         assertThat(violations).hasSize(1);
-        violations.forEach(v -> {
-            assertThat(v.getPropertyPath()).hasToString("since");
-            assertThat(v.getMessage()).isEqualTo("must not be null");
-        });
-
+        assertThat(violations)
+                .extracting(v -> new Tuple(v.getPropertyPath().toString(), v.getMessage()))
+                .containsExactly(new Tuple("since", "must not be empty"));
     }
 
     @Test
@@ -75,11 +74,12 @@ class ValidateProjectDTOTest {
 
         Set<ConstraintViolation<ProjectDTO>> violations = validator.validate(p);
 
-        assertThat(violations).hasSize(1);
-        violations.forEach(v -> {
-            assertThat(v.getPropertyPath()).hasToString("since");
-            assertThat(v.getMessage()).isEqualTo("must match yyyy-MM, e.g. 2006-11");
-        });
+        assertThat(violations).hasSize(2);
+        assertThat(violations)
+                .extracting(v -> new Tuple(v.getPropertyPath().toString(), v.getMessage()))
+                .containsExactlyInAnyOrder(
+                        new Tuple("since", "must not be empty"),
+                        new Tuple("since", "must match yyyy-MM, e.g. 2006-11"));
     }
 
     @Test
@@ -93,9 +93,8 @@ class ValidateProjectDTOTest {
         Set<ConstraintViolation<ProjectDTO>> violations = validator.validate(p);
 
         assertThat(violations).hasSize(1);
-        violations.forEach(v -> {
-            assertThat(v.getPropertyPath()).hasToString("since");
-            assertThat(v.getMessage()).isEqualTo("must match yyyy-MM, e.g. 2006-11");
-        });
+        assertThat(violations)
+                .extracting(v -> new Tuple(v.getPropertyPath().toString(), v.getMessage()))
+                .containsExactly(new Tuple("since", "must match yyyy-MM, e.g. 2006-11"));
     }
 }

@@ -8,7 +8,6 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Builder
@@ -24,12 +23,12 @@ public class ProjectDTO {
     @NotEmpty
     private String name;
 
-    @NotNull
+    @NotEmpty
     @Pattern(regexp = "^\\d{4}-(0[1-9]|1[0-2])$", message = "must match yyyy-MM, e.g. 2006-11")
     @DateTimeFormat(pattern = "yyyy-MM")
     private String since;
 
-    @NotNull
+    @NotEmpty
     @Pattern(regexp = "^\\d{4}-(0[1-9]|1[0-2])$", message = "must match yyyy-MM, e.g. 2006-11")
     @DateTimeFormat(pattern = "yyyy-MM")
     private String until;

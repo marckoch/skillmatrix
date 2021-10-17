@@ -14,14 +14,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 import java.time.YearMonth;
 
+import static de.marckoch.skillmatrix.skills.web.DeveloperEditController.REDIRECT_DEVELOPERS;
+
 // maybe use this: https://qawithexperts.com/article/bootstrap/showing-month-and-year-only-in-bootstrap-datepicker/292
 @Controller
 @AllArgsConstructor
 class DeveloperProjectEditController {
 
-    private static final String CREATE_OR_UPDATE_PROJECT_VIEW = "/developers/createOrUpdateProjectForm";
+    public static final String CREATE_OR_UPDATE_PROJECT_VIEW = "/developers/createOrUpdateProjectForm";
     private static final String DEVELOPER_ATTRIBUTE_NAME = "developer";
-    private static final String REDIRECT_DEVELOPERS = "redirect:/developers/";
 
     private final DeveloperRepository developerRepository;
 

@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.YearMonth;
 import java.util.Optional;
 
+import static de.marckoch.skillmatrix.skills.web.DeveloperProjectEditController.CREATE_OR_UPDATE_PROJECT_VIEW;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasProperty;
@@ -57,7 +58,7 @@ class DeveloperProjectEditControllerTest {
                 .andExpect(model().attributeExists("projectDTO"))
                 .andExpect(model().attribute("projectDTO", hasProperty("new", is(true))))
                 .andExpect(model().attribute("projectDTO", not(hasProperty("id"))))
-                .andExpect(view().name("/developers/createOrUpdateProjectForm"));
+                .andExpect(view().name(CREATE_OR_UPDATE_PROJECT_VIEW));
     }
 
     @Test
@@ -72,9 +73,11 @@ class DeveloperProjectEditControllerTest {
         // error because name, since and until are missing in post!
         mockMvc.perform(post("/developers/123/project/add"))
                 .andExpect(status().isOk())
-                .andExpect(model().hasErrors())
                 .andExpect(model().errorCount(3))
-                .andExpect(view().name("/developers/createOrUpdateProjectForm"));
+                .andExpect(model().attributeHasFieldErrorCode("projectDTO", "name", "NotEmpty"))
+                .andExpect(model().attributeHasFieldErrorCode("projectDTO", "since", "NotEmpty"))
+                .andExpect(model().attributeHasFieldErrorCode("projectDTO", "until", "NotEmpty"))
+                .andExpect(view().name(CREATE_OR_UPDATE_PROJECT_VIEW));
     }
 
     @Test
@@ -111,7 +114,7 @@ class DeveloperProjectEditControllerTest {
         mockMvc.perform(get("/developers/{developerId}/project/edit", dev1.getDeveloperId()))
                 .andExpect(status().isOk())
                 .andExpect(model().hasNoErrors())
-                .andExpect(view().name("/developers/createOrUpdateProjectForm"))
+                .andExpect(view().name(CREATE_OR_UPDATE_PROJECT_VIEW))
                 .andExpect(content().string(containsString("my project")));
     }
 
@@ -127,9 +130,11 @@ class DeveloperProjectEditControllerTest {
         // error because name is missing in post!
         mockMvc.perform(post("/developers/123/project/edit"))
                 .andExpect(status().isOk())
-                .andExpect(model().hasErrors())
                 .andExpect(model().errorCount(3))
-                .andExpect(view().name("/developers/createOrUpdateProjectForm"));
+                .andExpect(model().attributeHasFieldErrorCode("projectDTO", "name", "NotEmpty"))
+                .andExpect(model().attributeHasFieldErrorCode("projectDTO", "since", "NotEmpty"))
+                .andExpect(model().attributeHasFieldErrorCode("projectDTO", "until", "NotEmpty"))
+                .andExpect(view().name(CREATE_OR_UPDATE_PROJECT_VIEW));
     }
 
     @Test

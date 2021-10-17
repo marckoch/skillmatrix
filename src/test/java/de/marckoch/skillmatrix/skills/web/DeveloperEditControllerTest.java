@@ -13,6 +13,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Optional;
 
+import static de.marckoch.skillmatrix.skills.web.DeveloperEditController.CREATE_OR_UPDATE_DEVELOPER_VIEW;
+import static de.marckoch.skillmatrix.skills.web.DeveloperEditController.REDIRECT_DEVELOPERS;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
@@ -27,7 +29,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(DeveloperEditController.class)
 class DeveloperEditControllerTest {
-
     @Autowired
     private MockMvc mockMvc;
 
@@ -47,7 +48,7 @@ class DeveloperEditControllerTest {
                 .andExpect(model().attributeExists("developerDTO"))
                 .andExpect(model().attribute("developerDTO", hasProperty("new", is(true))))
                 .andExpect(model().attribute("developerDTO", not(hasProperty("id"))))
-                .andExpect(view().name("/developers/createOrUpdateDeveloperForm"));
+                .andExpect(view().name(CREATE_OR_UPDATE_DEVELOPER_VIEW));
     }
 
     @Test
@@ -55,9 +56,10 @@ class DeveloperEditControllerTest {
         // error because first and last name is missing in post!
         mockMvc.perform(post("/developers/new"))
                 .andExpect(status().isOk())
-                .andExpect(model().hasErrors())
                 .andExpect(model().errorCount(2))
-                .andExpect(view().name("/developers/createOrUpdateDeveloperForm"));
+                .andExpect(model().attributeHasFieldErrorCode("developerDTO", "firstName", "NotEmpty"))
+                .andExpect(model().attributeHasFieldErrorCode("developerDTO", "lastName", "NotEmpty"))
+                .andExpect(view().name(CREATE_OR_UPDATE_DEVELOPER_VIEW));
     }
 
     @Test
@@ -72,7 +74,7 @@ class DeveloperEditControllerTest {
                         .param("lastName", "last"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
-                .andExpect(view().name("redirect:/developers/123"));
+                .andExpect(view().name(REDIRECT_DEVELOPERS + "123"));
     }
 
     @Test
@@ -87,9 +89,9 @@ class DeveloperEditControllerTest {
         mockMvc.perform(get("/developers/{developerId}/edit", 123))
                 .andExpect(status().isOk())
                 .andExpect(model().hasNoErrors())
-                .andExpect(view().name("/developers/createOrUpdateDeveloperForm"))
-                .andExpect(content().string(containsString("firstName123")))
-                .andExpect(content().string(containsString("lastName123")));
+                .andExpect(view().name(CREATE_OR_UPDATE_DEVELOPER_VIEW))
+                .andExpect(content().string(containsString(dev1.getFirstName())))
+                .andExpect(content().string(containsString(dev1.getLastName())));
     }
 
     @Test
@@ -97,9 +99,10 @@ class DeveloperEditControllerTest {
         // error because first and last name is missing in post!
         mockMvc.perform(post("/developers/123/edit"))
                 .andExpect(status().isOk())
-                .andExpect(model().hasErrors())
                 .andExpect(model().errorCount(2))
-                .andExpect(view().name("/developers/createOrUpdateDeveloperForm"));
+                .andExpect(model().attributeHasFieldErrorCode("developerDTO", "firstName", "NotEmpty"))
+                .andExpect(model().attributeHasFieldErrorCode("developerDTO", "lastName", "NotEmpty"))
+                .andExpect(view().name(CREATE_OR_UPDATE_DEVELOPER_VIEW));
     }
 
     @Test
@@ -115,6 +118,6 @@ class DeveloperEditControllerTest {
                         .param("lastName", "last"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
-                .andExpect(view().name("redirect:/developers/123"));
+                .andExpect(view().name(REDIRECT_DEVELOPERS + "123"));
     }
 }

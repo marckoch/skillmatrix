@@ -8,10 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import java.util.Collections;
 import java.util.Optional;
 
+import static de.marckoch.skillmatrix.skills.web.SkillEditController.CREATE_OR_UPDATE_SKILL_VIEW;
+import static de.marckoch.skillmatrix.skills.web.SkillEditController.REDIRECT_SKILLS;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
@@ -38,20 +42,20 @@ class SkillEditControllerTest {
     void initCreationFormShouldShowNewDeveloper() throws Exception {
         mockMvc.perform(get("/skills/new"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("skill"))
-                .andExpect(model().attribute("skill", hasProperty("new", is(true))))
-                .andExpect(model().attribute("skill", not(hasProperty("id"))))
-                .andExpect(view().name("/skills/createOrUpdateSkillForm"));
+                .andExpect(model().attributeExists("skillDTO"))
+                .andExpect(model().attribute("skillDTO", hasProperty("new", is(true))))
+                .andExpect(model().attribute("skillDTO", not(hasProperty("id"))))
+                .andExpect(view().name(CREATE_OR_UPDATE_SKILL_VIEW));
     }
 
     @Test
     void processCreationFormWithWrongDataShouldShowError() throws Exception {
-        // error because first and last name is missing in post!
+        // error because name is missing in post!
         mockMvc.perform(post("/skills/new"))
                 .andExpect(status().isOk())
-                .andExpect(model().hasErrors())
                 .andExpect(model().errorCount(1))
-                .andExpect(view().name("/skills/createOrUpdateSkillForm"));
+                .andExpect(model().attributeHasFieldErrorCode("skillDTO", "name", "NotEmpty"))
+                .andExpect(view().name(CREATE_OR_UPDATE_SKILL_VIEW));
     }
 
     @Test
@@ -65,7 +69,7 @@ class SkillEditControllerTest {
                         .param("name", "newTestSkill"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
-                .andExpect(view().name("redirect:/skills/333"));
+                .andExpect(view().name(REDIRECT_SKILLS + "333"));
     }
 
     @Test
@@ -78,28 +82,31 @@ class SkillEditControllerTest {
         mockMvc.perform(get("/skills/{skillId}/edit", skill1.getSkillId()))
                 .andExpect(status().isOk())
                 .andExpect(model().hasNoErrors())
-                .andExpect(view().name("/skills/createOrUpdateSkillForm"))
+                .andExpect(view().name(CREATE_OR_UPDATE_SKILL_VIEW))
                 .andExpect(content().string(containsString(newNameForSkill1)));
     }
 
     @Test
     void processUpdateFormWithWrongDataShouldShowError() throws Exception {
         // error because name is missing in post!
-        mockMvc.perform(post("/skills/123/edit"))
+        MvcResult result = mockMvc.perform(post("/skills/123/edit"))
                 .andExpect(status().isOk())
-                .andExpect(model().hasErrors())
+                .andDo(MockMvcResultHandlers.print())
                 .andExpect(model().errorCount(1))
-                .andExpect(view().name("/skills/createOrUpdateSkillForm"));
+                .andExpect(model().attributeHasFieldErrorCode("skillDTO", "name", "NotEmpty"))
+                .andExpect(view().name(CREATE_OR_UPDATE_SKILL_VIEW))
+                .andReturn();
     }
 
     @Test
     void processUpdateFormWithCorrectDataShouldSaveData() throws Exception {
+        when(skillRepository.findById(1)).thenReturn(Optional.of(skill1));
         when(skillRepository.save(ArgumentMatchers.any(Skill.class))).thenReturn(skill1);
 
         mockMvc.perform(post("/skills/1/edit")
                         .param("name", "nnn"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
-                .andExpect(view().name("redirect:/skills/1"));
+                .andExpect(view().name(REDIRECT_SKILLS + "1"));
     }
 }
