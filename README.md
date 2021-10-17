@@ -30,6 +30,14 @@ then start the app
 ./mvnw spring-boot:run -Dspring-boot.run.profiles=postgres
 ```
 
+## Dockerfile
+
+```
+./mvnw clean package
+docker build . -t skillmatrix:latest
+docker run -p 8080:8080 skillmatrix
+```
+
 ## Tech Stack
 - Java 17
 - Maven 3.8.2
