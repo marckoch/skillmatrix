@@ -2,7 +2,6 @@ package de.marckoch.skillmatrix.skills.web;
 
 import de.marckoch.skillmatrix.skills.entity.Developer;
 import de.marckoch.skillmatrix.skills.entity.DeveloperRepository;
-import de.marckoch.skillmatrix.skills.entity.Experience;
 import de.marckoch.skillmatrix.skills.entity.Skill;
 import de.marckoch.skillmatrix.skills.service.SkillsService;
 import lombok.AllArgsConstructor;
@@ -17,7 +16,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.EXPERIENCE;
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.EXPERIENCE_DTO;
 
 @Controller
 @AllArgsConstructor
@@ -35,12 +34,12 @@ class DeveloperDetailsController {
 
 		// check if we already have a (erroneous) experience in model,
 		// this was checked and put there by redirect from ExperienceController
-		if (!model.containsAttribute(EXPERIENCE.modelAttributeName())) {
-			Experience experience = new Experience();
-			experience.setDeveloper(dev);
-			mav.getModel().put(EXPERIENCE.modelAttributeName(), experience);
+		if (!model.containsAttribute(EXPERIENCE_DTO.modelAttributeName)) {
+			ExperienceDTO experienceDTO = new ExperienceDTO();
+			experienceDTO.setDeveloper(dev);
+			mav.getModel().put(EXPERIENCE_DTO.modelAttributeName, experienceDTO);
 		} else {
-			mav.getModel().put(EXPERIENCE.modelAttributeName(), model.getAttribute(EXPERIENCE.modelAttributeName()));
+			mav.getModel().put(EXPERIENCE_DTO.modelAttributeName, model.getAttribute(EXPERIENCE_DTO.modelAttributeName));
 		}
 
 		List<Skill> freeSkills = skillsService.getFreeSkills(dev);

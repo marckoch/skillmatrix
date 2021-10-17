@@ -43,9 +43,9 @@ class SkillEditControllerTest {
     void initCreationFormShouldShowNewDeveloper() throws Exception {
         mockMvc.perform(get("/skills/new"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists(SKILL_DTO.modelAttributeName()))
-                .andExpect(model().attribute(SKILL_DTO.modelAttributeName(), hasProperty("new", is(true))))
-                .andExpect(model().attribute(SKILL_DTO.modelAttributeName(), not(hasProperty("id"))))
+                .andExpect(model().attributeExists(SKILL_DTO.modelAttributeName))
+                .andExpect(model().attribute(SKILL_DTO.modelAttributeName, hasProperty("new", is(true))))
+                .andExpect(model().attribute(SKILL_DTO.modelAttributeName, not(hasProperty("id"))))
                 .andExpect(view().name(CREATE_OR_UPDATE_SKILL_VIEW));
     }
 
@@ -55,7 +55,7 @@ class SkillEditControllerTest {
         mockMvc.perform(post("/skills/new"))
                 .andExpect(status().isOk())
                 .andExpect(model().errorCount(1))
-                .andExpect(model().attributeHasFieldErrorCode(SKILL_DTO.modelAttributeName(), "name", "NotEmpty"))
+                .andExpect(model().attributeHasFieldErrorCode(SKILL_DTO.modelAttributeName, "name", "NotEmpty"))
                 .andExpect(view().name(CREATE_OR_UPDATE_SKILL_VIEW));
     }
 
@@ -94,7 +94,7 @@ class SkillEditControllerTest {
                 .andExpect(status().isOk())
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(model().errorCount(1))
-                .andExpect(model().attributeHasFieldErrorCode(SKILL_DTO.modelAttributeName(), "name", "NotEmpty"))
+                .andExpect(model().attributeHasFieldErrorCode(SKILL_DTO.modelAttributeName, "name", "NotEmpty"))
                 .andExpect(view().name(CREATE_OR_UPDATE_SKILL_VIEW))
                 .andReturn();
     }

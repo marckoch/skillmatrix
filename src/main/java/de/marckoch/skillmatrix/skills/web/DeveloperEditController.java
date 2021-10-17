@@ -27,7 +27,7 @@ class DeveloperEditController {
 	@GetMapping("/developers/new")
 	public String initCreationForm(Model model) {
 		DeveloperDTO developerDTO = new DeveloperDTO();
-		model.addAttribute(DEVELOPER_DTO.modelAttributeName(), developerDTO);
+		model.addAttribute(DEVELOPER_DTO.modelAttributeName, developerDTO);
 		return CREATE_OR_UPDATE_DEVELOPER_VIEW;
 	}
 
@@ -48,7 +48,7 @@ class DeveloperEditController {
 		Developer developer = developerRepository.findById(developerId).orElseThrow();
 
 		DeveloperDTO dto = buildDeveloperDTO(developer);
-		model.addAttribute(DEVELOPER_DTO.modelAttributeName(), dto);
+		model.addAttribute(DEVELOPER_DTO.modelAttributeName, dto);
 		return CREATE_OR_UPDATE_DEVELOPER_VIEW;
 	}
 
@@ -63,7 +63,7 @@ class DeveloperEditController {
 			updateEntityFromDTO(developerDTO, existingDev);
 
 			Developer savedDev = developerRepository.save(existingDev);
-			model.addAttribute(DEVELOPER.modelAttributeName(), savedDev);
+			model.addAttribute(DEVELOPER.modelAttributeName, savedDev);
 			return "redirect:/developers/" + savedDev.getDeveloperId();
 		}
 	}

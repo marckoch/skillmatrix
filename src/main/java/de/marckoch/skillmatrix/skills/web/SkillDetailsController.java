@@ -20,7 +20,7 @@ class SkillDetailsController {
     public ModelAndView showSkill(@PathVariable("skillId") int skillId) {
         ModelAndView mav = new ModelAndView("skills/skillDetails");
         Skill skill = skillRepository.findById(skillId).orElseThrow();
-        mav.addObject(SKILL.modelAttributeName(), skill);
+        mav.addObject(SKILL.modelAttributeName, skill);
         return mav;
     }
 }

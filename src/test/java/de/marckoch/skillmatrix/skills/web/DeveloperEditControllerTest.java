@@ -46,9 +46,9 @@ class DeveloperEditControllerTest {
     void initCreationFormShouldShowNewDeveloper() throws Exception {
         mockMvc.perform(get("/developers/new"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists(DEVELOPER_DTO.modelAttributeName()))
-                .andExpect(model().attribute(DEVELOPER_DTO.modelAttributeName(), hasProperty("new", is(true))))
-                .andExpect(model().attribute(DEVELOPER_DTO.modelAttributeName(), not(hasProperty("id"))))
+                .andExpect(model().attributeExists(DEVELOPER_DTO.modelAttributeName))
+                .andExpect(model().attribute(DEVELOPER_DTO.modelAttributeName, hasProperty("new", is(true))))
+                .andExpect(model().attribute(DEVELOPER_DTO.modelAttributeName, not(hasProperty("id"))))
                 .andExpect(view().name(CREATE_OR_UPDATE_DEVELOPER_VIEW));
     }
 
@@ -58,8 +58,8 @@ class DeveloperEditControllerTest {
         mockMvc.perform(post("/developers/new"))
                 .andExpect(status().isOk())
                 .andExpect(model().errorCount(2))
-                .andExpect(model().attributeHasFieldErrorCode(DEVELOPER_DTO.modelAttributeName(), "firstName", "NotEmpty"))
-                .andExpect(model().attributeHasFieldErrorCode(DEVELOPER_DTO.modelAttributeName(), "lastName", "NotEmpty"))
+                .andExpect(model().attributeHasFieldErrorCode(DEVELOPER_DTO.modelAttributeName, "firstName", "NotEmpty"))
+                .andExpect(model().attributeHasFieldErrorCode(DEVELOPER_DTO.modelAttributeName, "lastName", "NotEmpty"))
                 .andExpect(view().name(CREATE_OR_UPDATE_DEVELOPER_VIEW));
     }
 
@@ -101,8 +101,8 @@ class DeveloperEditControllerTest {
         mockMvc.perform(post("/developers/123/edit"))
                 .andExpect(status().isOk())
                 .andExpect(model().errorCount(2))
-                .andExpect(model().attributeHasFieldErrorCode(DEVELOPER_DTO.modelAttributeName(), "firstName", "NotEmpty"))
-                .andExpect(model().attributeHasFieldErrorCode(DEVELOPER_DTO.modelAttributeName(), "lastName", "NotEmpty"))
+                .andExpect(model().attributeHasFieldErrorCode(DEVELOPER_DTO.modelAttributeName, "firstName", "NotEmpty"))
+                .andExpect(model().attributeHasFieldErrorCode(DEVELOPER_DTO.modelAttributeName, "lastName", "NotEmpty"))
                 .andExpect(view().name(CREATE_OR_UPDATE_DEVELOPER_VIEW));
     }
 

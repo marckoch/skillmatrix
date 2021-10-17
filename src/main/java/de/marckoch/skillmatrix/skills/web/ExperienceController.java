@@ -16,7 +16,7 @@ import javax.validation.Valid;
 import java.util.Map;
 
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.DEVELOPER;
-import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.EXPERIENCE;
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.EXPERIENCE_DTO;
 
 @Controller
 @AllArgsConstructor
@@ -27,20 +27,25 @@ class ExperienceController {
     private final DeveloperRepository developerRepository;
 
     @PostMapping("/experience/{developerId}/new")
-    public String processAddSkillToDeveloperForm(Map<String, Object> model,
-                                                 @PathVariable("developerId") int developerId,
-                                                 @Valid Experience experience, BindingResult result,
-                                                 final RedirectAttributes redirectAttributes) {
+    public String processAddSkillToDeveloperForm(@PathVariable("developerId") int developerId,
+                                                 @Valid ExperienceDTO experienceDTO, BindingResult result,
+                                                 final RedirectAttributes redirectAttributes, Map<String, Object> model) {
         Developer dev = developerRepository.findById(developerId).orElseThrow();
-        model.put(DEVELOPER.modelAttributeName(), dev);
-        experience.setDeveloper(dev);
+        model.put(DEVELOPER.modelAttributeName, dev);
 
         if (result.hasErrors()) {
             // save (erroneous model) for redirect
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.experience", result);
-            redirectAttributes.addFlashAttribute(EXPERIENCE.modelAttributeName, experience);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.experienceDTO", result);
+            redirectAttributes.addFlashAttribute(EXPERIENCE_DTO.modelAttributeName, experienceDTO);
         } else {
-            experienceRepository.save(experience);
+            Experience newExp = Experience.builder()
+                    .skill(experienceDTO.getSkill())
+                    .developer(dev)
+                    .rating(experienceDTO.getRating())
+                    .years(experienceDTO.getYears())
+                    .build();
+
+            experienceRepository.save(newExp);
         }
 
         return "redirect:/developers/" + dev.getDeveloperId();

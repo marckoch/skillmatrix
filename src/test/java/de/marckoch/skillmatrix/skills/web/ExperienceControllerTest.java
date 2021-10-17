@@ -17,7 +17,7 @@ import org.springframework.validation.BindingResult;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.EXPERIENCE;
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.EXPERIENCE_DTO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
@@ -53,11 +53,11 @@ class ExperienceControllerTest {
         MvcResult result = mockMvc.perform(post("/experience/{developerId}/new", 123))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
-                .andExpect(flash().attributeExists(EXPERIENCE.modelAttributeName(), "org.springframework.validation.BindingResult.experience"))
+                .andExpect(flash().attributeExists(EXPERIENCE_DTO.modelAttributeName, "org.springframework.validation.BindingResult.experienceDTO"))
                 .andExpect(view().name("redirect:/developers/123"))
                 .andReturn();
 
-        BindingResult bindingResult = (BindingResult) result.getFlashMap().get("org.springframework.validation.BindingResult.experience");
+        BindingResult bindingResult = (BindingResult) result.getFlashMap().get("org.springframework.validation.BindingResult.experienceDTO");
         assertThat(bindingResult.getFieldErrorCount()).isEqualTo(2);
         assertThat(bindingResult.getFieldErrors())
                 .extracting(fieldError ->
@@ -82,11 +82,11 @@ class ExperienceControllerTest {
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
-                .andExpect(flash().attributeExists(EXPERIENCE.modelAttributeName(), "org.springframework.validation.BindingResult.experience"))
+                .andExpect(flash().attributeExists(EXPERIENCE_DTO.modelAttributeName, "org.springframework.validation.BindingResult.experienceDTO"))
                 .andExpect(view().name("redirect:/developers/123"))
                 .andReturn();
 
-        BindingResult bindingResult = (BindingResult) result.getFlashMap().get("org.springframework.validation.BindingResult.experience");
+        BindingResult bindingResult = (BindingResult) result.getFlashMap().get("org.springframework.validation.BindingResult.experienceDTO");
         assertThat(bindingResult.getFieldErrorCount()).isEqualTo(2);
         assertThat(bindingResult.getFieldErrors())
                 .extracting(fieldError ->

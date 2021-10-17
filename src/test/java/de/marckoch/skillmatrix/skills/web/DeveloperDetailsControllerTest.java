@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.Optional;
 
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.DEVELOPER;
-import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.EXPERIENCE;
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.EXPERIENCE_DTO;
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
@@ -50,7 +50,7 @@ class DeveloperDetailsControllerTest {
 
         mockMvc.perform(get("/developers/{developerId}", dev1.getDeveloperId()))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists(DEVELOPER.modelAttributeName(), EXPERIENCE.modelAttributeName()))
+                .andExpect(model().attributeExists(DEVELOPER.modelAttributeName, EXPERIENCE_DTO.modelAttributeName))
                 .andExpect(view().name("developers/developerDetails"))
                 .andExpect(content().string(containsString(dev1.getLastName())));
     }

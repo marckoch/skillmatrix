@@ -27,7 +27,7 @@ class SkillEditController {
     @GetMapping("/skills/new")
     public String initCreationForm(Map<String, Object> model) {
         SkillDTO skill = new SkillDTO();
-        model.put(SKILL_DTO.modelAttributeName(), skill);
+        model.put(SKILL_DTO.modelAttributeName, skill);
         return CREATE_OR_UPDATE_SKILL_VIEW;
     }
 
@@ -48,7 +48,7 @@ class SkillEditController {
         Skill skill = skillRepository.findById(skillId).orElseThrow();
 
         SkillDTO dto = buildSkillDTO(skill);
-        model.addAttribute(SKILL_DTO.modelAttributeName(), dto);
+        model.addAttribute(SKILL_DTO.modelAttributeName, dto);
         return CREATE_OR_UPDATE_SKILL_VIEW;
     }
 
@@ -63,7 +63,7 @@ class SkillEditController {
             updateEntityFromDTO(skillDTO, existingSkill);
 
             Skill savedSkill = skillRepository.save(existingSkill);
-            model.addAttribute(SKILL_DTO.modelAttributeName(), savedSkill);
+            model.addAttribute(SKILL_DTO.modelAttributeName, savedSkill);
             return REDIRECT_SKILLS + savedSkill.getSkillId();
         }
     }
