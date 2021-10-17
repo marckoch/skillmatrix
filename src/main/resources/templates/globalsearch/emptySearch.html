@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{fragments/layout :: layout (~{::body})}">
+      th:replace="~{fragments/layout :: layout (~{::body})}">
 
 <body>
-  <h2>Search</h2>
-  <span class="bi bi-emoji-frown"></span> Nothing found! You can search for developers or skills!
+<h2>Search</h2>
+<div class="alert alert-danger" role="alert">
+    <span class="bi bi-emoji-frown"></span> Nothing found! You can search for developers or skills!
+</div>
 </body>
 </html>
