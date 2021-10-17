@@ -39,7 +39,7 @@ class DeveloperEditController {
 			Developer newDev = new Developer();
 			updateEntityFromDTO(developerDTO, newDev);
 			Developer savedDev = developerRepository.save(newDev);
-			return "redirect:/developers/" + savedDev.getDeveloperId();
+			return REDIRECT_DEVELOPERS + savedDev.getDeveloperId();
 		}
 	}
 
@@ -64,7 +64,7 @@ class DeveloperEditController {
 
 			Developer savedDev = developerRepository.save(existingDev);
 			model.addAttribute(DEVELOPER.modelAttributeName, savedDev);
-			return "redirect:/developers/" + savedDev.getDeveloperId();
+			return REDIRECT_DEVELOPERS + savedDev.getDeveloperId();
 		}
 	}
 
