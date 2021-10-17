@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 import java.util.Map;
 
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.SKILL_DTO;
+
 @Controller
 @AllArgsConstructor
 class SkillEditController {
@@ -25,7 +27,7 @@ class SkillEditController {
     @GetMapping("/skills/new")
     public String initCreationForm(Map<String, Object> model) {
         SkillDTO skill = new SkillDTO();
-        model.put("skillDTO", skill);
+        model.put(SKILL_DTO.modelAttributeName(), skill);
         return CREATE_OR_UPDATE_SKILL_VIEW;
     }
 
@@ -46,7 +48,7 @@ class SkillEditController {
         Skill skill = skillRepository.findById(skillId).orElseThrow();
 
         SkillDTO dto = buildSkillDTO(skill);
-        model.addAttribute("skillDTO", dto);
+        model.addAttribute(SKILL_DTO.modelAttributeName(), dto);
         return CREATE_OR_UPDATE_SKILL_VIEW;
     }
 
@@ -61,7 +63,7 @@ class SkillEditController {
             updateEntityFromDTO(skillDTO, existingSkill);
 
             Skill savedSkill = skillRepository.save(existingSkill);
-            model.addAttribute("skillDTO", savedSkill);
+            model.addAttribute(SKILL_DTO.modelAttributeName(), savedSkill);
             return REDIRECT_SKILLS + savedSkill.getSkillId();
         }
     }

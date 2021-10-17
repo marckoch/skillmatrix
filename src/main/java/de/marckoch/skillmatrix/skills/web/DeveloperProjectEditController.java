@@ -15,6 +15,8 @@ import javax.validation.Valid;
 import java.time.YearMonth;
 
 import static de.marckoch.skillmatrix.skills.web.DeveloperEditController.REDIRECT_DEVELOPERS;
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.DEVELOPER;
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.PROJECT_DTO;
 
 // maybe use this: https://qawithexperts.com/article/bootstrap/showing-month-and-year-only-in-bootstrap-datepicker/292
 @Controller
@@ -22,17 +24,16 @@ import static de.marckoch.skillmatrix.skills.web.DeveloperEditController.REDIREC
 class DeveloperProjectEditController {
 
     public static final String CREATE_OR_UPDATE_PROJECT_VIEW = "/developers/createOrUpdateProjectForm";
-    private static final String DEVELOPER_ATTRIBUTE_NAME = "developer";
 
     private final DeveloperRepository developerRepository;
 
     @GetMapping("/developers/{developerId}/project/add")
     public String initCreationForm(@PathVariable("developerId") int developerId, Model model) {
         Developer developer = developerRepository.findById(developerId).orElseThrow();
-        model.addAttribute(DEVELOPER_ATTRIBUTE_NAME, developer);
+        model.addAttribute(DEVELOPER.modelAttributeName(), developer);
 
         ProjectDTO projectDTO = new ProjectDTO();
-        model.addAttribute("projectDTO", projectDTO);
+        model.addAttribute(PROJECT_DTO.modelAttributeName(), projectDTO);
         return CREATE_OR_UPDATE_PROJECT_VIEW;
     }
 
@@ -41,7 +42,7 @@ class DeveloperProjectEditController {
                                       @PathVariable("developerId") int developerId, Model model) {
         if (result.hasErrors()) {
             Developer developer = developerRepository.findById(developerId).orElseThrow();
-            model.addAttribute(DEVELOPER_ATTRIBUTE_NAME, developer);
+            model.addAttribute(DEVELOPER.modelAttributeName(), developer);
 
             return CREATE_OR_UPDATE_PROJECT_VIEW;
         } else {
@@ -57,10 +58,10 @@ class DeveloperProjectEditController {
     @GetMapping("/developers/{developerId}/project/edit")
     public String initUpdateProjectForm(@PathVariable("developerId") int developerId, Model model) {
         Developer developer = developerRepository.findById(developerId).orElseThrow();
-        model.addAttribute(DEVELOPER_ATTRIBUTE_NAME, developer);
+        model.addAttribute(DEVELOPER.modelAttributeName(), developer);
 
         ProjectDTO dto = buildProjectDTO(developer.getCurrentProject());
-        model.addAttribute("projectDTO", dto);
+        model.addAttribute(PROJECT_DTO.modelAttributeName(), dto);
         return CREATE_OR_UPDATE_PROJECT_VIEW;
     }
 
@@ -69,7 +70,7 @@ class DeveloperProjectEditController {
                                            @PathVariable("developerId") int developerId, Model model) {
         if (result.hasErrors()) {
             Developer developer = developerRepository.findById(developerId).orElseThrow();
-            model.addAttribute(DEVELOPER_ATTRIBUTE_NAME, developer);
+            model.addAttribute(DEVELOPER.modelAttributeName(), developer);
 
             return CREATE_OR_UPDATE_PROJECT_VIEW;
         } else {
@@ -78,7 +79,7 @@ class DeveloperProjectEditController {
             updateEntityFromDTO(developerDTO, existingDev.getCurrentProject());
 
             Developer savedDev = developerRepository.save(existingDev);
-            model.addAttribute(DEVELOPER_ATTRIBUTE_NAME, savedDev);
+            model.addAttribute(DEVELOPER.modelAttributeName(), savedDev);
             return REDIRECT_DEVELOPERS + savedDev.getDeveloperId();
         }
     }
@@ -88,7 +89,7 @@ class DeveloperProjectEditController {
         Developer existingDev = developerRepository.findById(developerId).orElseThrow();
         existingDev.setCurrentProject(null);
         Developer savedDev = developerRepository.save(existingDev);
-        model.addAttribute(DEVELOPER_ATTRIBUTE_NAME, savedDev);
+        model.addAttribute(DEVELOPER.modelAttributeName(), savedDev);
         return REDIRECT_DEVELOPERS + savedDev.getDeveloperId();
     }
 

@@ -15,6 +15,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.util.Map;
 
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.DEVELOPER;
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.EXPERIENCE;
+
 @Controller
 @AllArgsConstructor
 class ExperienceController {
@@ -29,13 +32,13 @@ class ExperienceController {
                                                  @Valid Experience experience, BindingResult result,
                                                  final RedirectAttributes redirectAttributes) {
         Developer dev = developerRepository.findById(developerId).orElseThrow();
-        model.put("developer", dev);
+        model.put(DEVELOPER.modelAttributeName(), dev);
         experience.setDeveloper(dev);
 
         if (result.hasErrors()) {
             // save (erroneous model) for redirect
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.experience", result);
-            redirectAttributes.addFlashAttribute("experience", experience);
+            redirectAttributes.addFlashAttribute(EXPERIENCE.modelAttributeName, experience);
         } else {
             experienceRepository.save(experience);
         }

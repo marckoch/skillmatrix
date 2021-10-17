@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.SKILL;
+
 @Controller
 @AllArgsConstructor
 class SkillDetailsController {
@@ -18,7 +20,7 @@ class SkillDetailsController {
     public ModelAndView showSkill(@PathVariable("skillId") int skillId) {
         ModelAndView mav = new ModelAndView("skills/skillDetails");
         Skill skill = skillRepository.findById(skillId).orElseThrow();
-        mav.addObject(skill);
+        mav.addObject(SKILL.modelAttributeName(), skill);
         return mav;
     }
 }

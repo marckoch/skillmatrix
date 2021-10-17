@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.DEVELOPER;
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.DEVELOPER_DTO;
+
 @Controller
 @AllArgsConstructor
 class DeveloperEditController {
@@ -24,7 +27,7 @@ class DeveloperEditController {
 	@GetMapping("/developers/new")
 	public String initCreationForm(Model model) {
 		DeveloperDTO developerDTO = new DeveloperDTO();
-		model.addAttribute("developerDTO", developerDTO);
+		model.addAttribute(DEVELOPER_DTO.modelAttributeName(), developerDTO);
 		return CREATE_OR_UPDATE_DEVELOPER_VIEW;
 	}
 
@@ -45,7 +48,7 @@ class DeveloperEditController {
 		Developer developer = developerRepository.findById(developerId).orElseThrow();
 
 		DeveloperDTO dto = buildDeveloperDTO(developer);
-		model.addAttribute("developerDTO", dto);
+		model.addAttribute(DEVELOPER_DTO.modelAttributeName(), dto);
 		return CREATE_OR_UPDATE_DEVELOPER_VIEW;
 	}
 
@@ -60,7 +63,7 @@ class DeveloperEditController {
 			updateEntityFromDTO(developerDTO, existingDev);
 
 			Developer savedDev = developerRepository.save(existingDev);
-			model.addAttribute("developer", savedDev);
+			model.addAttribute(DEVELOPER.modelAttributeName(), savedDev);
 			return "redirect:/developers/" + savedDev.getDeveloperId();
 		}
 	}

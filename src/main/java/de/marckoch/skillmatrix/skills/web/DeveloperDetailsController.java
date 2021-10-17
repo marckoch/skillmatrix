@@ -17,6 +17,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.EXPERIENCE;
+
 @Controller
 @AllArgsConstructor
 class DeveloperDetailsController {
@@ -31,16 +33,14 @@ class DeveloperDetailsController {
 		Developer dev = developerRepository.findById(developerId).orElseThrow();
 		mav.addObject(dev);
 
-		final String EXPERIENCE = "experience";
-
 		// check if we already have a (erroneous) experience in model,
 		// this was checked and put there by redirect from ExperienceController
-		if (!model.containsAttribute(EXPERIENCE)) {
+		if (!model.containsAttribute(EXPERIENCE.modelAttributeName())) {
 			Experience experience = new Experience();
 			experience.setDeveloper(dev);
-			mav.getModel().put(EXPERIENCE, experience);
+			mav.getModel().put(EXPERIENCE.modelAttributeName(), experience);
 		} else {
-			mav.getModel().put(EXPERIENCE, model.getAttribute(EXPERIENCE));
+			mav.getModel().put(EXPERIENCE.modelAttributeName(), model.getAttribute(EXPERIENCE.modelAttributeName()));
 		}
 
 		List<Skill> freeSkills = skillsService.getFreeSkills(dev);

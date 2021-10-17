@@ -16,6 +16,7 @@ import java.time.YearMonth;
 import java.util.Optional;
 
 import static de.marckoch.skillmatrix.skills.web.DeveloperProjectEditController.CREATE_OR_UPDATE_PROJECT_VIEW;
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.PROJECT_DTO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasProperty;
@@ -55,9 +56,9 @@ class DeveloperProjectEditControllerTest {
 
         mockMvc.perform(get("/developers/123/project/add"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("projectDTO"))
-                .andExpect(model().attribute("projectDTO", hasProperty("new", is(true))))
-                .andExpect(model().attribute("projectDTO", not(hasProperty("id"))))
+                .andExpect(model().attributeExists(PROJECT_DTO.modelAttributeName()))
+                .andExpect(model().attribute(PROJECT_DTO.modelAttributeName(), hasProperty("new", is(true))))
+                .andExpect(model().attribute(PROJECT_DTO.modelAttributeName(), not(hasProperty("id"))))
                 .andExpect(view().name(CREATE_OR_UPDATE_PROJECT_VIEW));
     }
 
@@ -74,9 +75,9 @@ class DeveloperProjectEditControllerTest {
         mockMvc.perform(post("/developers/123/project/add"))
                 .andExpect(status().isOk())
                 .andExpect(model().errorCount(3))
-                .andExpect(model().attributeHasFieldErrorCode("projectDTO", "name", "NotEmpty"))
-                .andExpect(model().attributeHasFieldErrorCode("projectDTO", "since", "NotEmpty"))
-                .andExpect(model().attributeHasFieldErrorCode("projectDTO", "until", "NotEmpty"))
+                .andExpect(model().attributeHasFieldErrorCode(PROJECT_DTO.modelAttributeName(), "name", "NotEmpty"))
+                .andExpect(model().attributeHasFieldErrorCode(PROJECT_DTO.modelAttributeName(), "since", "NotEmpty"))
+                .andExpect(model().attributeHasFieldErrorCode(PROJECT_DTO.modelAttributeName(), "until", "NotEmpty"))
                 .andExpect(view().name(CREATE_OR_UPDATE_PROJECT_VIEW));
     }
 
@@ -131,9 +132,9 @@ class DeveloperProjectEditControllerTest {
         mockMvc.perform(post("/developers/123/project/edit"))
                 .andExpect(status().isOk())
                 .andExpect(model().errorCount(3))
-                .andExpect(model().attributeHasFieldErrorCode("projectDTO", "name", "NotEmpty"))
-                .andExpect(model().attributeHasFieldErrorCode("projectDTO", "since", "NotEmpty"))
-                .andExpect(model().attributeHasFieldErrorCode("projectDTO", "until", "NotEmpty"))
+                .andExpect(model().attributeHasFieldErrorCode(PROJECT_DTO.modelAttributeName(), "name", "NotEmpty"))
+                .andExpect(model().attributeHasFieldErrorCode(PROJECT_DTO.modelAttributeName(), "since", "NotEmpty"))
+                .andExpect(model().attributeHasFieldErrorCode(PROJECT_DTO.modelAttributeName(), "until", "NotEmpty"))
                 .andExpect(view().name(CREATE_OR_UPDATE_PROJECT_VIEW));
     }
 

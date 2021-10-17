@@ -15,6 +15,7 @@ import java.util.Optional;
 
 import static de.marckoch.skillmatrix.skills.web.DeveloperEditController.CREATE_OR_UPDATE_DEVELOPER_VIEW;
 import static de.marckoch.skillmatrix.skills.web.DeveloperEditController.REDIRECT_DEVELOPERS;
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.DEVELOPER_DTO;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
@@ -45,9 +46,9 @@ class DeveloperEditControllerTest {
     void initCreationFormShouldShowNewDeveloper() throws Exception {
         mockMvc.perform(get("/developers/new"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("developerDTO"))
-                .andExpect(model().attribute("developerDTO", hasProperty("new", is(true))))
-                .andExpect(model().attribute("developerDTO", not(hasProperty("id"))))
+                .andExpect(model().attributeExists(DEVELOPER_DTO.modelAttributeName()))
+                .andExpect(model().attribute(DEVELOPER_DTO.modelAttributeName(), hasProperty("new", is(true))))
+                .andExpect(model().attribute(DEVELOPER_DTO.modelAttributeName(), not(hasProperty("id"))))
                 .andExpect(view().name(CREATE_OR_UPDATE_DEVELOPER_VIEW));
     }
 
@@ -57,8 +58,8 @@ class DeveloperEditControllerTest {
         mockMvc.perform(post("/developers/new"))
                 .andExpect(status().isOk())
                 .andExpect(model().errorCount(2))
-                .andExpect(model().attributeHasFieldErrorCode("developerDTO", "firstName", "NotEmpty"))
-                .andExpect(model().attributeHasFieldErrorCode("developerDTO", "lastName", "NotEmpty"))
+                .andExpect(model().attributeHasFieldErrorCode(DEVELOPER_DTO.modelAttributeName(), "firstName", "NotEmpty"))
+                .andExpect(model().attributeHasFieldErrorCode(DEVELOPER_DTO.modelAttributeName(), "lastName", "NotEmpty"))
                 .andExpect(view().name(CREATE_OR_UPDATE_DEVELOPER_VIEW));
     }
 
@@ -100,8 +101,8 @@ class DeveloperEditControllerTest {
         mockMvc.perform(post("/developers/123/edit"))
                 .andExpect(status().isOk())
                 .andExpect(model().errorCount(2))
-                .andExpect(model().attributeHasFieldErrorCode("developerDTO", "firstName", "NotEmpty"))
-                .andExpect(model().attributeHasFieldErrorCode("developerDTO", "lastName", "NotEmpty"))
+                .andExpect(model().attributeHasFieldErrorCode(DEVELOPER_DTO.modelAttributeName(), "firstName", "NotEmpty"))
+                .andExpect(model().attributeHasFieldErrorCode(DEVELOPER_DTO.modelAttributeName(), "lastName", "NotEmpty"))
                 .andExpect(view().name(CREATE_OR_UPDATE_DEVELOPER_VIEW));
     }
 
