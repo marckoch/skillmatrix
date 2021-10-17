@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static de.marckoch.skillmatrix.skills.web.ViewNames.SKILL_SETS;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -56,7 +57,7 @@ class SkillSetsControllerTest {
         mockMvc.perform(get("/skills/sets"))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("skills", Matchers.hasSize(0)))
-                .andExpect(view().name("/skills/skillSets"));
+                .andExpect(view().name(SKILL_SETS));
     }
 
     @Test
@@ -72,7 +73,7 @@ class SkillSetsControllerTest {
         mockMvc.perform(get("/skills/sets").param("skillSetQuery", "skill1"))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("skills", Matchers.hasSize(1)))
-                .andExpect(view().name("/skills/skillSets"));
+                .andExpect(view().name(SKILL_SETS));
     }
 
     @Test
@@ -89,6 +90,6 @@ class SkillSetsControllerTest {
         mockMvc.perform(get("/skills/sets").param("skillSetQuery", "skill1,skill2"))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("skills", Matchers.hasSize(2)))
-                .andExpect(view().name("/skills/skillSets"));
+                .andExpect(view().name(SKILL_SETS));
     }
 }

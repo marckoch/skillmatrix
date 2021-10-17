@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import static de.marckoch.skillmatrix.skills.web.ViewNames.SKILL_LIST;
+
 @Controller
 @AllArgsConstructor
 class SkillListController {
@@ -37,6 +39,6 @@ class SkillListController {
 
         SortUtil.addPagingAndSortAttributesToModel(model, resultPage, pagenumber, sortField, sortDir);
 
-        return "skills/skillList";
+        return SKILL_LIST;
     }
 }

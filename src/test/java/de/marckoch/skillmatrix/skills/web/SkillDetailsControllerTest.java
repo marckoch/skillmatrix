@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Collections;
 import java.util.Optional;
 
+import static de.marckoch.skillmatrix.skills.web.ViewNames.SKILL_DETAILS;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -32,7 +33,7 @@ class SkillDetailsControllerTest {
 
         mockMvc.perform(get("/skills/{skillId}", skill1.getSkillId()))
                 .andExpect(status().isOk())
-                .andExpect(view().name("skills/skillDetails"));
+                .andExpect(view().name(SKILL_DETAILS));
     }
 
     @Test

@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Collections;
 import java.util.List;
 
+import static de.marckoch.skillmatrix.skills.web.ViewNames.DEVELOPER_LIST;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
@@ -68,6 +69,6 @@ class DeveloperListControllerTest {
                 .andExpect(model().attribute("sortField", is("lastName")))
                 .andExpect(model().attribute("sortDir", is("asc")))
                 .andExpect(model().attribute("reverseSortDir", is("desc")))
-                .andExpect(view().name("developers/developerList"));
+                .andExpect(view().name(DEVELOPER_LIST));
     }
 }

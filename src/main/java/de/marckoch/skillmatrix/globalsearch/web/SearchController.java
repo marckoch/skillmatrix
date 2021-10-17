@@ -4,12 +4,15 @@ import de.marckoch.skillmatrix.skills.entity.Developer;
 import de.marckoch.skillmatrix.skills.entity.DeveloperRepository;
 import de.marckoch.skillmatrix.skills.entity.Skill;
 import de.marckoch.skillmatrix.skills.entity.SkillRepository;
+import de.marckoch.skillmatrix.skills.web.ViewNames;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collection;
+
+import static de.marckoch.skillmatrix.skills.web.ViewNames.*;
 
 /**
  * Controller for the global search box at the top right.
@@ -37,15 +40,15 @@ class SearchController {
         Collection<Developer> developers = devRepo.findByQuery(query.toUpperCase());
         if (!developers.isEmpty()) {
             model.addAttribute("developers", developers);
-            return "developers/developerList";
+            return DEVELOPER_LIST;
         }
 
         Collection<Skill> skills = skillRepo.findByQuery(query.toUpperCase());
         if (!skills.isEmpty()) {
             model.addAttribute("skills", skills);
-            return "skills/skillList";
+            return SKILL_LIST;
         }
 
-        return "globalsearch/emptySearch";
+        return EMPTY_SEARCH;
     }
 }

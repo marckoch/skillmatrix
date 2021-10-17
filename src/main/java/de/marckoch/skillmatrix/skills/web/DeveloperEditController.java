@@ -14,12 +14,12 @@ import javax.validation.Valid;
 
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.DEVELOPER;
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.DEVELOPER_DTO;
+import static de.marckoch.skillmatrix.skills.web.ViewNames.CREATE_OR_UPDATE_DEVELOPER_VIEW;
 
 @Controller
 @AllArgsConstructor
 class DeveloperEditController {
 
-	public static final String CREATE_OR_UPDATE_DEVELOPER_VIEW = "/developers/createOrUpdateDeveloperForm";
 	public static final String REDIRECT_DEVELOPERS = "redirect:/developers/";
 
 	private final DeveloperRepository developerRepository;

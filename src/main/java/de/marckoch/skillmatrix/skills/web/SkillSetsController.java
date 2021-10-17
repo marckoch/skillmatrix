@@ -13,6 +13,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import static de.marckoch.skillmatrix.skills.web.ViewNames.SKILL_SETS;
+
 @Controller
 @AllArgsConstructor
 class SkillSetsController {
@@ -24,7 +26,7 @@ class SkillSetsController {
         final List<Skill> skills = skillSetsService.buildSkillSets(skillSetQuery);
         model.addAttribute("skills", skills);
         model.addAttribute("skillSetQuery", buildJsonOfSkillSetQuery(skillSetQuery));
-        return "/skills/skillSets";
+        return SKILL_SETS;
     }
 
     // return search terms so token input can show them again (via its prePopulate mechanism)

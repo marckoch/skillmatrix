@@ -13,9 +13,9 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Optional;
 
-import static de.marckoch.skillmatrix.skills.web.DeveloperEditController.CREATE_OR_UPDATE_DEVELOPER_VIEW;
 import static de.marckoch.skillmatrix.skills.web.DeveloperEditController.REDIRECT_DEVELOPERS;
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.DEVELOPER_DTO;
+import static de.marckoch.skillmatrix.skills.web.ViewNames.CREATE_OR_UPDATE_DEVELOPER_VIEW;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;

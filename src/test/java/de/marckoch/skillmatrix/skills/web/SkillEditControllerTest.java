@@ -9,14 +9,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import java.util.Collections;
 import java.util.Optional;
 
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.SKILL_DTO;
-import static de.marckoch.skillmatrix.skills.web.SkillEditController.CREATE_OR_UPDATE_SKILL_VIEW;
 import static de.marckoch.skillmatrix.skills.web.SkillEditController.REDIRECT_SKILLS;
+import static de.marckoch.skillmatrix.skills.web.ViewNames.CREATE_OR_UPDATE_SKILL_VIEW;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;

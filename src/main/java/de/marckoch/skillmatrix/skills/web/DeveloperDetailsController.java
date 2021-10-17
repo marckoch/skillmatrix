@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.EXPERIENCE_DTO;
+import static de.marckoch.skillmatrix.skills.web.ViewNames.DEVELOPER_DETAILS;
 
 @Controller
 @AllArgsConstructor
@@ -28,7 +29,7 @@ class DeveloperDetailsController {
 
     @GetMapping("/developers/{developerId}")
     public ModelAndView showDeveloper(@PathVariable("developerId") int developerId, Model model) {
-        ModelAndView mav = new ModelAndView("developers/developerDetails");
+        ModelAndView mav = new ModelAndView(DEVELOPER_DETAILS);
         Developer dev = developerRepository.findById(developerId).orElseThrow();
         mav.addObject(dev);
 

@@ -14,12 +14,12 @@ import javax.validation.Valid;
 import java.util.Map;
 
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.SKILL_DTO;
+import static de.marckoch.skillmatrix.skills.web.ViewNames.CREATE_OR_UPDATE_SKILL_VIEW;
 
 @Controller
 @AllArgsConstructor
 class SkillEditController {
 
-    public static final String CREATE_OR_UPDATE_SKILL_VIEW = "/skills/createOrUpdateSkillForm";
     public static final String REDIRECT_SKILLS = "redirect:/skills/";
 
     private final SkillRepository skillRepository;

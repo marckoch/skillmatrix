@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import static de.marckoch.skillmatrix.skills.web.ViewNames.DEVELOPER_LIST;
+
 @Controller
 @AllArgsConstructor
 class DeveloperListController {
@@ -37,6 +39,6 @@ class DeveloperListController {
 
 		SortUtil.addPagingAndSortAttributesToModel(model, resultPage, pagenumber, sortField, sortDir);
 
-		return "developers/developerList";
+		return DEVELOPER_LIST;
 	}
 }

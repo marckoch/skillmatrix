@@ -13,6 +13,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Collections;
 import java.util.List;
 
+import static de.marckoch.skillmatrix.skills.web.ViewNames.DEVELOPER_LIST;
+import static de.marckoch.skillmatrix.skills.web.ViewNames.EMPTY_SEARCH;
+import static de.marckoch.skillmatrix.skills.web.ViewNames.SKILL_LIST;
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -44,7 +47,7 @@ class SearchControllerTest {
         mockMvc.perform(get("/globalsearch").param("query", "dev1"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("developers"))
-                .andExpect(view().name("developers/developerList"))
+                .andExpect(view().name(DEVELOPER_LIST))
                 .andExpect(content().string(containsString(dev1.getLastName())));
     }
 
@@ -59,7 +62,7 @@ class SearchControllerTest {
         mockMvc.perform(get("/globalsearch").param("query", "skillName1"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("skills"))
-                .andExpect(view().name("skills/skillList"))
+                .andExpect(view().name(SKILL_LIST))
                 .andExpect(content().string(containsString(skill1.getName())));
     }
 
@@ -71,7 +74,7 @@ class SearchControllerTest {
         mockMvc.perform(get("/globalsearch").param("query", "xxx"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeDoesNotExist("developers", "skills"))
-                .andExpect(view().name("globalsearch/emptySearch"))
+                .andExpect(view().name(EMPTY_SEARCH))
                 .andExpect(content().string(containsString("Nothing found!")));
     }
 }

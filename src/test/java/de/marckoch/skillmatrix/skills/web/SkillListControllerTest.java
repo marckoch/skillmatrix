@@ -9,11 +9,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import java.util.Collections;
 import java.util.List;
 
+import static de.marckoch.skillmatrix.skills.web.ViewNames.SKILL_LIST;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
@@ -60,7 +60,7 @@ class SkillListControllerTest {
                 .andExpect(model().attribute("sortField", is("name")))
                 .andExpect(model().attribute("sortDir", is("asc")))
                 .andExpect(model().attribute("reverseSortDir", is("desc")))
-                .andExpect(view().name("skills/skillList"));
+                .andExpect(view().name(SKILL_LIST));
     }
 
     @Test
@@ -80,6 +80,6 @@ class SkillListControllerTest {
                 .andExpect(model().attribute("sortField", is("name")))
                 .andExpect(model().attribute("sortDir", is("desc")))
                 .andExpect(model().attribute("reverseSortDir", is("asc")))
-                .andExpect(view().name("skills/skillList"));
+                .andExpect(view().name(SKILL_LIST));
     }
 }

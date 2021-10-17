@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static de.marckoch.skillmatrix.skills.web.ViewNames.SKILL_MATRIX;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -53,6 +54,6 @@ class SkillMatrixControllerTest {
 
         mockMvc.perform(get("/skills/matrix"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/skills/skillMatrix"));
+                .andExpect(view().name(SKILL_MATRIX));
     }
 }

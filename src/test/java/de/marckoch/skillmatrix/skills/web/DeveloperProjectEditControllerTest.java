@@ -15,8 +15,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.YearMonth;
 import java.util.Optional;
 
-import static de.marckoch.skillmatrix.skills.web.DeveloperProjectEditController.CREATE_OR_UPDATE_PROJECT_VIEW;
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.PROJECT_DTO;
+import static de.marckoch.skillmatrix.skills.web.ViewNames.CREATE_OR_UPDATE_PROJECT_VIEW;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasProperty;
