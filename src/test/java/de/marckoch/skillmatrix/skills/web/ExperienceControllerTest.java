@@ -79,7 +79,6 @@ class ExperienceControllerTest {
         MvcResult result = mockMvc.perform(post("/experience/{developerId}/new", 123)
                         .param("years", "99")
                         .param("rating", "8"))
-                .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
                 .andExpect(flash().attributeExists(EXPERIENCE_DTO.modelAttributeName, "org.springframework.validation.BindingResult.experienceDTO"))

@@ -71,7 +71,6 @@ class SkillListControllerTest {
                         .param("sort-field", "name")
                         .param("sort-dir", "desc"))
                 .andExpect(status().isOk())
-                .andDo(MockMvcResultHandlers.print())
                 .andExpect(model().hasNoErrors())
                 .andExpect(model().attributeExists("skills"))
                 .andExpect(model().attribute("skills", instanceOf(PageImpl.class)))

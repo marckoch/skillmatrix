@@ -92,7 +92,6 @@ class SkillEditControllerTest {
         // error because name is missing in post!
         MvcResult result = mockMvc.perform(post("/skills/123/edit"))
                 .andExpect(status().isOk())
-                .andDo(MockMvcResultHandlers.print())
                 .andExpect(model().errorCount(1))
                 .andExpect(model().attributeHasFieldErrorCode(SKILL_DTO.modelAttributeName, "name", "NotEmpty"))
                 .andExpect(view().name(CREATE_OR_UPDATE_SKILL_VIEW))
