@@ -12,6 +12,13 @@
                 this for what seems like forever and I know everything about it').</p>
             <p class="text-secondary">Other people can search for skills and see which person has these skills.</p>
         </div>
+        <th:block th:if="${showWarning}">
+            <div class="col-md-12">
+                <div class="alert alert-danger" role="alert">
+                    <span class="bi bi-exclamation-circle"></span> This is a TEST environment! Data will NOT be saved and might be lost!
+                </div>
+            </div>
+        </th:block>
     </div>
   </body>
 </html>
