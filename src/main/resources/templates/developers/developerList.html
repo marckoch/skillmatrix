@@ -42,7 +42,8 @@
                     <span th:case="'desc'" class="bi bi-arrow-down"></span>
                 </th:block>
             </th>
-            <th style="width: 20%;">Title</th>
+            <th style="width: 10%;">Title</th>
+            <th style="width: 10%;">Project</th>
             <th style="width: 50%;">Top 3 Skills</th>
         </tr>
     </thead>
@@ -52,7 +53,11 @@
                 <a th:href="@{/developers/__${developer.getDeveloperId()}__}"
                    th:text="${developer.getFullName()}">Developer 1</a>
             </td>
+
             <td th:text="${developer.title}">Dr.</td>
+
+            <td th:text="${developer.hasProject() ? developer.currentProject.name : ''}">Project</td>
+
             <td>
                 <th:block th:if="${developer.topThreeExperiences().size() > 0}">
                     <table id="top-skills" class="table table-striped">
