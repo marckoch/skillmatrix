@@ -44,6 +44,7 @@ jobs:
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=marckoch_skillmatrix
 
   deploy:
+    name: Deploy Docker image to AWS ECR
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -56,7 +57,7 @@ jobs:
           distribution: 'adopt'
           java-version: '17'
 
-      - name: Build and analyze
+      - name: Build package
         run: mvn -B package
 
       - name: Configure AWS credentials
@@ -78,3 +79,19 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+  redeploy:
+    name: Trigger redeploy of Beanstalk App
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v18
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: skillmatrix
+          environment_name: skillmatrix-test
+          version_label: skillmatrix-source-4
+          region: eu-central-1
