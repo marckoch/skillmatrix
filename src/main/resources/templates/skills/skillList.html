@@ -49,9 +49,9 @@
         <tbody>
           <tr th:each="skill : ${skills}">
               <td>
-                  <a th:href="@{/skills/__${skill.getSkillId()}__}" th:text="${skill.getNameAndVersion()}">Skill 1</a>
+                  <a th:href="@{/skills/__${skill.getSkillId()}__}" th:utext="${skill.getNameAndVersion()}">Skill 1</a>
               </td>
-              <td th:text="${skill.alias}">Alias</td>
+              <td th:utext="${skill.alias}">Alias</td>
 
               <td>
                   <th:block th:if="${skill.topThreeExperts().size() > 0}">

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.Collections;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.DEVELOPER_LIST;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.EMPTY_SEARCH;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.SKILL_LIST;
+import static org.assertj.core.api.Assertions.*;
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -39,31 +41,38 @@ class SearchControllerTest {
     @Test
     void searchingDeveloperNameShouldReturnDeveloperList() throws Exception {
         Developer dev1 = new Developer();
-        dev1.setLastName("developer1lastName");
+        dev1.setLastName("lastNameDev1xx");
         dev1.setExperiences(Collections.emptyList());
 
-        when(developerRepository.findByQuery("dev1".toUpperCase())).thenReturn(List.of(dev1));
+        when(developerRepository.findByQuery("Dev1".toUpperCase())).thenReturn(List.of(dev1));
 
-        mockMvc.perform(get("/globalsearch").param("query", "dev1"))
+        MvcResult result = mockMvc.perform(get("/globalsearch").param("query", "dev1"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("developers"))
                 .andExpect(view().name(DEVELOPER_LIST))
-                .andExpect(content().string(containsString(dev1.getLastName())));
+                .andExpect(content().string(containsString(dev1.getLastName())))
+                .andReturn();
+        List<Developer> devs = (List<Developer>) result.getModelAndView().getModel().get("developers");
+        assertThat(devs.get(0).getLastName()).isEqualTo("lastName<mark>Dev1</mark>xx");
     }
 
     @Test
     void searchingSkillNameShouldReturnSkillList() throws Exception {
         Skill skill1 = new Skill();
-        skill1.setName("skillName1");
+        skill1.setName("xxskillName1xx");
         skill1.setExperiences(Collections.emptyList());
 
         when(skillRepository.findByQuery("skillName1".toUpperCase())).thenReturn(List.of(skill1));
 
-        mockMvc.perform(get("/globalsearch").param("query", "skillName1"))
+        MvcResult result = mockMvc.perform(get("/globalsearch").param("query", "skillName1"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("skills"))
                 .andExpect(view().name(SKILL_LIST))
-                .andExpect(content().string(containsString(skill1.getName())));
+                .andExpect(content().string(containsString(skill1.getName())))
+                .andReturn();
+
+        List<Skill> skills = (List<Skill>) result.getModelAndView().getModel().get("skills");
+        assertThat(skills.get(0).getName()).isEqualTo("xx<mark>skillName1</mark>xx");
     }
 
     @Test

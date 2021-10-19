@@ -51,7 +51,7 @@
         <tr th:each="developer : ${developers}">
             <td>
                 <a th:href="@{/developers/__${developer.getDeveloperId()}__}"
-                   th:text="${developer.getFullName()}">Developer 1</a>
+                   th:utext="${developer.getFullName()}">Developer 1</a>
             </td>
 
             <td th:text="${developer.title}">Dr.</td>
