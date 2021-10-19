@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collection;
 
-import static de.marckoch.skillmatrix.skills.web.ViewNames.*;
+import static de.marckoch.skillmatrix.skills.web.ViewNames.DEVELOPER_LIST;
+import static de.marckoch.skillmatrix.skills.web.ViewNames.EMPTY_SEARCH;
+import static de.marckoch.skillmatrix.skills.web.ViewNames.SKILL_LIST;
 
 /**
  * Controller for the global search box at the top right.
@@ -53,7 +55,8 @@ class SearchController {
         return EMPTY_SEARCH;
     }
 
-    private final String HIGHLIGHTED_RESULT = "<mark>$0</mark>";
+    private static final String HIGHLIGHTED_RESULT = "<mark>$0</mark>";
+
     private void highlightDeveloperSearchMatches(Collection<Developer> developers, String query) {
         developers.forEach(d -> {
             if (d.getFirstName() != null) {
