@@ -34,8 +34,9 @@ class DeveloperDetailsController {
         // check if we already have a (erroneous) experience in model,
         // this was checked and put there by redirect from ExperienceController
         if (!model.containsAttribute(EXPERIENCE_DTO.modelAttributeName)) {
-            ExperienceDTO experienceDTO = new ExperienceDTO();
-            experienceDTO.setDeveloper(dev);
+            ExperienceDTO experienceDTO = ExperienceDTO.builder()
+                    .developer(dev)
+                    .build();
             model.addAttribute(EXPERIENCE_DTO.modelAttributeName, experienceDTO);
         } else {
             model.addAttribute("wasValidated", true);

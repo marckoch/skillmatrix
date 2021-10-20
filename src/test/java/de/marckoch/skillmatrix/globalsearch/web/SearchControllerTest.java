@@ -41,6 +41,7 @@ class SearchControllerTest {
     @Test
     void searchingDeveloperNameShouldReturnDeveloperList() throws Exception {
         Developer dev1 = new Developer();
+        dev1.setFirstName("firstNameDev1xx");
         dev1.setLastName("lastNameDev1xx");
         dev1.setExperiences(Collections.emptyList());
 
@@ -62,6 +63,7 @@ class SearchControllerTest {
     void searchingSkillNameShouldReturnSkillList() throws Exception {
         Skill skill1 = new Skill();
         skill1.setName("xxskillName1xx");
+        skill1.setAlias("xAlliasxskillName1xx");
         skill1.setExperiences(Collections.emptyList());
 
         when(skillRepository.findByQuery("skillName1".toUpperCase())).thenReturn(List.of(skill1));
