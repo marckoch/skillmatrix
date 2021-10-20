@@ -43,13 +43,13 @@
             </tr>
         </thead>
         <tbody>
-          <tr th:each="skill : ${skills}">
+          <tr th:each="skill : ${skills}" th:classappend="${skill.getWeight() == 0 ? 'table-danger' : ''}">
               <td>
                   <a th:href="@{/skills/__${skill.getSkillId()}__}" th:text="${skill.nameAndVersion}">Skill V1</a>
               </td>
 
               <th:block th:each="exp : ${skill.getExperiences()}">
-                  <td>
+                  <td th:classappend="${exp.developer.getWeight() == 0 ? 'table-danger' : ''}">
                       <span th:if="${exp.getWeight() > 0}" th:text="${exp.getWeight()}"
                             data-bs-toggle="tooltip" data-bs-html="true" th:title="${exp.getYears() + ' years<br>' + exp.getRating() + ' stars'}">3</span>
                   </td>

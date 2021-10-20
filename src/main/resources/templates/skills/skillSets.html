@@ -49,7 +49,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="skill : ${skills}">
+            <tr th:each="skill : ${skills}" th:classappend="${skill.getWeight() == 0 ? 'table-danger' : ''}">
                 <td>
                     <a th:href="@{/skills/__${skill.getSkillId()}__}" th:text="${skill.nameAndVersion}">Skill V1</a>
                 </td>
