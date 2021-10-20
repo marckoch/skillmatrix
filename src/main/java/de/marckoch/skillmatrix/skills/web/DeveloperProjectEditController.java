@@ -39,6 +39,7 @@ class DeveloperProjectEditController {
     @PostMapping("/developers/{developerId}/project/add")
     public String processCreationForm(@Valid ProjectDTO projectDTO, BindingResult result,
                                       @PathVariable("developerId") int developerId, Model model) {
+        model.addAttribute("wasValidated", true);
         if (result.hasErrors()) {
             Developer developer = developerRepository.findById(developerId).orElseThrow();
             model.addAttribute(DEVELOPER.modelAttributeName, developer);
@@ -67,6 +68,7 @@ class DeveloperProjectEditController {
     @PostMapping("/developers/{developerId}/project/edit")
     public String processUpdateProjectForm(@Valid ProjectDTO developerDTO, BindingResult result,
                                            @PathVariable("developerId") int developerId, Model model) {
+        model.addAttribute("wasValidated", true);
         if (result.hasErrors()) {
             Developer developer = developerRepository.findById(developerId).orElseThrow();
             model.addAttribute(DEVELOPER.modelAttributeName, developer);
