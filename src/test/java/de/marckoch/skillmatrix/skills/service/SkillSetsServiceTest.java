@@ -13,7 +13,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 import java.util.random.RandomGenerator;
 import java.util.stream.Collectors;
 
@@ -33,9 +33,9 @@ class SkillSetsServiceTest {
     @MockBean
     DeveloperRepository developerRepository;
 
-    final int NUMBER_OF_DEVELOPERS = 100;
+    final int NUMBER_OF_DEVELOPERS = 10;
     final int NUMBER_OF_SKILLS = 200;
-    final int NUMBER_OF_EXPERIENCES = 1000;
+    final int NUMBER_OF_EXPERIENCES = 100;
 
     private final List<Developer> developers = new ArrayList<>();
     private final List<Skill> skills = new ArrayList<>();
@@ -52,15 +52,15 @@ class SkillSetsServiceTest {
     void skillSetsWorksWithBigData() {
         createRandomTestData();
 
-        List<Skill> searchSkills = getRandomSkills();
+        List<Experience> randomExp = getRandomExperiences(5);
+        List<Skill> searchSkills = randomExp.stream().map(Experience::getSkill).distinct().toList();
 
-        when(skillRepository.findAll()).thenReturn(skills);
         searchSkills.forEach(skill ->
                 when(skillRepository.findByQuery(skill.getName().toUpperCase())).thenReturn(List.of(skill)));
 
-        when(developerRepository.findAll()).thenReturn(developers);
-        developers.forEach(developer ->
-                when(developerRepository.findById(developer.getDeveloperId())).thenReturn(Optional.of(developer)));
+        Set<Integer> developerIdsOfSearchedSkills = getDeveloperIds(searchSkills);
+        List<Developer> developersOfSearchedSkills = developers.stream().filter(developer -> developerIdsOfSearchedSkills.contains(developer.getDeveloperId())).toList();
+        when(developerRepository.findAllById(developerIdsOfSearchedSkills)).thenReturn(developersOfSearchedSkills);
 
         // when
         final List<Skill> skills = skillSetsService.getSkillsForSkillSets(commaSeperatedListOfUppercaseSkillNames(searchSkills));
@@ -73,6 +73,7 @@ class SkillSetsServiceTest {
         final List<Integer> sortedDeveloperIdsOfFirstSkill = skills.get(0).getDeveloperIds();
 
         skills.forEach(skill -> {
+            assertThat(skill.getExperiences()).hasSize(developersOfSearchedSkills.size());
             assertThat(skill.getDeveloperIds()).isEqualTo(sortedDeveloperIdsOfFirstSkill);
         });
     }
@@ -83,16 +84,22 @@ class SkillSetsServiceTest {
                 .collect(Collectors.joining(","));
     }
 
-    private List<Skill> getRandomSkills() {
+    private Set<Integer> getDeveloperIds(List<Skill> skills) {
+        return skills.stream()
+                .flatMap(s -> s.getDeveloperIds().stream())
+                .collect(Collectors.toSet());
+    }
+
+    private List<Experience> getRandomExperiences(int count) {
         RandomGenerator randomGenerator = RandomGenerator.getDefault();
-        List<Skill> searchSkills = new ArrayList<>();
-        while (searchSkills.size() < 5) {
-            Skill skill = skills.get(randomGenerator.nextInt(skills.size()));
-            if (!searchSkills.contains(skill)) {
-                searchSkills.add(skill);
+        List<Experience> randomExps = new ArrayList<>();
+        while (randomExps.size() < count) {
+            Experience exp = experiences.get(randomGenerator.nextInt(experiences.size()));
+            if (!randomExps.contains(exp)) {
+                randomExps.add(exp);
             }
         }
-        return searchSkills;
+        return randomExps;
     }
 
     public void createRandomTestData() {

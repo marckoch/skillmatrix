@@ -14,7 +14,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.random.RandomGenerator;
 
 import static java.util.Comparator.comparingInt;
@@ -45,8 +44,6 @@ class SkillMatrixServiceTest {
     void skillMatrixWorksWithBigData() {
         when(skillRepository.findAll()).thenReturn(skills);
         when(developerRepository.findAll()).thenReturn(developers);
-        developers.forEach(developer ->
-                when(developerRepository.findById(developer.getDeveloperId())).thenReturn(Optional.of(developer)));
 
         final List<Skill> skills = skillMatrixService.getSkillsForSkillMatrix();
 

@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -25,14 +23,14 @@ public class SkillMatrixService {
     public List<Skill> getSkillsForSkillMatrix() {
         final List<Skill> skills = sortSkills(getAllSkills());
 
-        final Set<Integer> developerIds = getDeveloperIds();
+        List<Developer> developers = developerRepository.findAll();
 
-        return buildSkillList(skills, developerIds);
+        return buildSkillList(skills, developers);
     }
 
-    private List<Skill> buildSkillList(List<Skill> skills, Set<Integer> developerIds) {
+    private List<Skill> buildSkillList(List<Skill> skills, List<Developer> developers) {
         skills.forEach(skill -> {
-            addEmptyExperienceForMissingDevelopers(skill, developerIds);
+            addEmptyExperienceForMissingDevelopers(skill, developers);
 
             // sort all experiences again by developer weight of selected skills descending, then by name
             Comparator<Experience> weightComp = Comparator.comparing(o -> o.getDeveloper().getWeight());
@@ -47,35 +45,28 @@ public class SkillMatrixService {
         return skillRepository.findAll();
     }
 
-    public Set<Integer> getDeveloperIds() {
-        return developerRepository.findAll()
-                .stream()
-                .map(Developer::getDeveloperId)
-                .collect(Collectors.toSet());
-    }
-
-    private void addEmptyExperienceForMissingDevelopers(Skill skill, Set<Integer> devIdsOfSkills) {
+    private void addEmptyExperienceForMissingDevelopers(Skill skill, List<Developer> developers) {
         List<Experience> experiences = skill.getExperiences();
-        List<Integer> idsOfMissingDevs = findIdsOfMissingDevs(devIdsOfSkills, experiences);
+        List<Developer> missingDevs = findMissingDevs(developers, experiences);
 
-        idsOfMissingDevs.forEach(developerId -> {
-            Experience e = createEmptyExperienceForDeveloper(developerId);
+        missingDevs.forEach(developer -> {
+            Experience e = createEmptyExperienceForDeveloper(developer);
             experiences.add(e);
         });
     }
 
-    private List<Integer> findIdsOfMissingDevs(Set<Integer> idsOfDevelopers, List<Experience> experiences) {
+    private List<Developer> findMissingDevs(List<Developer> developers, List<Experience> experiences) {
         final List<Integer> idsOfDevelopersWithThisSkill = experiences.stream()
                 .map(exp -> exp.getDeveloper().getDeveloperId())
                 .toList();
-        return idsOfDevelopers.stream()
-                .filter(id -> !idsOfDevelopersWithThisSkill.contains(id))
+        return developers.stream()
+                .filter(developer -> !idsOfDevelopersWithThisSkill.contains(developer.getDeveloperId()))
                 .toList();
     }
 
-    private Experience createEmptyExperienceForDeveloper(Integer developerId) {
+    private Experience createEmptyExperienceForDeveloper(Developer developer) {
         return Experience.builder()
-                .developer(developerRepository.findById(developerId).orElseThrow())
+                .developer(developer)
                 .rating(0)
                 .years(0)
                 .build();
