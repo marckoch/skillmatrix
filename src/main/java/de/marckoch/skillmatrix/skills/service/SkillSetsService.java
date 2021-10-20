@@ -24,11 +24,15 @@ public class SkillSetsService {
 
     private final DeveloperRepository developerRepository;
 
-    public List<Skill> buildSkillSets(String skillSetQuery) {
+    public List<Skill> getSkillsForSkillSets(String skillSetQuery) {
         final List<Skill> skills = sortSkills(getSkills(skillSetQuery));
 
         final Set<Integer> developerIds = getDeveloperIds(skills);
 
+        return buildSkillList(skills, developerIds);
+    }
+
+    private List<Skill> buildSkillList(List<Skill> skills, Set<Integer> developerIds) {
         skills.forEach(skill -> {
             addEmptyExperienceForMissingDevelopers(skill, developerIds);
 
@@ -39,6 +43,29 @@ public class SkillSetsService {
         });
 
         return skills;
+    }
+
+    private List<Skill> getSkills(String query) {
+        if (query == null || query.isEmpty())
+            return Collections.emptyList();
+
+        // this should/could be done in one query, but for now this is good enough.
+        // user will enter only a handful of search terms, so we do a query for each of them.
+        if (query.contains(",")) {
+            List<String> searchTerms = Arrays.stream(query.split(",")).map(s -> s.trim().toUpperCase()).toList();
+            return searchTerms.stream()
+                    .map(skillRepository::findByQuery)
+                    .flatMap(Collection::stream)
+                    .distinct()
+                    .toList();
+        } else
+            return skillRepository.findByQuery(query.toUpperCase());
+    }
+
+    private Set<Integer> getDeveloperIds(List<Skill> skills) {
+        return skills.stream()
+                .flatMap(s -> s.getDeveloperIds().stream())
+                .collect(Collectors.toSet());
     }
 
     private void addEmptyExperienceForMissingDevelopers(Skill skill, Set<Integer> devIdsOfSkills) {
@@ -68,23 +95,6 @@ public class SkillSetsService {
                 .build();
     }
 
-    private List<Skill> getSkills(String query) {
-        if (query == null || query.isEmpty())
-            return Collections.emptyList();
-
-        // this should/could be done in one query, but for now this is good enough.
-        // user will enter only a handful of search terms, so we do a query for each of them.
-        if (query.contains(",")) {
-            List<String> searchTerms = Arrays.stream(query.split(",")).map(s -> s.trim().toUpperCase()).toList();
-            return searchTerms.stream()
-                    .map(skillRepository::findByQuery)
-                    .flatMap(Collection::stream)
-                    .distinct()
-                    .toList();
-        } else
-            return skillRepository.findByQuery(query.toUpperCase());
-    }
-
     private List<Skill> sortSkills(List<Skill> skills) {
         Comparator<Skill> skillWeightComp = Comparator.comparing(HasExperiences::getWeight);
         Comparator<Skill> skillNameComp = Comparator.comparing(Skill::getName);
@@ -92,11 +102,5 @@ public class SkillSetsService {
         return skills.stream()
                 .sorted(skillWeightComp.reversed().thenComparing(skillNameComp))
                 .toList();
-    }
-
-    public Set<Integer> getDeveloperIds(List<Skill> skills) {
-        return skills.stream()
-                .flatMap(s -> s.getDeveloperIds().stream())
-                .collect(Collectors.toSet());
     }
 }

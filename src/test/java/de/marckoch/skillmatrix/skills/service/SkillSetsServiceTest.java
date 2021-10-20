@@ -43,7 +43,7 @@ class SkillSetsServiceTest {
 
     @Test
     void skillSetsWorksWithEmptyInput() {
-        final List<Skill> skills = skillSetsService.buildSkillSets("");
+        final List<Skill> skills = skillSetsService.getSkillsForSkillSets("");
 
         assertThat(skills).isEmpty();
     }
@@ -63,7 +63,7 @@ class SkillSetsServiceTest {
                 when(developerRepository.findById(developer.getDeveloperId())).thenReturn(Optional.of(developer)));
 
         // when
-        final List<Skill> skills = skillSetsService.buildSkillSets(commaSeperatedListOfUppercaseSkillNames(searchSkills));
+        final List<Skill> skills = skillSetsService.getSkillsForSkillSets(commaSeperatedListOfUppercaseSkillNames(searchSkills));
 
         // then
         assertThat(skills).hasSize(searchSkills.size());

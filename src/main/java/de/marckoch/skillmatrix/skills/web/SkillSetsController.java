@@ -23,7 +23,7 @@ class SkillSetsController {
 
     @GetMapping("/skills/sets")
     public String skillSets(@RequestParam(required = false) String skillSetQuery, Model model) {
-        final List<Skill> skills = skillSetsService.buildSkillSets(skillSetQuery);
+        final List<Skill> skills = skillSetsService.getSkillsForSkillSets(skillSetQuery);
         model.addAttribute("skills", skills);
         model.addAttribute("skillSetQuery", buildJsonOfSkillSetQuery(skillSetQuery));
         return SKILL_SETS;

@@ -19,7 +19,7 @@ class SkillMatrixController {
 
     @GetMapping("/skills/matrix")
     public String skillMatrix(Model model) {
-        final List<Skill> skills = skillMatrixService.buildSkillMatrix();
+        final List<Skill> skills = skillMatrixService.getSkillsForSkillMatrix();
         model.addAttribute("skills", skills);
         return SKILL_MATRIX;
     }

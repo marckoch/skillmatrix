@@ -48,7 +48,7 @@ class SkillMatrixServiceTest {
         developers.forEach(developer ->
                 when(developerRepository.findById(developer.getDeveloperId())).thenReturn(Optional.of(developer)));
 
-        final List<Skill> skills = skillMatrixService.buildSkillMatrix();
+        final List<Skill> skills = skillMatrixService.getSkillsForSkillMatrix();
 
         assertThat(skills).hasSize(NUMBER_OF_SKILLS);
         assertThat(skills).map(HasExperiences::getWeight)

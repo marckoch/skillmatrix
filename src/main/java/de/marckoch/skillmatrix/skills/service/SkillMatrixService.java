@@ -22,11 +22,15 @@ public class SkillMatrixService {
 
     private final DeveloperRepository developerRepository;
 
-    public List<Skill> buildSkillMatrix() {
+    public List<Skill> getSkillsForSkillMatrix() {
         final List<Skill> skills = sortSkills(getAllSkills());
 
         final Set<Integer> developerIds = getDeveloperIds();
 
+        return buildSkillList(skills, developerIds);
+    }
+
+    private List<Skill> buildSkillList(List<Skill> skills, Set<Integer> developerIds) {
         skills.forEach(skill -> {
             addEmptyExperienceForMissingDevelopers(skill, developerIds);
 
@@ -39,6 +43,17 @@ public class SkillMatrixService {
         return skills;
     }
 
+    private List<Skill> getAllSkills() {
+        return skillRepository.findAll();
+    }
+
+    public Set<Integer> getDeveloperIds() {
+        return developerRepository.findAll()
+                .stream()
+                .map(Developer::getDeveloperId)
+                .collect(Collectors.toSet());
+    }
+
     private void addEmptyExperienceForMissingDevelopers(Skill skill, Set<Integer> devIdsOfSkills) {
         List<Experience> experiences = skill.getExperiences();
         List<Integer> idsOfMissingDevs = findIdsOfMissingDevs(devIdsOfSkills, experiences);
@@ -49,11 +64,11 @@ public class SkillMatrixService {
         });
     }
 
-    private List<Integer> findIdsOfMissingDevs(Set<Integer> idsOfAllDevelopers, List<Experience> experiences) {
+    private List<Integer> findIdsOfMissingDevs(Set<Integer> idsOfDevelopers, List<Experience> experiences) {
         final List<Integer> idsOfDevelopersWithThisSkill = experiences.stream()
                 .map(exp -> exp.getDeveloper().getDeveloperId())
                 .toList();
-        return idsOfAllDevelopers.stream()
+        return idsOfDevelopers.stream()
                 .filter(id -> !idsOfDevelopersWithThisSkill.contains(id))
                 .toList();
     }
@@ -66,10 +81,6 @@ public class SkillMatrixService {
                 .build();
     }
 
-    private List<Skill> getAllSkills() {
-        return skillRepository.findAll();
-    }
-
     private List<Skill> sortSkills(List<Skill> skills) {
         Comparator<Skill> skillWeightComp = Comparator.comparing(HasExperiences::getWeight);
         Comparator<Skill> skillNameComp = Comparator.comparing(Skill::getName);
@@ -77,12 +88,5 @@ public class SkillMatrixService {
         return skills.stream()
                 .sorted(skillWeightComp.reversed().thenComparing(skillNameComp))
                 .toList();
-    }
-
-    public Set<Integer> getDeveloperIds() {
-        return developerRepository.findAll()
-                .stream()
-                .map(Developer::getDeveloperId)
-                .collect(Collectors.toSet());
     }
 }
