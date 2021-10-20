@@ -13,5 +13,6 @@ public class ViewNames {
     public static final String SKILL_MATRIX = "skills/skillMatrix";
     public static final String SKILL_SETS = "skills/skillSets";
 
+    public static final String SEARCH_RESULT = "globalsearch/searchResult";
     public static final String EMPTY_SEARCH = "globalsearch/emptySearch";
 }

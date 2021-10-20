@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body})}">
+<body>
+
+<th:block th:if="${!developers.isEmpty()}">
+    <h4 class="d-flex justify-content-between align-items-center">Developers</h4>
+    <table id="developers" class="table table-striped">
+        <thead>
+        <tr>
+            <th style="width: 30%;">Name</th>
+            <th style="width: 10%;">Title</th>
+            <th style="width: 10%;">Project</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="developer : ${developers}">
+            <td>
+                <a th:href="@{/developers/__${developer.getDeveloperId()}__}"
+                   th:utext="${developer.getFullName()}">Developer 1</a>
+            </td>
+
+            <td th:text="${developer.title}">Dr.</td>
+
+            <td th:text="${developer.hasProject() ? developer.currentProject.name : ''}">Project</td>
+        </tr>
+        </tbody>
+    </table>
+</th:block>
+
+<th:block th:if="${!skills.isEmpty()}">
+    <h4 class="d-flex justify-content-between align-items-center">Skills</h4>
+    <table id="skills" class="table table-striped">
+        <thead>
+        <tr>
+            <th style="width: 30%;">Name</a></th>
+            <th style="width: 20%;">Alias</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="skill : ${skills}">
+            <td>
+                <a th:href="@{/skills/__${skill.getSkillId()}__}" th:utext="${skill.getNameAndVersion()}">Skill 1</a>
+            </td>
+            <td th:utext="${skill.alias}">Alias</td>
+        </tr>
+        </tbody>
+    </table>
+</th:block>
+
+</body>
+</html>

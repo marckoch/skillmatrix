@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collection;
 
-import static de.marckoch.skillmatrix.skills.web.ViewNames.DEVELOPER_LIST;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.EMPTY_SEARCH;
-import static de.marckoch.skillmatrix.skills.web.ViewNames.SKILL_LIST;
+import static de.marckoch.skillmatrix.skills.web.ViewNames.SEARCH_RESULT;
 
 /**
  * Controller for the global search box at the top right.
@@ -38,21 +37,26 @@ class SearchController {
         // we could (should?) refactor this into one query to the database,
         // but for now this is good enough
 
+        boolean somethingFound = false;
+
         Collection<Developer> developers = devRepo.findByQuery(query.toUpperCase());
         if (!developers.isEmpty()) {
             highlightDeveloperSearchMatches(developers, query);
-            model.addAttribute("developers", developers);
-            return DEVELOPER_LIST;
+            somethingFound = true;
         }
+        model.addAttribute("developers", developers);
 
         Collection<Skill> skills = skillRepo.findByQuery(query.toUpperCase());
         if (!skills.isEmpty()) {
             highlightSkillSearchMatches(skills, query);
-            model.addAttribute("skills", skills);
-            return SKILL_LIST;
+            somethingFound = true;
         }
+        model.addAttribute("skills", skills);
 
-        return EMPTY_SEARCH;
+        if (somethingFound)
+            return SEARCH_RESULT;
+        else
+            return EMPTY_SEARCH;
     }
 
     private static final String HIGHLIGHTED_RESULT = "<mark>$0</mark>";
