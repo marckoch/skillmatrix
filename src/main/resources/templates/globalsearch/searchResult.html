@@ -3,6 +3,13 @@
 <html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body})}">
 <body>
 
+<style>
+    mark {
+        padding: 0em;
+        background-color: #ffff00;
+    }
+</style>
+
 <th:block th:if="${!developers.isEmpty()}">
     <h4 class="d-flex justify-content-between align-items-center">Developers</h4>
     <table id="developers" class="table table-striped">
