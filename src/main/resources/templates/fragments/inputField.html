@@ -6,7 +6,8 @@
           <label class="form-label"
                  th:for="${'id' + name}" th:text="${label}">Label</label>
           <input class="form-control" type="text"
-                 th:classappend="${valid ? 'is-valid' : 'is-invalid'}" th:id="${'id' + name}" th:field="*{__${name}__}" required>
+                 th:classappend="${wasValidated == null ? '' : (valid ? 'is-valid' : 'is-invalid')}"
+                 th:id="${'id' + name}" th:field="*{__${name}__}" required>
           <th:block th:if="${!valid}">
               <div class="invalid-feedback" th:errors="*{__${name}__}"></div>
           </th:block>

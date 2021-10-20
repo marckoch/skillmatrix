@@ -32,7 +32,8 @@ class SkillEditController {
     }
 
     @PostMapping("/skills/new")
-    public String processCreationForm(@Valid SkillDTO skillDTO, BindingResult result) {
+    public String processCreationForm(@Valid SkillDTO skillDTO, BindingResult result, Model model) {
+        model.addAttribute("wasValidated", true);
         if (result.hasErrors()) {
             return CREATE_OR_UPDATE_SKILL_VIEW;
         } else {
@@ -55,6 +56,7 @@ class SkillEditController {
     @PostMapping("/skills/{skillId}/edit")
     public String processUpdateSkillForm(@Valid SkillDTO skillDTO, BindingResult result,
                                          @PathVariable("skillId") int skillId, Model model) {
+        model.addAttribute("wasValidated", true);
         if (result.hasErrors()) {
             return CREATE_OR_UPDATE_SKILL_VIEW;
         } else {

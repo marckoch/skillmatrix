@@ -28,19 +28,19 @@ class DeveloperDetailsController {
     private final SkillsService skillsService;
 
     @GetMapping("/developers/{developerId}")
-    public ModelAndView showDeveloper(@PathVariable("developerId") int developerId, Model model) {
-        ModelAndView mav = new ModelAndView(DEVELOPER_DETAILS);
+    public String showDeveloper(@PathVariable("developerId") int developerId, Model model) {
         Developer dev = developerRepository.findById(developerId).orElseThrow();
-        mav.addObject(dev);
+        model.addAttribute(dev);
 
         // check if we already have a (erroneous) experience in model,
         // this was checked and put there by redirect from ExperienceController
         if (!model.containsAttribute(EXPERIENCE_DTO.modelAttributeName)) {
             ExperienceDTO experienceDTO = new ExperienceDTO();
             experienceDTO.setDeveloper(dev);
-            mav.getModel().put(EXPERIENCE_DTO.modelAttributeName, experienceDTO);
+            model.addAttribute(EXPERIENCE_DTO.modelAttributeName, experienceDTO);
         } else {
-            mav.getModel().put(EXPERIENCE_DTO.modelAttributeName, model.getAttribute(EXPERIENCE_DTO.modelAttributeName));
+            model.addAttribute("wasValidated", true);
+            model.addAttribute(EXPERIENCE_DTO.modelAttributeName, model.getAttribute(EXPERIENCE_DTO.modelAttributeName));
         }
 
         List<Skill> freeSkills = skillsService.getFreeSkills(dev);
@@ -48,9 +48,9 @@ class DeveloperDetailsController {
                 .map(this::skill2SelectItem)
                 .sorted(Comparator.comparing(SelectItem::getValue))
                 .toList();
-        mav.getModel().put("skillSelectItems", selectItems);
+        model.addAttribute("skillSelectItems", selectItems);
 
-        return mav;
+        return DEVELOPER_DETAILS;
     }
 
     @ModelAttribute("ratings")

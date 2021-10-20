@@ -32,7 +32,8 @@ class DeveloperEditController {
 	}
 
 	@PostMapping("/developers/new")
-	public String processCreationForm(@Valid DeveloperDTO developerDTO, BindingResult result) {
+	public String processCreationForm(@Valid DeveloperDTO developerDTO, BindingResult result, Model model) {
+		model.addAttribute("wasValidated", true);
 		if (result.hasErrors()) {
 			return CREATE_OR_UPDATE_DEVELOPER_VIEW;
 		} else {
@@ -55,6 +56,7 @@ class DeveloperEditController {
 	@PostMapping("/developers/{developerId}/edit")
 	public String processUpdateDeveloperForm(@Valid DeveloperDTO developerDTO, BindingResult result,
 										 	 @PathVariable("developerId") int developerId, Model model) {
+		model.addAttribute("wasValidated", true);
 		if (result.hasErrors()) {
 			return CREATE_OR_UPDATE_DEVELOPER_VIEW;
 		} else {

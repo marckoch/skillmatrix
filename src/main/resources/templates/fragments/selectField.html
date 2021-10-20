@@ -5,7 +5,9 @@
       <div th:with="valid=${!#fields.hasErrors(name)}">
         <label class="form-label" th:for="${'id' + name}" th:text="${label}">Label</label>
         <select class="form-select" required
-                th:field="*{__${name}__}" th:classappend="${valid ? 'is-valid' : 'is-invalid'}" th:id="${'id' + name}">
+                th:field="*{__${name}__}"
+                th:classappend="${wasValidated == null ? '' : (valid ? 'is-valid' : 'is-invalid')}"
+                th:id="${'id' + name}">
           <option th:each="item : ${items}" th:value="${item.key}" th:text="${item.value}"></option>
         </select>
         <th:block th:if="${!valid}" >
