@@ -4,14 +4,13 @@
   <body>
     <h2>Skill Matrix</h2>
 
-    <details class="text-secondary">
-        <summary class="bi bi-exclamation-circle"> Info</summary>
-        <p>Here you see all skills and all developers. Each experience is weighted by rating * years.<br>
-            Skills which a lot of developers have good knowledge about are at the top, lesser known skills are at the bottom.<br>
-            Developers with a lot of knowledge are positioned on the left, developers with fewer skills are at the right.</p>
-        <p>Tip: You can hover the mouse over a number in the table to see the years and rating!</p>
-    </details>
-    <hr>
+    <div class="alert alert-primary" role="alert">
+        <span class="bi bi-exclamation-circle"> </span>
+        Here you see all skills and all developers. Each experience is weighted by rating * years.<br>
+        Skills which a lot of developers have good knowledge about are at the top, lesser known skills are at the bottom.<br>
+        Developers with a lot of knowledge are positioned on the left, developers with fewer skills are at the right.<br>
+        Tip: You can hover the mouse over a number in the table to see the years and rating!
+    </div>
 
     <script type="text/javascript" th:inline="javascript">
         $(document).ready(function () {
