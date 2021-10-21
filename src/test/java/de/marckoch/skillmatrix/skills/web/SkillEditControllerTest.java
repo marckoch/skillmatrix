@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-@WebMvcTest(SkillEditController.class)
+@WebMvcTest({SkillEditController.class, SkillMapper.class})
 class SkillEditControllerTest {
     @Autowired
     private MockMvc mockMvc;

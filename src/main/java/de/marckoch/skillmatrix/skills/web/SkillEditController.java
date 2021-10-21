@@ -24,6 +24,8 @@ class SkillEditController {
 
     private final SkillRepository skillRepository;
 
+    private final SkillMapper skillMapper;
+
     @GetMapping("/skills/new")
     public String initCreationForm(Map<String, Object> model) {
         SkillDTO skill = new SkillDTO();
@@ -38,7 +40,7 @@ class SkillEditController {
             return CREATE_OR_UPDATE_SKILL_VIEW;
         } else {
             Skill newSkill = new Skill();
-            updateEntityFromDTO(skillDTO, newSkill);
+            skillMapper.updateEntityFromDTO(skillDTO, newSkill);
             Skill savedSkill = skillRepository.save(newSkill);
             return REDIRECT_SKILLS + savedSkill.getSkillId();
         }
@@ -48,7 +50,7 @@ class SkillEditController {
     public String initUpdateSkillForm(@PathVariable("skillId") int skillId, Model model) {
         Skill skill = skillRepository.findById(skillId).orElseThrow();
 
-        SkillDTO dto = buildSkillDTO(skill);
+        SkillDTO dto = skillMapper.buildSkillDTO(skill);
         model.addAttribute(SKILL_DTO.modelAttributeName, dto);
         return CREATE_OR_UPDATE_SKILL_VIEW;
     }
@@ -62,7 +64,7 @@ class SkillEditController {
         } else {
             Skill existingSkill = skillRepository.findById(skillId).orElseThrow();
 
-            updateEntityFromDTO(skillDTO, existingSkill);
+            skillMapper.updateEntityFromDTO(skillDTO, existingSkill);
 
             Skill savedSkill = skillRepository.save(existingSkill);
             model.addAttribute(SKILL_DTO.modelAttributeName, savedSkill);
@@ -70,18 +72,4 @@ class SkillEditController {
         }
     }
 
-    private SkillDTO buildSkillDTO(Skill skill) {
-        return SkillDTO.builder()
-                .skillId(skill.getSkillId())
-                .name(skill.getName())
-                .version(skill.getVersion())
-                .alias(skill.getAlias())
-                .build();
-    }
-
-    private void updateEntityFromDTO(SkillDTO dto, Skill entity) {
-        entity.setName(dto.getName());
-        entity.setVersion(dto.getVersion());
-        entity.setAlias(dto.getAlias());
-    }
 }
