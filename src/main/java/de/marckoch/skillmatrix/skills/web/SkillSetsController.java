@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.SKILLS;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.SKILL_SETS;
 
 @Controller
@@ -24,7 +25,7 @@ class SkillSetsController {
     @GetMapping("/skills/sets")
     public String skillSets(@RequestParam(required = false) String skillSetQuery, Model model) {
         final List<Skill> skills = skillSetsService.getSkillsForSkillSets(skillSetQuery);
-        model.addAttribute("skills", skills);
+        model.addAttribute(SKILLS, skills);
         model.addAttribute("skillSetQuery", buildJsonOfSkillSetQuery(skillSetQuery));
         return SKILL_SETS;
     }

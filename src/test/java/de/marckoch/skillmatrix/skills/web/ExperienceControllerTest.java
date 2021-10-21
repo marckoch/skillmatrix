@@ -52,7 +52,7 @@ class ExperienceControllerTest {
         MvcResult result = mockMvc.perform(post("/experience/{developerId}/new", 123))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
-                .andExpect(flash().attributeExists(EXPERIENCE_DTO.modelAttributeName, "org.springframework.validation.BindingResult.experienceDTO"))
+                .andExpect(flash().attributeExists(EXPERIENCE_DTO, "org.springframework.validation.BindingResult.experienceDTO"))
                 .andExpect(view().name("redirect:/developers/123"))
                 .andReturn();
 
@@ -80,7 +80,7 @@ class ExperienceControllerTest {
                         .param("rating", "8"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
-                .andExpect(flash().attributeExists(EXPERIENCE_DTO.modelAttributeName, "org.springframework.validation.BindingResult.experienceDTO"))
+                .andExpect(flash().attributeExists(EXPERIENCE_DTO, "org.springframework.validation.BindingResult.experienceDTO"))
                 .andExpect(view().name("redirect:/developers/123"))
                 .andReturn();
 

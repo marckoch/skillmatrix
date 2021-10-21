@@ -18,6 +18,7 @@ import java.util.Optional;
 
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.DEVELOPER;
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.EXPERIENCE_DTO;
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.SKILL_SELECT_ITEMS;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.DEVELOPER_DETAILS;
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -59,8 +60,8 @@ class DeveloperDetailsControllerTest {
 
         mockMvc.perform(get("/developers/{developerId}", dev1.getDeveloperId()))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists(DEVELOPER.modelAttributeName, EXPERIENCE_DTO.modelAttributeName, "skillSelectItems"))
-                .andExpect(model().attribute("skillSelectItems", Matchers.hasSize(2)))
+                .andExpect(model().attributeExists(DEVELOPER, EXPERIENCE_DTO, SKILL_SELECT_ITEMS))
+                .andExpect(model().attribute(SKILL_SELECT_ITEMS, Matchers.hasSize(2)))
                 .andExpect(view().name(DEVELOPER_DETAILS))
                 .andExpect(content().string(containsString(dev1.getLastName())));
     }

@@ -14,6 +14,7 @@ import javax.validation.Valid;
 
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.DEVELOPER;
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.DEVELOPER_DTO;
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.WAS_VALIDATED;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.CREATE_OR_UPDATE_DEVELOPER_VIEW;
 
 @Controller
@@ -29,13 +30,13 @@ class DeveloperEditController {
 	@GetMapping("/developers/new")
 	public String initCreationForm(Model model) {
 		DeveloperDTO developerDTO = new DeveloperDTO();
-		model.addAttribute(DEVELOPER_DTO.modelAttributeName, developerDTO);
+		model.addAttribute(DEVELOPER_DTO, developerDTO);
 		return CREATE_OR_UPDATE_DEVELOPER_VIEW;
 	}
 
 	@PostMapping("/developers/new")
 	public String processCreationForm(@Valid DeveloperDTO developerDTO, BindingResult result, Model model) {
-		model.addAttribute("wasValidated", true);
+		model.addAttribute(WAS_VALIDATED, true);
 		if (result.hasErrors()) {
 			return CREATE_OR_UPDATE_DEVELOPER_VIEW;
 		} else {
@@ -51,14 +52,14 @@ class DeveloperEditController {
 		Developer developer = developerRepository.findById(developerId).orElseThrow();
 
 		DeveloperDTO dto = developerMapper.buildDeveloperDTO(developer);
-		model.addAttribute(DEVELOPER_DTO.modelAttributeName, dto);
+		model.addAttribute(DEVELOPER_DTO, dto);
 		return CREATE_OR_UPDATE_DEVELOPER_VIEW;
 	}
 
 	@PostMapping("/developers/{developerId}/edit")
 	public String processUpdateDeveloperForm(@Valid DeveloperDTO developerDTO, BindingResult result,
 										 	 @PathVariable("developerId") int developerId, Model model) {
-		model.addAttribute("wasValidated", true);
+		model.addAttribute(WAS_VALIDATED, true);
 		if (result.hasErrors()) {
 			return CREATE_OR_UPDATE_DEVELOPER_VIEW;
 		} else {
@@ -67,7 +68,7 @@ class DeveloperEditController {
 			developerMapper.updateEntityFromDTO(developerDTO, existingDev);
 
 			Developer savedDev = developerRepository.save(existingDev);
-			model.addAttribute(DEVELOPER.modelAttributeName, savedDev);
+			model.addAttribute(DEVELOPER, savedDev);
 			return REDIRECT_DEVELOPERS + savedDev.getDeveloperId();
 		}
 	}

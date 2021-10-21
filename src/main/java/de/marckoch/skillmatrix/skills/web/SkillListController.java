@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.SKILLS;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.SKILL_LIST;
 
 @Controller
@@ -35,7 +36,7 @@ class SkillListController {
         Pageable p = PageRequest.of(pagenumber, 10, sort);
         Page<Skill> resultPage = skillRepository.findAll(p);
 
-        model.addAttribute("skills", resultPage);
+        model.addAttribute(SKILLS, resultPage);
 
         SortUtil.addPagingAttributesToModel(model, resultPage, pagenumber);
         SortUtil.addSortAttributesToModel(model, sortField, sortDir);

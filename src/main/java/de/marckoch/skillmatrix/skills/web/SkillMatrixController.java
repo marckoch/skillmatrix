@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.SKILLS;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.SKILL_MATRIX;
 
 @Controller
@@ -20,7 +21,7 @@ class SkillMatrixController {
     @GetMapping("/skills/matrix")
     public String skillMatrix(Model model) {
         final List<Skill> skills = skillMatrixService.getSkillsForSkillMatrix();
-        model.addAttribute("skills", skills);
+        model.addAttribute(SKILLS, skills);
         return SKILL_MATRIX;
     }
 }

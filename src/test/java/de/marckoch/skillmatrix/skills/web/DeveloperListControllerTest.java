@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Collections;
 import java.util.List;
 
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.DEVELOPERS;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.DEVELOPER_LIST;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
@@ -61,8 +62,8 @@ class DeveloperListControllerTest {
                         .param(RequestParams.SORT_DIR, "asc"))
                 .andExpect(status().isOk())
                 .andExpect(model().hasNoErrors())
-                .andExpect(model().attributeExists("developers"))
-                .andExpect(model().attribute("developers", instanceOf(PageImpl.class)))
+                .andExpect(model().attributeExists(DEVELOPERS))
+                .andExpect(model().attribute(DEVELOPERS, instanceOf(PageImpl.class)))
                 .andExpect(model().attribute("currentPage", is(0)))
                 .andExpect(model().attribute("totalPages", is(1)))
                 .andExpect(model().attribute("totalItems", is(1L)))

@@ -33,12 +33,12 @@ class ExperienceController {
                                                  @Valid ExperienceDTO experienceDTO, BindingResult result,
                                                  final RedirectAttributes redirectAttributes, Map<String, Object> model) {
         Developer dev = developerRepository.findById(developerId).orElseThrow();
-        model.put(DEVELOPER.modelAttributeName, dev);
+        model.put(DEVELOPER, dev);
 
         if (result.hasErrors()) {
             // save (erroneous model) for redirect
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.experienceDTO", result);
-            redirectAttributes.addFlashAttribute(EXPERIENCE_DTO.modelAttributeName, experienceDTO);
+            redirectAttributes.addFlashAttribute(EXPERIENCE_DTO, experienceDTO);
         } else {
             Experience newExp = experienceMapper.createNewEntityFromDTO(experienceDTO);
             newExp.setDeveloper(dev);

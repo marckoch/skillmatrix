@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import java.util.Map;
 
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.SKILL_DTO;
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.WAS_VALIDATED;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.CREATE_OR_UPDATE_SKILL_VIEW;
 
 @Controller
@@ -29,13 +30,13 @@ class SkillEditController {
     @GetMapping("/skills/new")
     public String initCreationForm(Map<String, Object> model) {
         SkillDTO skill = new SkillDTO();
-        model.put(SKILL_DTO.modelAttributeName, skill);
+        model.put(SKILL_DTO, skill);
         return CREATE_OR_UPDATE_SKILL_VIEW;
     }
 
     @PostMapping("/skills/new")
     public String processCreationForm(@Valid SkillDTO skillDTO, BindingResult result, Model model) {
-        model.addAttribute("wasValidated", true);
+        model.addAttribute(WAS_VALIDATED, true);
         if (result.hasErrors()) {
             return CREATE_OR_UPDATE_SKILL_VIEW;
         } else {
@@ -51,14 +52,14 @@ class SkillEditController {
         Skill skill = skillRepository.findById(skillId).orElseThrow();
 
         SkillDTO dto = skillMapper.buildSkillDTO(skill);
-        model.addAttribute(SKILL_DTO.modelAttributeName, dto);
+        model.addAttribute(SKILL_DTO, dto);
         return CREATE_OR_UPDATE_SKILL_VIEW;
     }
 
     @PostMapping("/skills/{skillId}/edit")
     public String processUpdateSkillForm(@Valid SkillDTO skillDTO, BindingResult result,
                                          @PathVariable("skillId") int skillId, Model model) {
-        model.addAttribute("wasValidated", true);
+        model.addAttribute(WAS_VALIDATED, true);
         if (result.hasErrors()) {
             return CREATE_OR_UPDATE_SKILL_VIEW;
         } else {
@@ -67,9 +68,8 @@ class SkillEditController {
             skillMapper.updateEntityFromDTO(skillDTO, existingSkill);
 
             Skill savedSkill = skillRepository.save(existingSkill);
-            model.addAttribute(SKILL_DTO.modelAttributeName, savedSkill);
+            model.addAttribute(SKILL_DTO, savedSkill);
             return REDIRECT_SKILLS + savedSkill.getSkillId();
         }
     }
-
 }

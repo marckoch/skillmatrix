@@ -29,7 +29,7 @@ class SkillDetailsController {
 
         SortUtil.addSortAttributesToModel(model, sortField, sortDir);
 
-        model.addAttribute(SKILL.modelAttributeName, skill);
+        model.addAttribute(SKILL, skill);
         return SKILL_DETAILS;
     }
 }

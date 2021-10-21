@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.DEVELOPERS;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.EMPTY_SEARCH;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.SEARCH_RESULT;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -49,7 +50,7 @@ class SearchControllerTest {
 
         MvcResult result = mockMvc.perform(get("/globalsearch").param("query", "dev1"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("developers"))
+                .andExpect(model().attributeExists(DEVELOPERS))
                 .andExpect(view().name(SEARCH_RESULT))
                 .andExpect(content().string(containsString(dev1.getLastName())))
                 .andReturn();

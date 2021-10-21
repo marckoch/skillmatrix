@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.EXPERIENCE_DTO;
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.SKILL_SELECT_ITEMS;
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.WAS_VALIDATED;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.DEVELOPER_DETAILS;
 
 @Controller
@@ -42,14 +44,14 @@ class DeveloperDetailsController {
 
         // check if we already have a (erroneous) experience in model,
         // this was checked and put there by redirect from ExperienceController
-        if (!model.containsAttribute(EXPERIENCE_DTO.modelAttributeName)) {
+        if (!model.containsAttribute(EXPERIENCE_DTO)) {
             ExperienceDTO experienceDTO = ExperienceDTO.builder()
                     .developer(dev)
                     .build();
-            model.addAttribute(EXPERIENCE_DTO.modelAttributeName, experienceDTO);
+            model.addAttribute(EXPERIENCE_DTO, experienceDTO);
         } else {
-            model.addAttribute("wasValidated", true);
-            model.addAttribute(EXPERIENCE_DTO.modelAttributeName, model.getAttribute(EXPERIENCE_DTO.modelAttributeName));
+            model.addAttribute(WAS_VALIDATED, true);
+            model.addAttribute(EXPERIENCE_DTO, model.getAttribute(EXPERIENCE_DTO));
         }
 
         List<Skill> freeSkills = skillsService.getFreeSkills(dev);
@@ -57,7 +59,7 @@ class DeveloperDetailsController {
                 .map(this::skill2SelectItem)
                 .sorted(Comparator.comparing(SelectItem::getValue))
                 .toList();
-        model.addAttribute("skillSelectItems", selectItems);
+        model.addAttribute(SKILL_SELECT_ITEMS, selectItems);
 
         return DEVELOPER_DETAILS;
     }

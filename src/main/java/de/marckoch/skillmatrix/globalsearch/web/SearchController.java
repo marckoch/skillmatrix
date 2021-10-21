@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collection;
 
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.DEVELOPERS;
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.SKILLS;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.EMPTY_SEARCH;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.SEARCH_RESULT;
 
@@ -44,14 +46,14 @@ class SearchController {
             highlightDeveloperSearchMatches(developers, query);
             somethingFound = true;
         }
-        model.addAttribute("developers", developers);
+        model.addAttribute(DEVELOPERS, developers);
 
         Collection<Skill> skills = skillRepo.findByQuery(query.toUpperCase());
         if (!skills.isEmpty()) {
             highlightSkillSearchMatches(skills, query);
             somethingFound = true;
         }
-        model.addAttribute("skills", skills);
+        model.addAttribute(SKILLS, skills);
 
         if (somethingFound)
             return SEARCH_RESULT;

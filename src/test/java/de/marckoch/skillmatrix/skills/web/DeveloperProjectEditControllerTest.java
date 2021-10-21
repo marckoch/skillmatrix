@@ -60,9 +60,9 @@ class DeveloperProjectEditControllerTest {
 
         mockMvc.perform(get("/developers/123/project/add"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists(PROJECT_DTO.modelAttributeName))
-                .andExpect(model().attribute(PROJECT_DTO.modelAttributeName, hasProperty("new", is(true))))
-                .andExpect(model().attribute(PROJECT_DTO.modelAttributeName, not(hasProperty("id"))))
+                .andExpect(model().attributeExists(PROJECT_DTO))
+                .andExpect(model().attribute(PROJECT_DTO, hasProperty("new", is(true))))
+                .andExpect(model().attribute(PROJECT_DTO, not(hasProperty("id"))))
                 .andExpect(view().name(CREATE_OR_UPDATE_PROJECT_VIEW));
     }
 
@@ -79,9 +79,9 @@ class DeveloperProjectEditControllerTest {
         mockMvc.perform(post("/developers/123/project/add"))
                 .andExpect(status().isOk())
                 .andExpect(model().errorCount(3))
-                .andExpect(model().attributeHasFieldErrorCode(PROJECT_DTO.modelAttributeName, "name", "NotEmpty"))
-                .andExpect(model().attributeHasFieldErrorCode(PROJECT_DTO.modelAttributeName, "since", "NotEmpty"))
-                .andExpect(model().attributeHasFieldErrorCode(PROJECT_DTO.modelAttributeName, "until", "NotEmpty"))
+                .andExpect(model().attributeHasFieldErrorCode(PROJECT_DTO, "name", "NotEmpty"))
+                .andExpect(model().attributeHasFieldErrorCode(PROJECT_DTO, "since", "NotEmpty"))
+                .andExpect(model().attributeHasFieldErrorCode(PROJECT_DTO, "until", "NotEmpty"))
                 .andExpect(view().name(CREATE_OR_UPDATE_PROJECT_VIEW));
     }
 
@@ -136,9 +136,9 @@ class DeveloperProjectEditControllerTest {
         mockMvc.perform(post("/developers/123/project/edit"))
                 .andExpect(status().isOk())
                 .andExpect(model().errorCount(3))
-                .andExpect(model().attributeHasFieldErrorCode(PROJECT_DTO.modelAttributeName, "name", "NotEmpty"))
-                .andExpect(model().attributeHasFieldErrorCode(PROJECT_DTO.modelAttributeName, "since", "NotEmpty"))
-                .andExpect(model().attributeHasFieldErrorCode(PROJECT_DTO.modelAttributeName, "until", "NotEmpty"))
+                .andExpect(model().attributeHasFieldErrorCode(PROJECT_DTO, "name", "NotEmpty"))
+                .andExpect(model().attributeHasFieldErrorCode(PROJECT_DTO, "since", "NotEmpty"))
+                .andExpect(model().attributeHasFieldErrorCode(PROJECT_DTO, "until", "NotEmpty"))
                 .andExpect(view().name(CREATE_OR_UPDATE_PROJECT_VIEW));
     }
 

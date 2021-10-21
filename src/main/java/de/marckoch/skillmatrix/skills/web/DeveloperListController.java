@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.DEVELOPERS;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.DEVELOPER_LIST;
 
 @Controller
@@ -35,7 +36,7 @@ class DeveloperListController {
 		Pageable p = PageRequest.of(pagenumber, 10, sort);
 		Page<Developer> resultPage = developerRepository.findAll(p);
 
-		model.addAttribute("developers", resultPage);
+		model.addAttribute(DEVELOPERS, resultPage);
 
 		SortUtil.addPagingAttributesToModel(model, resultPage, pagenumber);
 		SortUtil.addSortAttributesToModel(model, sortField, sortDir);

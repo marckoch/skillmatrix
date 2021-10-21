@@ -18,6 +18,7 @@ import javax.validation.Valid;
 import static de.marckoch.skillmatrix.skills.web.DeveloperEditController.REDIRECT_DEVELOPERS;
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.DEVELOPER;
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.PROJECT_DTO;
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.WAS_VALIDATED;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.CREATE_OR_UPDATE_PROJECT_VIEW;
 
 // maybe use this: https://qawithexperts.com/article/bootstrap/showing-month-and-year-only-in-bootstrap-datepicker/292
@@ -34,20 +35,20 @@ class DeveloperProjectEditController {
     @GetMapping("/developers/{developerId}/project/add")
     public String initCreationForm(@PathVariable("developerId") int developerId, Model model) {
         Developer developer = developerRepository.findById(developerId).orElseThrow();
-        model.addAttribute(DEVELOPER.modelAttributeName, developer);
+        model.addAttribute(DEVELOPER, developer);
 
         ProjectDTO projectDTO = new ProjectDTO();
-        model.addAttribute(PROJECT_DTO.modelAttributeName, projectDTO);
+        model.addAttribute(PROJECT_DTO, projectDTO);
         return CREATE_OR_UPDATE_PROJECT_VIEW;
     }
 
     @PostMapping("/developers/{developerId}/project/add")
     public String processCreationForm(@Valid ProjectDTO projectDTO, BindingResult result,
                                       @PathVariable("developerId") int developerId, Model model) {
-        model.addAttribute("wasValidated", true);
+        model.addAttribute(WAS_VALIDATED, true);
         if (result.hasErrors()) {
             Developer developer = developerRepository.findById(developerId).orElseThrow();
-            model.addAttribute(DEVELOPER.modelAttributeName, developer);
+            model.addAttribute(DEVELOPER, developer);
 
             return CREATE_OR_UPDATE_PROJECT_VIEW;
         } else {
@@ -63,29 +64,29 @@ class DeveloperProjectEditController {
     @GetMapping("/developers/{developerId}/project/edit")
     public String initUpdateProjectForm(@PathVariable("developerId") int developerId, Model model) {
         Developer developer = developerRepository.findById(developerId).orElseThrow();
-        model.addAttribute(DEVELOPER.modelAttributeName, developer);
+        model.addAttribute(DEVELOPER, developer);
 
         ProjectDTO dto = projectMapper.buildProjectDTO(developer.getCurrentProject());
-        model.addAttribute(PROJECT_DTO.modelAttributeName, dto);
+        model.addAttribute(PROJECT_DTO, dto);
         return CREATE_OR_UPDATE_PROJECT_VIEW;
     }
 
     @PostMapping("/developers/{developerId}/project/edit")
-    public String processUpdateProjectForm(@Valid ProjectDTO developerDTO, BindingResult result,
+    public String processUpdateProjectForm(@Valid ProjectDTO projectDTO, BindingResult result,
                                            @PathVariable("developerId") int developerId, Model model) {
-        model.addAttribute("wasValidated", true);
+        model.addAttribute(WAS_VALIDATED, true);
         if (result.hasErrors()) {
             Developer developer = developerRepository.findById(developerId).orElseThrow();
-            model.addAttribute(DEVELOPER.modelAttributeName, developer);
+            model.addAttribute(DEVELOPER, developer);
 
             return CREATE_OR_UPDATE_PROJECT_VIEW;
         } else {
             Developer existingDev = developerRepository.findById(developerId).orElseThrow();
 
-            projectMapper.updateEntityFromDTO(developerDTO, existingDev.getCurrentProject());
+            projectMapper.updateEntityFromDTO(projectDTO, existingDev.getCurrentProject());
 
             Developer savedDev = developerRepository.save(existingDev);
-            model.addAttribute(DEVELOPER.modelAttributeName, savedDev);
+            model.addAttribute(DEVELOPER, savedDev);
             return REDIRECT_DEVELOPERS + savedDev.getDeveloperId();
         }
     }
@@ -97,7 +98,7 @@ class DeveloperProjectEditController {
         projectRepository.deleteById(existingDev.getCurrentProject().getProjectId());
         existingDev.setCurrentProject(null);
         Developer savedDev = developerRepository.save(existingDev);
-        model.addAttribute(DEVELOPER.modelAttributeName, savedDev);
+        model.addAttribute(DEVELOPER, savedDev);
         return REDIRECT_DEVELOPERS + savedDev.getDeveloperId();
     }
 }
