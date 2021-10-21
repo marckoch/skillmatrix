@@ -6,22 +6,23 @@ import de.marckoch.skillmatrix.skills.entity.Skill;
 import de.marckoch.skillmatrix.skills.entity.SkillRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class SkillsServiceTest {
 
-    @Autowired
+    @InjectMocks
     SkillsService skillsService;
 
-    @MockBean
+    @Mock
     SkillRepository skillRepository;
 
     Skill skill1 = Skill.builder().skillId(1).name("skill1").build();
@@ -35,7 +36,7 @@ class SkillsServiceTest {
     }
 
     @Test
-    void getFreeSkills() {
+    void freeSkills() {
         dev1.setExperiences(List.of(Experience.builder().skill(skill1).build()));
 
         List<Skill> freeSkills = skillsService.getFreeSkills(dev1);
@@ -45,7 +46,7 @@ class SkillsServiceTest {
     }
 
     @Test
-    void getFreeSkillsWhenDeveloperHasNoSkills() {
+    void freeSkillsHasAllSkillsWhenDeveloperHasNoSkills() {
         // dev gets no experiences!
 
         List<Skill> freeSkills = skillsService.getFreeSkills(dev1);
@@ -55,7 +56,7 @@ class SkillsServiceTest {
     }
 
     @Test
-    void getFreeSkillsWhenDeveloperHasAllSkills() {
+    void freeSkillsIsEmptyWhenDeveloperHasAllSkills() {
         dev1.setExperiences(List.of(
                 Experience.builder().skill(skill1).build(),
                 Experience.builder().skill(skill2).build(),

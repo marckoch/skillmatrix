@@ -7,9 +7,10 @@ import de.marckoch.skillmatrix.skills.entity.HasExperiences;
 import de.marckoch.skillmatrix.skills.entity.Skill;
 import de.marckoch.skillmatrix.skills.entity.SkillRepository;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,16 +22,16 @@ import static java.util.Comparator.comparingInt;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class SkillSetsServiceTest {
 
-    @Autowired
+    @InjectMocks
     SkillSetsService skillSetsService;
 
-    @MockBean
+    @Mock
     SkillRepository skillRepository;
 
-    @MockBean
+    @Mock
     DeveloperRepository developerRepository;
 
     final int NUMBER_OF_DEVELOPERS = 100;
