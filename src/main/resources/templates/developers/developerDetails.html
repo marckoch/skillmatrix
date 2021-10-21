@@ -81,8 +81,8 @@
                     <thead>
                         <tr>
                             <th style="width: 70%;">
-                                <a th:href="@{'/developers/' + ${developer.developerId} + '?sort-field=name&sort-dir=' + ${reverseSortDir}}">Skill </a>
-                                <th:block th:if="${sortField == 'name'}" th:switch="${sortDir}">
+                                <a th:href="@{'/developers/' + ${developer.developerId} + '?sort-field=skillName&sort-dir=' + ${reverseSortDir}}">Skill </a>
+                                <th:block th:if="${sortField == 'skillName'}" th:switch="${sortDir}">
                                     <span th:case="'asc'" class="bi bi-arrow-up"></span>
                                     <span th:case="'desc'" class="bi bi-arrow-down"></span>
                                 </th:block>

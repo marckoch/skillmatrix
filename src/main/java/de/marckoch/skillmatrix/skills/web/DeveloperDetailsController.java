@@ -2,7 +2,6 @@ package de.marckoch.skillmatrix.skills.web;
 
 import de.marckoch.skillmatrix.skills.entity.Developer;
 import de.marckoch.skillmatrix.skills.entity.DeveloperRepository;
-import de.marckoch.skillmatrix.skills.entity.Experience;
 import de.marckoch.skillmatrix.skills.entity.Skill;
 import de.marckoch.skillmatrix.skills.service.SkillsService;
 import lombok.AllArgsConstructor;
@@ -35,7 +34,7 @@ class DeveloperDetailsController {
                                 Model model) {
         Developer dev = developerRepository.findById(developerId).orElseThrow();
 
-        sortExperiences(dev, sortField, sortDir);
+        ExperienceSorter.sortExperiences(dev.getExperiences(), sortField, sortDir);
 
         SortUtil.addSortAttributesToModel(model, sortField, sortDir);
 
@@ -72,34 +71,5 @@ class DeveloperDetailsController {
 
     private SelectItem skill2SelectItem(Skill skill) {
         return new SelectItem(skill.getSkillId(), skill.getNameAndVersion());
-    }
-
-    private void sortExperiences(Developer dev, String sortField, String sortDir) {
-        final Comparator<Experience> byWeight = Comparator.comparing(Experience::getWeight);
-        final Comparator<Experience> byRating = Comparator.comparing(Experience::getRating);
-        final Comparator<Experience> bySkillName = Comparator.comparing(o -> o.getSkill().getNameAndVersion());
-
-        switch (sortField) {
-            case "name":
-                if ("asc".equalsIgnoreCase(sortDir))
-                    dev.getExperiences().sort(bySkillName);
-                else
-                    dev.getExperiences().sort(bySkillName.reversed());
-                break;
-            case "rating":
-                if ("asc".equalsIgnoreCase(sortDir))
-                    dev.getExperiences().sort(byRating);
-                else
-                    dev.getExperiences().sort(byRating.reversed());
-                break;
-            case "weight":
-                if ("asc".equalsIgnoreCase(sortDir))
-                    dev.getExperiences().sort(byWeight);
-                else
-                    dev.getExperiences().sort(byWeight.reversed());
-                break;
-            default:
-                dev.getExperiences().sort(byWeight.reversed());
-        }
     }
 }
