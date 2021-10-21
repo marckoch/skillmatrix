@@ -6,9 +6,10 @@ INSERT INTO developers VALUES (5, 'Mirco', 'Pehler', null);
 INSERT INTO developers VALUES (6, 'Frontend', 'Hero', null);
 INSERT INTO developers VALUES (7, 'Cloud', 'Hero', null);
 INSERT INTO developers VALUES (8, 'Backend', 'Hero', null);
-INSERT INTO developers VALUES (9, 'Hubert Blaine', 'Wolfeschlegelsteinhausenbergerdorff', null);
+INSERT INTO developers VALUES (9, 'Hubert Blaine', 'Wolfeschlegelsteinhausenbergerdorff', 'Test für lange Namen');
 INSERT INTO developers VALUES (10, 'Robert', 'Martin', 'Uncle Bob');
 INSERT INTO developers VALUES (11, 'Vlad', 'Mihalcea', 'Java Champion');
+INSERT INTO developers VALUES (12, 'Johnny', 'Docker', null);
 
 INSERT INTO skills VALUES (1, 'Java', '11', 'Java SE');
 INSERT INTO skills VALUES (2, 'Spring', '5', null);
