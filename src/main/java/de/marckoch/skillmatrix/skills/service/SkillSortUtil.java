@@ -7,6 +7,8 @@ import java.util.Comparator;
 import java.util.List;
 
 public class SkillSortUtil {
+    private SkillSortUtil() {}
+
     public static List<Skill> sortSkills(List<Skill> skills) {
         final Comparator<Skill> bySkillWeight = Comparator.comparing(HasExperiences::getWeight);
         final Comparator<Skill> bySkillName = Comparator.comparing(Skill::getName);

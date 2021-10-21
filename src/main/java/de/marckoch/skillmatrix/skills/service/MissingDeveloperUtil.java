@@ -7,6 +7,8 @@ import de.marckoch.skillmatrix.skills.entity.Skill;
 import java.util.List;
 
 public class MissingDeveloperUtil {
+    private MissingDeveloperUtil() {}
+
     // the given skill has some experiences, each of those points to a developer.
     // the given list of developers contains ALL developers.
     // this method add an empty experience for all developers that are NOT YET in skills experience list.
