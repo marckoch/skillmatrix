@@ -33,9 +33,9 @@ class SkillSetsServiceTest {
     @MockBean
     DeveloperRepository developerRepository;
 
-    final int NUMBER_OF_DEVELOPERS = 10;
+    final int NUMBER_OF_DEVELOPERS = 100;
     final int NUMBER_OF_SKILLS = 200;
-    final int NUMBER_OF_EXPERIENCES = 100;
+    final int NUMBER_OF_EXPERIENCES = 1000;
 
     private final List<Developer> developers = new ArrayList<>();
     private final List<Skill> skills = new ArrayList<>();
@@ -50,16 +50,19 @@ class SkillSetsServiceTest {
 
     @Test
     void skillSetsWorksWithBigData() {
+        // given
         createRandomTestData();
 
-        List<Experience> randomExp = getRandomExperiences(5);
+        List<Experience> randomExp = getRandomExperiences(15);
         List<Skill> searchSkills = randomExp.stream().map(Experience::getSkill).distinct().toList();
 
         searchSkills.forEach(skill ->
                 when(skillRepository.findByQuery(skill.getName().toUpperCase())).thenReturn(List.of(skill)));
 
         Set<Integer> developerIdsOfSearchedSkills = getDeveloperIds(searchSkills);
-        List<Developer> developersOfSearchedSkills = developers.stream().filter(developer -> developerIdsOfSearchedSkills.contains(developer.getDeveloperId())).toList();
+        List<Developer> developersOfSearchedSkills = developers.stream()
+                .filter(dev -> developerIdsOfSearchedSkills.contains(dev.getDeveloperId()))
+                .toList();
         when(developerRepository.findAllById(developerIdsOfSearchedSkills)).thenReturn(developersOfSearchedSkills);
 
         // when

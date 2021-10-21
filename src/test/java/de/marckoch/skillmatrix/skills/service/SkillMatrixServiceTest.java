@@ -6,7 +6,6 @@ import de.marckoch.skillmatrix.skills.entity.Experience;
 import de.marckoch.skillmatrix.skills.entity.HasExperiences;
 import de.marckoch.skillmatrix.skills.entity.Skill;
 import de.marckoch.skillmatrix.skills.entity.SkillRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -42,11 +41,16 @@ class SkillMatrixServiceTest {
 
     @Test
     void skillMatrixWorksWithBigData() {
+        // given
+        createRandomTestData();
+
         when(skillRepository.findAll()).thenReturn(skills);
         when(developerRepository.findAll()).thenReturn(developers);
 
+        // when
         final List<Skill> skills = skillMatrixService.getSkillsForSkillMatrix();
 
+        // then
         assertThat(skills).hasSize(NUMBER_OF_SKILLS);
         assertThat(skills).map(HasExperiences::getWeight)
                 .isSortedAccordingTo(comparingInt(o -> (int) o).reversed());
@@ -59,7 +63,6 @@ class SkillMatrixServiceTest {
         });
     }
 
-    @BeforeEach
     public void createRandomTestData() {
         for (int d = 0; d < NUMBER_OF_DEVELOPERS; d++) {
             Developer dev = new Developer();
