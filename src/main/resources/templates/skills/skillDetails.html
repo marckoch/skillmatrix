@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body})}">
 <body>
-    <h2 th:text="${skillDTO.getNameAndVersion()}">Skill Information</h2>
+    <h2 th:text="${skill.getNameAndVersion()}">Skill Information</h2>
 
     <div class="card mb-2">
         <h6 class="card-header d-flex justify-content-between align-items-center">
             Details
             <div>
-                <a class="btn btn-sm btn-primary" th:href="@{/skills/{id}/edit(id=${skillDTO.skillId})}">Edit</a>
+                <a class="btn btn-sm btn-primary" th:href="@{/skills/{id}/edit(id=${skill.skillId})}">Edit</a>
             </div>
         </h6>
         <div class="card-body" th:object="${developer}">
-            <div class="row g-3" th:object="${skillDTO}">
+            <div class="row g-3" th:object="${skill}">
                 <div class="col-md-4">
                     <label class="form-label" for="idSkill">Skill</label>
                     <input class="form-control" type="text" id="idSkill" th:field="*{name}" disabled>
@@ -33,7 +33,7 @@
             Developers
         </h6>
         <div class="card-body">
-            <th:block th:if="${experienceDTOs.size() > 0}">
+            <th:block th:if="${skill.experiences.size() > 0}">
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -43,7 +43,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="exp : ${experienceDTOs}">
+                        <tr th:each="exp : ${skill.experiences}">
                             <td><a th:href="@{/developers/__${exp.developer.developerId}__}"
                                    th:text="${exp.developer.getFullName()}">Developer Name</a></td>
                             <td th:text="${exp.years}">years</td>
@@ -54,7 +54,7 @@
                     </tbody>
                 </table>
             </th:block>
-            <th:block th:if="${experienceDTOs.size() == 0}">
+            <th:block th:if="${skill.experiences.size() == 0}">
                 <div class="alert alert-danger" role="alert">
                     <span class="bi bi-emoji-neutral"></span> No developer has this skill! Train them!
                 </div>

@@ -40,8 +40,8 @@ class ExperienceController {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.experienceDTO", result);
             redirectAttributes.addFlashAttribute(EXPERIENCE_DTO.modelAttributeName, experienceDTO);
         } else {
-            experienceDTO.setDeveloper(dev);
             Experience newExp = experienceMapper.createNewEntityFromDTO(experienceDTO);
+            newExp.setDeveloper(dev);
 
             experienceRepository.save(newExp);
         }
