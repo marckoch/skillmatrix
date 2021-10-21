@@ -26,6 +26,8 @@ class ExperienceController {
 
     private final DeveloperRepository developerRepository;
 
+    private final ExperienceMapper experienceMapper;
+
     @PostMapping("/experience/{developerId}/new")
     public String processAddSkillToDeveloperForm(@PathVariable("developerId") int developerId,
                                                  @Valid ExperienceDTO experienceDTO, BindingResult result,
@@ -38,12 +40,8 @@ class ExperienceController {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.experienceDTO", result);
             redirectAttributes.addFlashAttribute(EXPERIENCE_DTO.modelAttributeName, experienceDTO);
         } else {
-            Experience newExp = Experience.builder()
-                    .skill(experienceDTO.getSkill())
-                    .developer(dev)
-                    .rating(experienceDTO.getRating())
-                    .years(experienceDTO.getYears())
-                    .build();
+            experienceDTO.setDeveloper(dev);
+            Experience newExp = experienceMapper.createNewEntityFromDTO(experienceDTO);
 
             experienceRepository.save(newExp);
         }

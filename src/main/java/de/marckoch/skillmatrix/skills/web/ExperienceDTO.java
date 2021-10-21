@@ -37,4 +37,8 @@ public class ExperienceDTO {
     @NotNull
     @Range(min = 1, max = 5)
     private Integer rating;
+
+    public int getWeight() {
+        return getRating() * getYears();
+    }
 }
