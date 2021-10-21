@@ -5,9 +5,10 @@ import de.marckoch.skillmatrix.skills.entity.Skill;
 import de.marckoch.skillmatrix.skills.entity.SkillRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Comparator;
 
@@ -21,12 +22,44 @@ class SkillDetailsController {
     private final SkillRepository skillRepository;
 
     @GetMapping("/skills/{skillId}")
-    public ModelAndView showSkill(@PathVariable("skillId") int skillId) {
-        ModelAndView mav = new ModelAndView(SKILL_DETAILS);
-
+    public String showSkill(@PathVariable("skillId") int skillId,
+                            @RequestParam(name = "sort-field", required = false, defaultValue = "weight") final String sortField,
+                            @RequestParam(name = "sort-dir", required = false, defaultValue = "desc") final String sortDir,
+                            Model model) {
         Skill skill = skillRepository.findById(skillId).orElseThrow();
-        skill.getExperiences().sort(Comparator.comparing(Experience::getWeight).reversed());
-        mav.addObject(SKILL.modelAttributeName, skill);
-        return mav;
+
+        sortExperiences(skill, sortField, sortDir);
+
+        SortUtil.addSortAttributesToModel(model, sortField, sortDir);
+
+        model.addAttribute(SKILL.modelAttributeName, skill);
+        return SKILL_DETAILS;
+    }
+
+    private void sortExperiences(Skill skill, String sortField, String sortDir) {
+        final Comparator<Experience> byWeight = Comparator.comparing(Experience::getWeight);
+        final Comparator<Experience> byRating = Comparator.comparing(Experience::getRating);
+        final Comparator<Experience> byDeveloperFullName = Comparator.comparing(o -> o.getDeveloper().getFullName());
+
+        switch (sortField) {
+            case "name":
+                if ("asc".equalsIgnoreCase(sortDir))
+                    skill.getExperiences().sort(byDeveloperFullName);
+                else
+                    skill.getExperiences().sort(byDeveloperFullName.reversed());
+                break;
+            case "rating":
+                if ("asc".equalsIgnoreCase(sortDir))
+                    skill.getExperiences().sort(byRating);
+                else
+                    skill.getExperiences().sort(byRating.reversed());
+                break;
+            case "weight":
+                if ("asc".equalsIgnoreCase(sortDir))
+                    skill.getExperiences().sort(byWeight);
+                else
+                    skill.getExperiences().sort(byWeight.reversed());
+                break;
+        }
     }
 }

@@ -37,9 +37,21 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th style="width: 70%;">Name</th>
+                            <th style="width: 70%;">
+                                <a th:href="@{'/skills/' + ${skill.skillId} + '?sort-field=name&sort-dir=' + ${reverseSortDir}}">Name </a>
+                                <th:block th:if="${sortField == 'name'}" th:switch="${sortDir}">
+                                    <span th:case="'asc'" class="bi bi-arrow-up"></span>
+                                    <span th:case="'desc'" class="bi bi-arrow-down"></span>
+                                </th:block>
+                            </th>
                             <th style="width: 15%;">Years</th>
-                            <th style="width: 15%;">Rating</th>
+                            <th style="width: 15%;">
+                                <a th:href="@{'/skills/' + ${skill.skillId} + '?sort-field=rating&sort-dir=' + ${reverseSortDir}}">Rating </a>
+                                <th:block th:if="${sortField == 'rating'}" th:switch="${sortDir}">
+                                    <span th:case="'asc'" class="bi bi-arrow-up"></span>
+                                    <span th:case="'desc'" class="bi bi-arrow-down"></span>
+                                </th:block>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
