@@ -5,10 +5,11 @@ import de.marckoch.skillmatrix.skills.entity.DeveloperRepository;
 import de.marckoch.skillmatrix.skills.entity.Experience;
 import de.marckoch.skillmatrix.skills.entity.Skill;
 import de.marckoch.skillmatrix.skills.entity.SkillRepository;
+import de.marckoch.skillmatrix.skills.service.SkillMatrixService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.context.annotation.Import;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
@@ -21,16 +22,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-@Import({TestConfigWithRealSkillMatrixService.class})
-@WebMvcTest(SkillMatrixController.class)
+@WebMvcTest({SkillMatrixController.class, SkillMatrixService.class})
 class SkillMatrixControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
+    @MockBean
     DeveloperRepository developerRepository;
 
-    @Autowired
+    @MockBean
     SkillRepository skillRepository;
 
     Skill skill1 = Skill.builder().skillId(1).name("skill1").experiences(new ArrayList<>()).build();
