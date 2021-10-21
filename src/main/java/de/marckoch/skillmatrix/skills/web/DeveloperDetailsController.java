@@ -29,8 +29,8 @@ class DeveloperDetailsController {
 
     @GetMapping("/developers/{developerId}")
     public String showDeveloper(@PathVariable("developerId") int developerId,
-                                @RequestParam(name = "sort-field", required = false, defaultValue = "weight") final String sortField,
-                                @RequestParam(name = "sort-dir", required = false, defaultValue = "desc") final String sortDir,
+                                @RequestParam(name = RequestParams.SORT_FIELD, required = false, defaultValue = "weight") final String sortField,
+                                @RequestParam(name = RequestParams.SORT_DIR, required = false, defaultValue = "desc") final String sortDir,
                                 Model model) {
         Developer dev = developerRepository.findById(developerId).orElseThrow();
 

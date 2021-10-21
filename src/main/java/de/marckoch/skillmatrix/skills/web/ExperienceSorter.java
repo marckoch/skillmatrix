@@ -6,6 +6,8 @@ import java.util.Comparator;
 import java.util.List;
 
 public class ExperienceSorter {
+    private ExperienceSorter() {}
+
     public static void sortExperiences(List<Experience> experiences, String sortField, String sortDir) {
         final Comparator<Experience> byWeight = Comparator.comparing(Experience::getWeight);
         final Comparator<Experience> byRating = Comparator.comparing(Experience::getRating);

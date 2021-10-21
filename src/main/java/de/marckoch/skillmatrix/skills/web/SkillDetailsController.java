@@ -20,8 +20,8 @@ class SkillDetailsController {
 
     @GetMapping("/skills/{skillId}")
     public String showSkill(@PathVariable("skillId") int skillId,
-                            @RequestParam(name = "sort-field", required = false, defaultValue = "weight") final String sortField,
-                            @RequestParam(name = "sort-dir", required = false, defaultValue = "desc") final String sortDir,
+                            @RequestParam(name = RequestParams.SORT_FIELD, required = false, defaultValue = "weight") final String sortField,
+                            @RequestParam(name = RequestParams.SORT_DIR, required = false, defaultValue = "desc") final String sortDir,
                             Model model) {
         Skill skill = skillRepository.findById(skillId).orElseThrow();
 

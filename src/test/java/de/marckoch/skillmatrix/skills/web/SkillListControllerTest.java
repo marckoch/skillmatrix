@@ -48,8 +48,8 @@ class SkillListControllerTest {
         when(skillRepository.findAll(any(Pageable.class))).thenReturn(new PageImpl<>(List.of(skill1, skill2, skill3)));
 
         mockMvc.perform(get("/skills/page/{pagenumber}", 0)
-                        .param("sort-field", "name")
-                        .param("sort-dir", "asc"))
+                        .param(RequestParams.SORT_FIELD, "name")
+                        .param(RequestParams.SORT_DIR, "asc"))
                 .andExpect(status().isOk())
                 .andExpect(model().hasNoErrors())
                 .andExpect(model().attributeExists("skills"))
@@ -68,8 +68,8 @@ class SkillListControllerTest {
         when(skillRepository.findAll(any(Pageable.class))).thenReturn(new PageImpl<>(List.of(skill1, skill2, skill3)));
 
         mockMvc.perform(get("/skills/page/{pagenumber}", 0)
-                        .param("sort-field", "name")
-                        .param("sort-dir", "desc"))
+                        .param(RequestParams.SORT_FIELD, "name")
+                        .param(RequestParams.SORT_DIR, "desc"))
                 .andExpect(status().isOk())
                 .andExpect(model().hasNoErrors())
                 .andExpect(model().attributeExists("skills"))

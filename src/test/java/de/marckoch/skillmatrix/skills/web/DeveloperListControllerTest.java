@@ -57,8 +57,8 @@ class DeveloperListControllerTest {
         when(developerRepository.findAll(any(Pageable.class))).thenReturn(new PageImpl<>(List.of(dev1)));
 
         mockMvc.perform(get("/developers/page/{pagenumber}", 0)
-                        .param("sort-field", "lastName")
-                        .param("sort-dir", "asc"))
+                        .param(RequestParams.SORT_FIELD, "lastName")
+                        .param(RequestParams.SORT_DIR, "asc"))
                 .andExpect(status().isOk())
                 .andExpect(model().hasNoErrors())
                 .andExpect(model().attributeExists("developers"))

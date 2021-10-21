@@ -28,8 +28,8 @@ class SkillListController {
 
     @GetMapping("/skills/page/{pagenumber}")
     public String showAll(@PathVariable int pagenumber,
-                          @RequestParam(name = "sort-field", defaultValue = "name") final String sortField,
-                          @RequestParam(name = "sort-dir", defaultValue = "asc") final String sortDir,
+                          @RequestParam(name = RequestParams.SORT_FIELD, defaultValue = "name") final String sortField,
+                          @RequestParam(name = RequestParams.SORT_DIR, defaultValue = "asc") final String sortDir,
                           Model model) {
         Sort sort = SortUtil.build(sortDir, sortField);
         Pageable p = PageRequest.of(pagenumber, 10, sort);
