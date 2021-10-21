@@ -98,6 +98,8 @@ class DeveloperDetailsController {
                 else
                     dev.getExperiences().sort(byWeight.reversed());
                 break;
+            default:
+                dev.getExperiences().sort(byWeight.reversed());
         }
     }
 }

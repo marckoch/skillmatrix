@@ -60,6 +60,8 @@ class SkillDetailsController {
                 else
                     skill.getExperiences().sort(byWeight.reversed());
                 break;
+            default:
+                skill.getExperiences().sort(byWeight.reversed());
         }
     }
 }
