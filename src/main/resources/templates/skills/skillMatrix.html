@@ -46,13 +46,14 @@
                            data-bs-toggle="tooltip" data-bs-html="true" th:title="${'weight: ' + exp.developer.getWeight()}">Developer Name</a>
                     </td>
                 </th:block>
-                <th></th>
             </tr>
         </thead>
         <tbody>
           <tr th:each="skill : ${skills}" th:classappend="${skill.getWeight() == 0 ? 'table-danger' : ''}">
               <td>
-                  <a th:href="@{/skills/__${skill.getSkillId()}__}" th:text="${skill.nameAndVersion}">Skill V1</a>
+                  <a th:href="@{/skills/__${skill.getSkillId()}__}"
+                     th:text="${skill.nameAndVersion}"
+                     data-bs-toggle="tooltip" data-bs-html="true" th:title="${'weight: ' + skill.getWeight()}">Skill V1</a>
               </td>
 
               <th:block th:each="exp : ${skill.getExperiences()}">
@@ -61,9 +62,6 @@
                             data-bs-toggle="tooltip" data-bs-html="true" th:title="${exp.getYears() + ' years<br>' + exp.getRating() + ' stars'}">3</span>
                   </td>
               </th:block>
-              <td>
-                  <span th:text="${skill.getWeight()}"></span>
-              </td>
           </tr>
         </tbody>
     </table>
