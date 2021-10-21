@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-@WebMvcTest(DeveloperProjectEditController.class)
+@WebMvcTest({DeveloperProjectEditController.class, ProjectMapper.class})
 class DeveloperProjectEditControllerTest {
 
     @Autowired

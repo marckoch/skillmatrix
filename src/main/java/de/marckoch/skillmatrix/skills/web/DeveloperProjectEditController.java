@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.time.YearMonth;
 
 import static de.marckoch.skillmatrix.skills.web.DeveloperEditController.REDIRECT_DEVELOPERS;
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.DEVELOPER;
@@ -25,6 +24,8 @@ import static de.marckoch.skillmatrix.skills.web.ViewNames.CREATE_OR_UPDATE_PROJ
 class DeveloperProjectEditController {
 
     private final DeveloperRepository developerRepository;
+
+    private final ProjectMapper projectMapper;
 
     @GetMapping("/developers/{developerId}/project/add")
     public String initCreationForm(@PathVariable("developerId") int developerId, Model model) {
@@ -47,7 +48,7 @@ class DeveloperProjectEditController {
             return CREATE_OR_UPDATE_PROJECT_VIEW;
         } else {
             Project newProject = new Project();
-            updateEntityFromDTO(projectDTO, newProject);
+            projectMapper.updateEntityFromDTO(projectDTO, newProject);
             Developer developer = developerRepository.findById(developerId).orElseThrow();
             developer.setCurrentProject(newProject);
             Developer savedDev = developerRepository.save(developer);
@@ -60,7 +61,7 @@ class DeveloperProjectEditController {
         Developer developer = developerRepository.findById(developerId).orElseThrow();
         model.addAttribute(DEVELOPER.modelAttributeName, developer);
 
-        ProjectDTO dto = buildProjectDTO(developer.getCurrentProject());
+        ProjectDTO dto = projectMapper.buildProjectDTO(developer.getCurrentProject());
         model.addAttribute(PROJECT_DTO.modelAttributeName, dto);
         return CREATE_OR_UPDATE_PROJECT_VIEW;
     }
@@ -77,7 +78,7 @@ class DeveloperProjectEditController {
         } else {
             Developer existingDev = developerRepository.findById(developerId).orElseThrow();
 
-            updateEntityFromDTO(developerDTO, existingDev.getCurrentProject());
+            projectMapper.updateEntityFromDTO(developerDTO, existingDev.getCurrentProject());
 
             Developer savedDev = developerRepository.save(existingDev);
             model.addAttribute(DEVELOPER.modelAttributeName, savedDev);
@@ -92,20 +93,5 @@ class DeveloperProjectEditController {
         Developer savedDev = developerRepository.save(existingDev);
         model.addAttribute(DEVELOPER.modelAttributeName, savedDev);
         return REDIRECT_DEVELOPERS + savedDev.getDeveloperId();
-    }
-
-    private ProjectDTO buildProjectDTO(Project project) {
-        return ProjectDTO.builder()
-                .projectId(project.getProjectId())
-                .name(project.getName())
-                .since(project.getSince().toString())
-                .until(project.getUntil().toString())
-                .build();
-    }
-
-    private void updateEntityFromDTO(ProjectDTO dto, Project entity) {
-        entity.setName(dto.getName());
-        entity.setSince(YearMonth.parse(dto.getSince()));
-        entity.setUntil(YearMonth.parse(dto.getUntil()));
     }
 }
