@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Comparator;
 import java.util.List;
@@ -28,9 +29,16 @@ class DeveloperDetailsController {
     private final SkillsService skillsService;
 
     @GetMapping("/developers/{developerId}")
-    public String showDeveloper(@PathVariable("developerId") int developerId, Model model) {
+    public String showDeveloper(@PathVariable("developerId") int developerId,
+                                @RequestParam(name = "sort-field", required = false, defaultValue = "weight") final String sortField,
+                                @RequestParam(name = "sort-dir", required = false, defaultValue = "desc") final String sortDir,
+                                Model model) {
         Developer dev = developerRepository.findById(developerId).orElseThrow();
-        dev.getExperiences().sort(Comparator.comparingInt(Experience::getWeight).reversed());
+
+        sortExperiences(dev, sortField, sortDir);
+
+        SortUtil.addSortAttributesToModel(model, sortField, sortDir);
+
         model.addAttribute(dev);
 
         // check if we already have a (erroneous) experience in model,
@@ -64,5 +72,32 @@ class DeveloperDetailsController {
 
     private SelectItem skill2SelectItem(Skill skill) {
         return new SelectItem(skill.getSkillId(), skill.getNameAndVersion());
+    }
+
+    private void sortExperiences(Developer dev, String sortField, String sortDir) {
+        final Comparator<Experience> byWeight = Comparator.comparing(Experience::getWeight);
+        final Comparator<Experience> byRating = Comparator.comparing(Experience::getRating);
+        final Comparator<Experience> bySkillName = Comparator.comparing(o -> o.getSkill().getNameAndVersion());
+
+        switch (sortField) {
+            case "name":
+                if ("asc".equalsIgnoreCase(sortDir))
+                    dev.getExperiences().sort(bySkillName);
+                else
+                    dev.getExperiences().sort(bySkillName.reversed());
+                break;
+            case "rating":
+                if ("asc".equalsIgnoreCase(sortDir))
+                    dev.getExperiences().sort(byRating);
+                else
+                    dev.getExperiences().sort(byRating.reversed());
+                break;
+            case "weight":
+                if ("asc".equalsIgnoreCase(sortDir))
+                    dev.getExperiences().sort(byWeight);
+                else
+                    dev.getExperiences().sort(byWeight.reversed());
+                break;
+        }
     }
 }
