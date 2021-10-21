@@ -3,8 +3,10 @@ package de.marckoch.skillmatrix.skills.web;
 import de.marckoch.skillmatrix.skills.entity.Developer;
 import de.marckoch.skillmatrix.skills.entity.DeveloperRepository;
 import de.marckoch.skillmatrix.skills.entity.Project;
+import de.marckoch.skillmatrix.skills.entity.ProjectRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +26,8 @@ import static de.marckoch.skillmatrix.skills.web.ViewNames.CREATE_OR_UPDATE_PROJ
 class DeveloperProjectEditController {
 
     private final DeveloperRepository developerRepository;
+
+    private final ProjectRepository projectRepository;
 
     private final ProjectMapper projectMapper;
 
@@ -86,9 +90,11 @@ class DeveloperProjectEditController {
         }
     }
 
+    @Transactional
     @GetMapping("/developers/{developerId}/project/delete")
     public String deleteProject(@PathVariable("developerId") int developerId, Model model) {
         Developer existingDev = developerRepository.findById(developerId).orElseThrow();
+        projectRepository.deleteById(existingDev.getCurrentProject().getProjectId());
         existingDev.setCurrentProject(null);
         Developer savedDev = developerRepository.save(existingDev);
         model.addAttribute(DEVELOPER.modelAttributeName, savedDev);

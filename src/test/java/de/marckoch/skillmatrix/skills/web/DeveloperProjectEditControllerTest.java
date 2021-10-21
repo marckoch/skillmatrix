@@ -3,6 +3,7 @@ package de.marckoch.skillmatrix.skills.web;
 import de.marckoch.skillmatrix.skills.entity.Developer;
 import de.marckoch.skillmatrix.skills.entity.DeveloperRepository;
 import de.marckoch.skillmatrix.skills.entity.Project;
+import de.marckoch.skillmatrix.skills.entity.ProjectRepository;
 import de.marckoch.skillmatrix.skills.entity.SkillRepository;
 import de.marckoch.skillmatrix.skills.service.SkillsService;
 import org.junit.jupiter.api.Test;
@@ -41,6 +42,9 @@ class DeveloperProjectEditControllerTest {
 
     @MockBean
     SkillRepository skillRepository;
+
+    @MockBean
+    ProjectRepository projectRepository;
 
     @MockBean
     SkillsService skillsService;
