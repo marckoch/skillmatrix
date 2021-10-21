@@ -24,6 +24,8 @@ class DeveloperEditController {
 
 	private final DeveloperRepository developerRepository;
 
+	private final DeveloperMapper developerMapper;
+
 	@GetMapping("/developers/new")
 	public String initCreationForm(Model model) {
 		DeveloperDTO developerDTO = new DeveloperDTO();
@@ -38,7 +40,7 @@ class DeveloperEditController {
 			return CREATE_OR_UPDATE_DEVELOPER_VIEW;
 		} else {
 			Developer newDev = new Developer();
-			updateEntityFromDTO(developerDTO, newDev);
+			developerMapper.updateEntityFromDTO(developerDTO, newDev);
 			Developer savedDev = developerRepository.save(newDev);
 			return REDIRECT_DEVELOPERS + savedDev.getDeveloperId();
 		}
@@ -48,7 +50,7 @@ class DeveloperEditController {
 	public String initUpdateDeveloperForm(@PathVariable("developerId") int developerId, Model model) {
 		Developer developer = developerRepository.findById(developerId).orElseThrow();
 
-		DeveloperDTO dto = buildDeveloperDTO(developer);
+		DeveloperDTO dto = developerMapper.buildDeveloperDTO(developer);
 		model.addAttribute(DEVELOPER_DTO.modelAttributeName, dto);
 		return CREATE_OR_UPDATE_DEVELOPER_VIEW;
 	}
@@ -62,26 +64,11 @@ class DeveloperEditController {
 		} else {
 			Developer existingDev = developerRepository.findById(developerId).orElseThrow();
 
-			updateEntityFromDTO(developerDTO, existingDev);
+			developerMapper.updateEntityFromDTO(developerDTO, existingDev);
 
 			Developer savedDev = developerRepository.save(existingDev);
 			model.addAttribute(DEVELOPER.modelAttributeName, savedDev);
 			return REDIRECT_DEVELOPERS + savedDev.getDeveloperId();
 		}
-	}
-
-	private DeveloperDTO buildDeveloperDTO(Developer developer) {
-		return DeveloperDTO.builder()
-				.developerId(developer.getDeveloperId())
-				.firstName(developer.getFirstName())
-				.lastName(developer.getLastName())
-				.title(developer.getTitle())
-				.build();
-	}
-
-	private void updateEntityFromDTO(DeveloperDTO dto, Developer entity) {
-		entity.setLastName(dto.getLastName());
-		entity.setFirstName(dto.getFirstName());
-		entity.setTitle(dto.getTitle());
 	}
 }
