@@ -19,13 +19,13 @@ public class SortUtil {
         return sortDir.equalsIgnoreCase("asc") ? "desc" : "asc";
     }
 
-    public static void addPagingAndSortAttributesToModel(Model model, Page<?> resultPage, int pagenumber, String sortField, String sortDir) {
-        // paging
+    public static void addPagingAttributesToModel(Model model, Page<?> resultPage, int pagenumber) {
         model.addAttribute("currentPage", pagenumber);
         model.addAttribute("totalPages", resultPage.getTotalPages());
         model.addAttribute("totalItems", resultPage.getTotalElements());
+    }
 
-        // sorting
+    public static void addSortAttributesToModel(Model model, String sortField, String sortDir) {
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", reverse(sortDir));

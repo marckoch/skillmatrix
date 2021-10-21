@@ -28,8 +28,8 @@ class DeveloperListController {
 
 	@GetMapping("/developers/page/{pagenumber}")
 	public String showAll(@PathVariable int pagenumber,
-						  @RequestParam(name = "sort-field") final String sortField,
-						  @RequestParam(name = "sort-dir") final String sortDir,
+						  @RequestParam(name = "sort-field", defaultValue = "lastName") final String sortField,
+						  @RequestParam(name = "sort-dir", defaultValue = "asc") final String sortDir,
 						  Model model) {
 		Sort sort = SortUtil.build(sortDir, sortField);
 		Pageable p = PageRequest.of(pagenumber, 10, sort);
@@ -37,7 +37,8 @@ class DeveloperListController {
 
 		model.addAttribute("developers", resultPage);
 
-		SortUtil.addPagingAndSortAttributesToModel(model, resultPage, pagenumber, sortField, sortDir);
+		SortUtil.addPagingAttributesToModel(model, resultPage, pagenumber);
+		SortUtil.addSortAttributesToModel(model, sortField, sortDir);
 
 		return DEVELOPER_LIST;
 	}
