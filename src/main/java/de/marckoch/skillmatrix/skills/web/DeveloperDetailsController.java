@@ -2,6 +2,7 @@ package de.marckoch.skillmatrix.skills.web;
 
 import de.marckoch.skillmatrix.skills.entity.Developer;
 import de.marckoch.skillmatrix.skills.entity.DeveloperRepository;
+import de.marckoch.skillmatrix.skills.entity.Experience;
 import de.marckoch.skillmatrix.skills.entity.Skill;
 import de.marckoch.skillmatrix.skills.service.SkillsService;
 import lombok.AllArgsConstructor;
@@ -29,6 +30,7 @@ class DeveloperDetailsController {
     @GetMapping("/developers/{developerId}")
     public String showDeveloper(@PathVariable("developerId") int developerId, Model model) {
         Developer dev = developerRepository.findById(developerId).orElseThrow();
+        dev.getExperiences().sort(Comparator.comparingInt(Experience::getWeight).reversed());
         model.addAttribute(dev);
 
         // check if we already have a (erroneous) experience in model,
