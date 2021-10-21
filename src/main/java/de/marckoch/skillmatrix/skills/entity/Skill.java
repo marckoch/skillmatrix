@@ -57,7 +57,7 @@ public class Skill implements HasExperiences {
 
 	public List<Experience> topThreeExperts() {
 		return experiences.stream()
-				.sorted(Comparator.comparing(Experience::getRating).reversed())
+				.sorted(Comparator.comparing(Experience::getWeight).reversed())
 				.limit(3)
 				.toList();
 	}

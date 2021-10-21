@@ -65,7 +65,7 @@ public class Developer implements HasExperiences {
 
     public List<Experience> topThreeExperiences() {
         return experiences.stream()
-                .sorted(Comparator.comparing(Experience::getRating).reversed())
+                .sorted(Comparator.comparing(Experience::getWeight).reversed())
                 .limit(3)
                 .toList();
     }
