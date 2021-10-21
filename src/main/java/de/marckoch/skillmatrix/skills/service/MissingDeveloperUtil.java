@@ -17,7 +17,7 @@ public class MissingDeveloperUtil {
     // we have developers D1, D2, D3, D4
     // skill has experiences E1 (pointing to dev D3) and E2 (pointing to dev D1)
     // this method adds two empty exps pointing to D2 and D4
-    // at the end skill ha an experience for every developer in given list of developers
+    // at the end skill has an experience for every developer in given list of developers
     public static void addEmptyExperienceForMissingDevelopers(Skill skill, List<Developer> developers) {
         final List<Experience> experiences = skill.getExperiences();
         final List<Developer> missingDevs = findMissingDevs(developers, experiences);
