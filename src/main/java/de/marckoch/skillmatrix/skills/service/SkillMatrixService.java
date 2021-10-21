@@ -3,7 +3,6 @@ package de.marckoch.skillmatrix.skills.service;
 import de.marckoch.skillmatrix.skills.entity.Developer;
 import de.marckoch.skillmatrix.skills.entity.DeveloperRepository;
 import de.marckoch.skillmatrix.skills.entity.Experience;
-import de.marckoch.skillmatrix.skills.entity.HasExperiences;
 import de.marckoch.skillmatrix.skills.entity.Skill;
 import de.marckoch.skillmatrix.skills.entity.SkillRepository;
 import lombok.AllArgsConstructor;
@@ -21,7 +20,7 @@ public class SkillMatrixService {
     private final DeveloperRepository developerRepository;
 
     public List<Skill> getSkillsForSkillMatrix() {
-        final List<Skill> skills = sortSkills(getAllSkills());
+        final List<Skill> skills = SkillSortUtil.sortSkills(getAllSkills());
 
         List<Developer> developers = developerRepository.findAll();
 
@@ -29,13 +28,16 @@ public class SkillMatrixService {
     }
 
     private List<Skill> buildSkillList(List<Skill> skills, List<Developer> developers) {
-        skills.forEach(skill -> {
-            addEmptyExperienceForMissingDevelopers(skill, developers);
+        if (skills.isEmpty()) return skills;
 
-            // sort all experiences again by developer weight of selected skills descending, then by name
-            Comparator<Experience> weightComp = Comparator.comparing(o -> o.getDeveloper().getWeight());
-            Comparator<Experience> devNameComp = Comparator.comparing(o -> o.getDeveloper().getLastName());
-            skill.getExperiences().sort(weightComp.reversed().thenComparing(devNameComp));
+        // sort experiences by developer weight of selected skills descending, then by name
+        final Comparator<Experience> byDeveloperWeight = Comparator.comparing(o -> o.getDeveloper().getWeight());
+        final Comparator<Experience> byDeveloperLastName = Comparator.comparing(o -> o.getDeveloper().getLastName());
+        final Comparator<Experience> byWeightDescendingThenName = byDeveloperWeight.reversed().thenComparing(byDeveloperLastName);
+
+        skills.forEach(skill -> {
+            MissingDeveloperUtil.addEmptyExperienceForMissingDevelopers(skill, developers);
+            skill.getExperiences().sort(byWeightDescendingThenName);
         });
 
         return skills;
@@ -43,41 +45,5 @@ public class SkillMatrixService {
 
     private List<Skill> getAllSkills() {
         return skillRepository.findAll();
-    }
-
-    private void addEmptyExperienceForMissingDevelopers(Skill skill, List<Developer> developers) {
-        List<Experience> experiences = skill.getExperiences();
-        List<Developer> missingDevs = findMissingDevs(developers, experiences);
-
-        missingDevs.forEach(developer -> {
-            Experience e = createEmptyExperienceForDeveloper(developer);
-            experiences.add(e);
-        });
-    }
-
-    private List<Developer> findMissingDevs(List<Developer> developers, List<Experience> experiences) {
-        final List<Integer> idsOfDevelopersWithThisSkill = experiences.stream()
-                .map(exp -> exp.getDeveloper().getDeveloperId())
-                .toList();
-        return developers.stream()
-                .filter(developer -> !idsOfDevelopersWithThisSkill.contains(developer.getDeveloperId()))
-                .toList();
-    }
-
-    private Experience createEmptyExperienceForDeveloper(Developer developer) {
-        return Experience.builder()
-                .developer(developer)
-                .rating(0)
-                .years(0)
-                .build();
-    }
-
-    private List<Skill> sortSkills(List<Skill> skills) {
-        Comparator<Skill> skillWeightComp = Comparator.comparing(HasExperiences::getWeight);
-        Comparator<Skill> skillNameComp = Comparator.comparing(Skill::getName);
-
-        return skills.stream()
-                .sorted(skillWeightComp.reversed().thenComparing(skillNameComp))
-                .toList();
     }
 }

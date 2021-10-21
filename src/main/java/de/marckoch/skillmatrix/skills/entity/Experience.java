@@ -77,4 +77,12 @@ public class Experience {
 	public int getWeight() {
 		return getRating() * getYears();
 	}
+
+	public static Experience createEmptyExperienceForDeveloper(Developer developer) {
+		return Experience.builder()
+				.developer(developer)
+				.rating(0)
+				.years(0)
+				.build();
+	}
 }

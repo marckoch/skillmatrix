@@ -34,7 +34,7 @@ class SkillMatrixServiceTest {
 
     final int NUMBER_OF_DEVELOPERS = 100;
     final int NUMBER_OF_SKILLS = 200;
-    final int NUMBER_OF_EXPERIENCES = 1000;
+    final int NUMBER_OF_EXPERIENCES = NUMBER_OF_DEVELOPERS * NUMBER_OF_SKILLS / 2;
 
     private final List<Developer> developers = new ArrayList<>();
     private final List<Skill> skills = new ArrayList<>();
