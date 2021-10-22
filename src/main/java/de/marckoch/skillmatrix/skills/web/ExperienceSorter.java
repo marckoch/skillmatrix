@@ -5,6 +5,10 @@ import de.marckoch.skillmatrix.skills.entity.Experience;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * here we sort a list of experiences which usually hangs at a developer or skill instance.
+ * we sort here after loading, because a flexible sorting of child instances in the db query is not possible
+ */
 public class ExperienceSorter {
     private ExperienceSorter() {}
 

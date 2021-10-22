@@ -15,7 +15,7 @@ public class SortUtil {
                 Sort.by(sortField).ascending();
     }
 
-    static String reverse(String sortDir) {
+    private static String reverse(String sortDir) {
         return sortDir.equalsIgnoreCase("asc") ? "desc" : "asc";
     }
 

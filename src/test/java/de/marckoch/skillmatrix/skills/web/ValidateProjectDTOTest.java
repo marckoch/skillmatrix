@@ -1,5 +1,6 @@
 package de.marckoch.skillmatrix.skills.web;
 
+import de.marckoch.skillmatrix.skills.web.dto.ProjectDTO;
 import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

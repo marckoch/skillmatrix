@@ -1,4 +1,4 @@
-package de.marckoch.skillmatrix.skills.web;
+package de.marckoch.skillmatrix.skills.web.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

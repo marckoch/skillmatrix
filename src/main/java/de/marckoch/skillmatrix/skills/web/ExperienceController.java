@@ -4,6 +4,8 @@ import de.marckoch.skillmatrix.skills.entity.Developer;
 import de.marckoch.skillmatrix.skills.entity.DeveloperRepository;
 import de.marckoch.skillmatrix.skills.entity.Experience;
 import de.marckoch.skillmatrix.skills.entity.ExperienceRepository;
+import de.marckoch.skillmatrix.skills.web.dto.ExperienceDTO;
+import de.marckoch.skillmatrix.skills.web.dto.ExperienceMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;

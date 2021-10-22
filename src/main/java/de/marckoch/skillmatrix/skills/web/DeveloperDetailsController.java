@@ -4,6 +4,8 @@ import de.marckoch.skillmatrix.skills.entity.Developer;
 import de.marckoch.skillmatrix.skills.entity.DeveloperRepository;
 import de.marckoch.skillmatrix.skills.entity.Skill;
 import de.marckoch.skillmatrix.skills.service.SkillsService;
+import de.marckoch.skillmatrix.skills.web.dto.ExperienceDTO;
+import de.marckoch.skillmatrix.skills.web.dto.SelectItem;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

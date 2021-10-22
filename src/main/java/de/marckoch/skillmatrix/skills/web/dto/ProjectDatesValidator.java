@@ -1,4 +1,4 @@
-package de.marckoch.skillmatrix.skills.web;
+package de.marckoch.skillmatrix.skills.web.dto;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

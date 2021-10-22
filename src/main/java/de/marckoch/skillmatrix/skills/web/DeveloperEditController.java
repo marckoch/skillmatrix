@@ -2,6 +2,8 @@ package de.marckoch.skillmatrix.skills.web;
 
 import de.marckoch.skillmatrix.skills.entity.Developer;
 import de.marckoch.skillmatrix.skills.entity.DeveloperRepository;
+import de.marckoch.skillmatrix.skills.web.dto.DeveloperDTO;
+import de.marckoch.skillmatrix.skills.web.dto.DeveloperMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

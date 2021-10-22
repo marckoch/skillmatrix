@@ -4,6 +4,7 @@ import de.marckoch.skillmatrix.skills.entity.Developer;
 import de.marckoch.skillmatrix.skills.entity.DeveloperRepository;
 import de.marckoch.skillmatrix.skills.entity.SkillRepository;
 import de.marckoch.skillmatrix.skills.service.SkillsService;
+import de.marckoch.skillmatrix.skills.web.dto.DeveloperMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;

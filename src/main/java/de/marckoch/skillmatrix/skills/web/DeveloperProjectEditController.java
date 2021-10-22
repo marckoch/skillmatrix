@@ -4,6 +4,8 @@ import de.marckoch.skillmatrix.skills.entity.Developer;
 import de.marckoch.skillmatrix.skills.entity.DeveloperRepository;
 import de.marckoch.skillmatrix.skills.entity.Project;
 import de.marckoch.skillmatrix.skills.entity.ProjectRepository;
+import de.marckoch.skillmatrix.skills.web.dto.ProjectDTO;
+import de.marckoch.skillmatrix.skills.web.dto.ProjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;

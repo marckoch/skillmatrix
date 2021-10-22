@@ -2,6 +2,7 @@ package de.marckoch.skillmatrix.skills.web;
 
 import de.marckoch.skillmatrix.skills.entity.Skill;
 import de.marckoch.skillmatrix.skills.entity.SkillRepository;
+import de.marckoch.skillmatrix.skills.web.dto.SkillMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;

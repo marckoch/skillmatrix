@@ -1,4 +1,4 @@
-package de.marckoch.skillmatrix.skills.web;
+package de.marckoch.skillmatrix.skills.web.dto;
 
 import de.marckoch.skillmatrix.skills.entity.Experience;
 import org.springframework.stereotype.Component;
