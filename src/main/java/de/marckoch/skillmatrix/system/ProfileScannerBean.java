@@ -1,6 +1,8 @@
 package de.marckoch.skillmatrix.system;
 
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
@@ -11,15 +13,17 @@ import java.util.Arrays;
 @Component
 class ProfileScannerBean {
 
-    private Environment environment;
+    private final Environment environment;
+
+    private final Logger logger = LoggerFactory.getLogger(ProfileScannerBean.class);
 
     @PostConstruct
     void postConstruct(){
         String[] activeProfiles = environment.getActiveProfiles();
-        System.out.println("active profiles: " + Arrays.toString(activeProfiles));
+        logger.info("active profiles: " + Arrays.toString(activeProfiles));
 
         String[] defaultProfiles = environment.getDefaultProfiles();
-        System.out.println("default profiles: " + Arrays.toString(defaultProfiles));
+        logger.info("default profiles: " + Arrays.toString(defaultProfiles));
     }
 }
 
