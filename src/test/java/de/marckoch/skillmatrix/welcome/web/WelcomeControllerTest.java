@@ -1,4 +1,4 @@
-package de.marckoch.skillmatrix.system.web;
+package de.marckoch.skillmatrix.welcome.web;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package de.marckoch.skillmatrix.system.web;
+package de.marckoch.skillmatrix.welcome.web;
 
 import lombok.AllArgsConstructor;
 import org.springframework.core.env.Environment;
