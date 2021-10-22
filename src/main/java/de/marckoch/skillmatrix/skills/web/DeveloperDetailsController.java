@@ -46,14 +46,14 @@ class DeveloperDetailsController {
 
         // check if we already have a (erroneous) experience in model,
         // this was checked and put there by redirect from ExperienceController
-        if (!model.containsAttribute(EXPERIENCE_DTO)) {
+        if (model.containsAttribute(EXPERIENCE_DTO)) {
+            model.addAttribute(WAS_VALIDATED, true);
+            model.addAttribute(EXPERIENCE_DTO, model.getAttribute(EXPERIENCE_DTO));
+        } else {
             ExperienceDTO experienceDTO = ExperienceDTO.builder()
                     .developer(dev)
                     .build();
             model.addAttribute(EXPERIENCE_DTO, experienceDTO);
-        } else {
-            model.addAttribute(WAS_VALIDATED, true);
-            model.addAttribute(EXPERIENCE_DTO, model.getAttribute(EXPERIENCE_DTO));
         }
 
         List<Skill> freeSkills = skillsService.getFreeSkills(dev);
