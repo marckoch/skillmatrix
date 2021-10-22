@@ -34,7 +34,7 @@ class SkillListController {
                           Model model) {
         Sort sort = SortUtil.build(sortDir, sortField);
         Pageable p = PageRequest.of(pagenumber, 10, sort);
-        Page<Skill> resultPage = skillRepository.findAll(p);
+        Page<Skill> resultPage = skillRepository.findAllInSkillList(p);
 
         model.addAttribute(SKILLS, resultPage);
 

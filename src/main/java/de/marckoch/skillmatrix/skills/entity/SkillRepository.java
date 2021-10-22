@@ -1,5 +1,7 @@
 package de.marckoch.skillmatrix.skills.entity;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -29,6 +31,11 @@ public interface SkillRepository extends JpaRepository<Skill, Integer> {
 	@Query("SELECT DISTINCT s FROM Skill s")
 	@Transactional(readOnly = true)
 	List<Skill> findAllForFreeSkills();
+
+	@Query(value = "SELECT s FROM Skill s LEFT JOIN FETCH s.experiences e LEFT JOIN FETCH e.developer d",
+			countQuery = "SELECT COUNT(s) FROM Skill s")
+	@Transactional(readOnly = true)
+	Page<Skill> findAllInSkillList(Pageable pageable);
 
 	Skill save(Skill skill);
 }

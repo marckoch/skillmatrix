@@ -45,7 +45,7 @@ class SkillListControllerTest {
 
     @Test
     void showAllShowsSkillList() throws Exception {
-        when(skillRepository.findAll(any(Pageable.class))).thenReturn(new PageImpl<>(List.of(skill1, skill2, skill3)));
+        when(skillRepository.findAllInSkillList(any(Pageable.class))).thenReturn(new PageImpl<>(List.of(skill1, skill2, skill3)));
 
         mockMvc.perform(get("/skills/page/{pagenumber}", 0)
                         .param(RequestParams.SORT_FIELD, "name")
@@ -65,7 +65,7 @@ class SkillListControllerTest {
 
     @Test
     void showAllShowsSkillListWithSortingReversed() throws Exception {
-        when(skillRepository.findAll(any(Pageable.class))).thenReturn(new PageImpl<>(List.of(skill1, skill2, skill3)));
+        when(skillRepository.findAllInSkillList(any(Pageable.class))).thenReturn(new PageImpl<>(List.of(skill1, skill2, skill3)));
 
         mockMvc.perform(get("/skills/page/{pagenumber}", 0)
                         .param(RequestParams.SORT_FIELD, "name")
