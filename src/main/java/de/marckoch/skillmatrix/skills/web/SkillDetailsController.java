@@ -13,6 +13,7 @@ import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.SKILL;
 import static de.marckoch.skillmatrix.skills.web.RequestParams.SORT_DIR;
 import static de.marckoch.skillmatrix.skills.web.RequestParams.SORT_FIELD;
 import static de.marckoch.skillmatrix.skills.web.SortDirection.DESC;
+import static de.marckoch.skillmatrix.skills.web.SortField.WEIGHT;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.SKILL_DETAILS;
 
 @Controller
@@ -23,7 +24,7 @@ class SkillDetailsController {
 
     @GetMapping("/skills/{skillId}")
     public String showSkill(@PathVariable("skillId") int skillId,
-                            @RequestParam(name = SORT_FIELD, required = false, defaultValue = "weight") final String sortField,
+                            @RequestParam(name = SORT_FIELD, required = false, defaultValue = WEIGHT) final String sortField,
                             @RequestParam(name = SORT_DIR, required = false, defaultValue = DESC) final String sortDir,
                             Model model) {
         Skill skill = skillRepository.findById(skillId).orElseThrow();

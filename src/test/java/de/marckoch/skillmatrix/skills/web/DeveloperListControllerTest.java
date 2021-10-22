@@ -24,6 +24,7 @@ import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.TOTAL_ITEMS
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.TOTAL_PAGES;
 import static de.marckoch.skillmatrix.skills.web.SortDirection.ASC;
 import static de.marckoch.skillmatrix.skills.web.SortDirection.DESC;
+import static de.marckoch.skillmatrix.skills.web.SortField.DEVELOPER_LAST_NAME;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.DEVELOPER_LIST;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
@@ -66,7 +67,7 @@ class DeveloperListControllerTest {
         when(developerRepository.findAllInDeveloperList(any(Pageable.class))).thenReturn(new PageImpl<>(List.of(dev1)));
 
         mockMvc.perform(get("/developers/page/{pagenumber}", 0)
-                        .param(RequestParams.SORT_FIELD, "lastName")
+                        .param(RequestParams.SORT_FIELD, DEVELOPER_LAST_NAME)
                         .param(RequestParams.SORT_DIR, ASC))
                 .andExpect(status().isOk())
                 .andExpect(model().hasNoErrors())
@@ -75,7 +76,7 @@ class DeveloperListControllerTest {
                 .andExpect(model().attribute(CURRENT_PAGE, is(0)))
                 .andExpect(model().attribute(TOTAL_PAGES, is(1)))
                 .andExpect(model().attribute(TOTAL_ITEMS, is(1L)))
-                .andExpect(model().attribute(SORT_FIELD, is("lastName")))
+                .andExpect(model().attribute(SORT_FIELD, is(DEVELOPER_LAST_NAME)))
                 .andExpect(model().attribute(SORT_DIR, is(ASC)))
                 .andExpect(model().attribute(REVERSE_SORT_DIR, is(DESC)))
                 .andExpect(view().name(DEVELOPER_LIST));

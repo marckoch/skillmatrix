@@ -22,6 +22,7 @@ import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.TOTAL_ITEMS
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.TOTAL_PAGES;
 import static de.marckoch.skillmatrix.skills.web.SortDirection.ASC;
 import static de.marckoch.skillmatrix.skills.web.SortDirection.DESC;
+import static de.marckoch.skillmatrix.skills.web.SortField.SKILL_NAME;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.SKILL_LIST;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
@@ -57,7 +58,7 @@ class SkillListControllerTest {
         when(skillRepository.findAllInSkillList(any(Pageable.class))).thenReturn(new PageImpl<>(List.of(skill1, skill2, skill3)));
 
         mockMvc.perform(get("/skills/page/{pagenumber}", 0)
-                        .param(RequestParams.SORT_FIELD, "name")
+                        .param(RequestParams.SORT_FIELD, SKILL_NAME)
                         .param(RequestParams.SORT_DIR, ASC))
                 .andExpect(status().isOk())
                 .andExpect(model().hasNoErrors())
@@ -66,7 +67,7 @@ class SkillListControllerTest {
                 .andExpect(model().attribute(CURRENT_PAGE, is(0)))
                 .andExpect(model().attribute(TOTAL_PAGES, is(1)))
                 .andExpect(model().attribute(TOTAL_ITEMS, is(3L)))
-                .andExpect(model().attribute(SORT_FIELD, is("name")))
+                .andExpect(model().attribute(SORT_FIELD, is(SKILL_NAME)))
                 .andExpect(model().attribute(SORT_DIR, is(ASC)))
                 .andExpect(model().attribute(REVERSE_SORT_DIR, is(DESC)))
                 .andExpect(view().name(SKILL_LIST));
@@ -77,7 +78,7 @@ class SkillListControllerTest {
         when(skillRepository.findAllInSkillList(any(Pageable.class))).thenReturn(new PageImpl<>(List.of(skill1, skill2, skill3)));
 
         mockMvc.perform(get("/skills/page/{pagenumber}", 0)
-                        .param(RequestParams.SORT_FIELD, "name")
+                        .param(RequestParams.SORT_FIELD, SKILL_NAME)
                         .param(RequestParams.SORT_DIR, DESC))
                 .andExpect(status().isOk())
                 .andExpect(model().hasNoErrors())
@@ -86,7 +87,7 @@ class SkillListControllerTest {
                 .andExpect(model().attribute(CURRENT_PAGE, is(0)))
                 .andExpect(model().attribute(TOTAL_PAGES, is(1)))
                 .andExpect(model().attribute(TOTAL_ITEMS, is(3L)))
-                .andExpect(model().attribute(SORT_FIELD, is("name")))
+                .andExpect(model().attribute(SORT_FIELD, is(SKILL_NAME)))
                 .andExpect(model().attribute(SORT_DIR, is(DESC)))
                 .andExpect(model().attribute(REVERSE_SORT_DIR, is(ASC)))
                 .andExpect(view().name(SKILL_LIST));
