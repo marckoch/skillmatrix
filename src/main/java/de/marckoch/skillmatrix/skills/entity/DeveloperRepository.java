@@ -15,7 +15,7 @@ public interface DeveloperRepository extends JpaRepository<Developer, Integer> {
 	@Transactional(readOnly = true)
 	Optional<Developer> findById(@Param("id") Integer id);
 
-	@Query("SELECT DISTINCT dev FROM Developer dev WHERE UPPER(dev.lastName) LIKE %:queryInUpperCase% OR UPPER(dev.firstName) LIKE %:queryInUpperCase%")
+	@Query("SELECT DISTINCT dev, p FROM Developer dev LEFT JOIN dev.currentProject p WHERE UPPER(dev.lastName) LIKE %:queryInUpperCase% OR UPPER(dev.firstName) LIKE %:queryInUpperCase%")
 	@Transactional(readOnly = true)
 	Collection<Developer> findByQuery(@Param("queryInUpperCase") String queryInUpperCase);
 

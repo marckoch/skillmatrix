@@ -69,12 +69,12 @@ public class SkillSetsService {
         if (query.contains(",")) {
             List<String> searchTerms = Arrays.stream(query.split(",")).map(s -> s.trim().toUpperCase()).toList();
             return searchTerms.stream()
-                    .map(skillRepository::findByQuery)
+                    .map(skillRepository::findWithExperiencesByQuery)
                     .flatMap(Collection::stream)
                     .distinct()
                     .toList();
         } else
-            return skillRepository.findByQuery(query.toUpperCase());
+            return skillRepository.findWithExperiencesByQuery(query.toUpperCase());
     }
 
     private Set<Integer> getDeveloperIds(List<Skill> skills) {

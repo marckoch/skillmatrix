@@ -58,7 +58,7 @@ class SkillSetsServiceTest {
         List<Skill> searchSkills = randomExp.stream().map(Experience::getSkill).distinct().toList();
 
         searchSkills.forEach(skill ->
-                when(skillRepository.findByQuery(skill.getName().toUpperCase())).thenReturn(List.of(skill)));
+                when(skillRepository.findWithExperiencesByQuery(skill.getName().toUpperCase())).thenReturn(List.of(skill)));
 
         Set<Integer> developerIdsOfSearchedSkills = getDeveloperIds(searchSkills);
         List<Developer> developersOfSearchedSkills = developers.stream()

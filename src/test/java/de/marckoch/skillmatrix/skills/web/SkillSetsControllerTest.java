@@ -65,7 +65,7 @@ class SkillSetsControllerTest {
         dev1.getExperiences().add(expDev1Skill1);
         skill1.getExperiences().add(expDev1Skill1);
 
-        when(skillRepository.findByQuery("SKILL1")).thenReturn(List.of(skill1));
+        when(skillRepository.findWithExperiencesByQuery("SKILL1")).thenReturn(List.of(skill1));
         when(developerRepository.findAll()).thenReturn(List.of(dev1, dev2));
         when(developerRepository.findById(dev1.getDeveloperId())).thenReturn(Optional.of(dev1));
         when(developerRepository.findById(dev2.getDeveloperId())).thenReturn(Optional.of(dev2));
@@ -81,8 +81,8 @@ class SkillSetsControllerTest {
         dev1.getExperiences().add(expDev1Skill1);
         skill1.getExperiences().add(expDev1Skill1);
 
-        when(skillRepository.findByQuery("SKILL1")).thenReturn(List.of(skill1));
-        when(skillRepository.findByQuery("SKILL2")).thenReturn(List.of(skill2));
+        when(skillRepository.findWithExperiencesByQuery("SKILL1")).thenReturn(List.of(skill1));
+        when(skillRepository.findWithExperiencesByQuery("SKILL2")).thenReturn(List.of(skill2));
         when(developerRepository.findAll()).thenReturn(List.of(dev1, dev2));
         when(developerRepository.findById(dev1.getDeveloperId())).thenReturn(Optional.of(dev1));
         when(developerRepository.findById(dev2.getDeveloperId())).thenReturn(Optional.of(dev2));

@@ -18,7 +18,11 @@ public interface SkillRepository extends JpaRepository<Skill, Integer> {
 	@Transactional(readOnly = true)
 	List<Skill> findByQuery(@Param("queryInUpperCase") String queryInUpperCase);
 
-	@Query("SELECT DISTINCT s FROM Skill s")
+	@Query("SELECT DISTINCT s FROM Skill s LEFT JOIN FETCH s.experiences WHERE UPPER(s.name) LIKE %:queryInUpperCase% OR UPPER(s.alias) LIKE %:queryInUpperCase%")
+	@Transactional(readOnly = true)
+	List<Skill> findWithExperiencesByQuery(@Param("queryInUpperCase") String queryInUpperCase);
+
+	@Query("SELECT DISTINCT s FROM Skill s LEFT JOIN FETCH s.experiences")
 	@Transactional(readOnly = true)
 	List<Skill> findAll();
 
