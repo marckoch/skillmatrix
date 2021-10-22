@@ -55,7 +55,7 @@ class DeveloperListControllerTest {
         dev1.setLastName("developer1lastName");
         dev1.setExperiences(Collections.emptyList());
 
-        when(developerRepository.findAll(any(Pageable.class))).thenReturn(new PageImpl<>(List.of(dev1)));
+        when(developerRepository.findAllInDeveloperList(any(Pageable.class))).thenReturn(new PageImpl<>(List.of(dev1)));
 
         mockMvc.perform(get("/developers/page/{pagenumber}", 0)
                         .param(RequestParams.SORT_FIELD, "lastName")

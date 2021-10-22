@@ -34,7 +34,7 @@ class DeveloperListController {
 						  Model model) {
 		Sort sort = SortUtil.build(sortDir, sortField);
 		Pageable p = PageRequest.of(pagenumber, 10, sort);
-		Page<Developer> resultPage = developerRepository.findAll(p);
+		Page<Developer> resultPage = developerRepository.findAllInDeveloperList(p);
 
 		model.addAttribute(DEVELOPERS, resultPage);
 
