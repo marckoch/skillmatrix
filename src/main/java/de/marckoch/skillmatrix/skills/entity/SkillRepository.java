@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public interface SkillRepository extends JpaRepository<Skill, Integer> {
 
-	@Query("SELECT s FROM Skill s WHERE s.skillId =:id")
+	@Query("SELECT s FROM Skill s LEFT JOIN FETCH s.experiences e LEFT JOIN FETCH e.developer d WHERE s.skillId =:id")
 	@Transactional(readOnly = true)
 	Optional<Skill> findById(@Param("id") Integer id);
 
@@ -20,7 +20,7 @@ public interface SkillRepository extends JpaRepository<Skill, Integer> {
 	@Transactional(readOnly = true)
 	List<Skill> findByQuery(@Param("queryInUpperCase") String queryInUpperCase);
 
-	@Query("SELECT DISTINCT s FROM Skill s LEFT JOIN FETCH s.experiences WHERE UPPER(s.name) LIKE %:queryInUpperCase% OR UPPER(s.alias) LIKE %:queryInUpperCase%")
+	@Query("SELECT DISTINCT s, e, d FROM Skill s LEFT JOIN FETCH s.experiences e LEFT JOIN FETCH e.developer d WHERE UPPER(s.name) LIKE %:queryInUpperCase% OR UPPER(s.alias) LIKE %:queryInUpperCase%")
 	@Transactional(readOnly = true)
 	List<Skill> findWithExperiencesByQuery(@Param("queryInUpperCase") String queryInUpperCase);
 

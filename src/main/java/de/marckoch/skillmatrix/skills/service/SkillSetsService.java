@@ -28,7 +28,7 @@ public class SkillSetsService {
         final List<Skill> skills = SkillSortUtil.sortSkills(getSkills(skillSetQuery));
 
         final Set<Integer> developerIds = getDeveloperIds(skills);
-        List<Developer> developers = developerRepository.findAllById(developerIds);
+        List<Developer> developers = developerRepository.findAllByIdForSkillSets(developerIds);
 
         return buildSkillList(skills, developers);
     }

@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public interface DeveloperRepository extends JpaRepository<Developer, Integer> {
 
-	@Query("SELECT dev FROM Developer dev WHERE dev.developerId =:id")
+	@Query("SELECT dev FROM Developer dev LEFT JOIN dev.currentProject p LEFT JOIN FETCH dev.experiences e LEFT JOIN FETCH e.skill s WHERE dev.developerId =:id")
 	@Transactional(readOnly = true)
 	Optional<Developer> findById(@Param("id") Integer id);
 
@@ -29,6 +29,9 @@ public interface DeveloperRepository extends JpaRepository<Developer, Integer> {
 	countQuery = "SELECT COUNT(dev) FROM Developer dev")
 	@Transactional(readOnly = true)
 	Page<Developer> findAllInDeveloperList(Pageable pageable);
+
+	@Query(value = "SELECT DISTINCT dev FROM Developer dev LEFT JOIN FETCH dev.experiences e LEFT JOIN FETCH e.skill s WHERE dev.developerId in (:ids)")
+	List<Developer> findAllByIdForSkillSets(Iterable<Integer> ids);
 
 	Developer save(Developer developer);
 }

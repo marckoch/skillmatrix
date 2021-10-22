@@ -64,7 +64,7 @@ class SkillSetsServiceTest {
         List<Developer> developersOfSearchedSkills = developers.stream()
                 .filter(dev -> developerIdsOfSearchedSkills.contains(dev.getDeveloperId()))
                 .toList();
-        when(developerRepository.findAllById(developerIdsOfSearchedSkills)).thenReturn(developersOfSearchedSkills);
+        when(developerRepository.findAllByIdForSkillSets(developerIdsOfSearchedSkills)).thenReturn(developersOfSearchedSkills);
 
         // when
         final List<Skill> skills = skillSetsService.getSkillsForSkillSets(commaSeperatedListOfUppercaseSkillNames(searchSkills));
