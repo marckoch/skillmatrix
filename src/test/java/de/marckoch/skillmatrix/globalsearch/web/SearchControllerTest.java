@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-@WebMvcTest(SearchController.class)
+@WebMvcTest({SearchController.class, SearchResultHighlighter.class})
 class SearchControllerTest {
     @Autowired
     private MockMvc mockMvc;

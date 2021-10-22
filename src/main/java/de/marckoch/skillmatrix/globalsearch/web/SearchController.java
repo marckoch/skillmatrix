@@ -4,6 +4,7 @@ import de.marckoch.skillmatrix.skills.entity.Developer;
 import de.marckoch.skillmatrix.skills.entity.DeveloperRepository;
 import de.marckoch.skillmatrix.skills.entity.Skill;
 import de.marckoch.skillmatrix.skills.entity.SkillRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,19 +19,17 @@ import static de.marckoch.skillmatrix.skills.web.ViewNames.SEARCH_RESULT;
 
 /**
  * Controller for the global search box at the top right.
- * We search developers first. When we don't find anything we try searching skills.
+ * We search developers first. Then we try searching skills.
  */
 @Controller
+@AllArgsConstructor
 class SearchController {
 
     private final DeveloperRepository devRepo;
 
     private final SkillRepository skillRepo;
 
-    public SearchController(DeveloperRepository devRepo, SkillRepository skillRepo) {
-        this.devRepo = devRepo;
-        this.skillRepo = skillRepo;
-    }
+    private final SearchResultHighlighter searchResultHighlighter;
 
     @GetMapping("/globalsearch")
     public String processFindForm(@RequestParam String query, Model model) {
@@ -43,14 +42,14 @@ class SearchController {
 
         Collection<Developer> developers = devRepo.findByQuery(query.toUpperCase());
         if (!developers.isEmpty()) {
-            highlightDeveloperSearchMatches(developers, query);
+            searchResultHighlighter.highlightDeveloperSearchMatches(developers, query);
             somethingFound = true;
         }
         model.addAttribute(DEVELOPERS, developers);
 
         Collection<Skill> skills = skillRepo.findByQuery(query.toUpperCase());
         if (!skills.isEmpty()) {
-            highlightSkillSearchMatches(skills, query);
+            searchResultHighlighter.highlightSkillSearchMatches(skills, query);
             somethingFound = true;
         }
         model.addAttribute(SKILLS, skills);
@@ -59,32 +58,5 @@ class SearchController {
             return SEARCH_RESULT;
         else
             return EMPTY_SEARCH;
-    }
-
-    private static final String HIGHLIGHTED_RESULT = "<mark>$0</mark>";
-
-    private void highlightDeveloperSearchMatches(Collection<Developer> developers, String query) {
-        developers.forEach(d -> {
-            if (d.getFirstName() != null) {
-                d.setFirstName(d.getFirstName().replaceAll(caseIgnore(query), HIGHLIGHTED_RESULT));
-            }
-            if (d.getLastName() != null) {
-                d.setLastName(d.getLastName().replaceAll(caseIgnore(query), HIGHLIGHTED_RESULT));
-            }
-        });
-    }
-
-    private void highlightSkillSearchMatches(Collection<Skill> skills, String query) {
-        skills.forEach(s -> {
-            if (s.getName() != null) {
-                s.setName(s.getName().replaceAll(caseIgnore(query), HIGHLIGHTED_RESULT));
-            }
-            if (s.getAlias() != null)
-                s.setAlias(s.getAlias().replaceAll(caseIgnore(query), HIGHLIGHTED_RESULT));
-        });
-    }
-
-    private String caseIgnore(String query) {
-        return "(?i)" + query;
     }
 }
