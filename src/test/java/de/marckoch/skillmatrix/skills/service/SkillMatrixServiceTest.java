@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.random.RandomGenerator;
 
@@ -39,6 +40,15 @@ class SkillMatrixServiceTest {
     private final List<Developer> developers = new ArrayList<>();
     private final List<Skill> skills = new ArrayList<>();
     private final List<Experience> experiences = new ArrayList<>();
+
+    @Test
+    void skillMatrixWorksWithEmptyInput() {
+        when(skillRepository.findAll()).thenReturn(Collections.emptyList());
+
+        final List<Skill> skills = skillMatrixService.getSkillsForSkillMatrix();
+
+        assertThat(skills).isEmpty();
+    }
 
     @Test
     void skillMatrixWorksWithBigData() {
