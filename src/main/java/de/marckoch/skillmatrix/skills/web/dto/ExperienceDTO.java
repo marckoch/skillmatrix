@@ -23,8 +23,6 @@ import javax.validation.constraints.Positive;
 @AllArgsConstructor
 public class ExperienceDTO {
 
-    private Integer experienceId;
-
     private Developer developer;
 
     private Skill skill;
@@ -37,8 +35,4 @@ public class ExperienceDTO {
     @NotNull
     @Range(min = 1, max = 5)
     private Integer rating;
-
-    public int getWeight() {
-        return getRating() * getYears();
-    }
 }
