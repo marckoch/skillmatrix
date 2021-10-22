@@ -22,7 +22,7 @@ import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.EXPERIENCE_
 
 @Controller
 @AllArgsConstructor
-class ExperienceController {
+class ExperienceEditController {
 
     private final ExperienceRepository experienceRepository;
 
