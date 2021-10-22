@@ -18,7 +18,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import java.util.Collections;
@@ -60,7 +59,6 @@ public class Developer implements HasExperiences {
 
     @EqualsAndHashCode.Exclude
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "developer", fetch = FetchType.LAZY, orphanRemoval = true)
-    @OrderBy("rating DESC")
     private List<Experience> experiences;
 
     public List<Experience> topThreeExperiences() {
