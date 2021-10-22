@@ -32,7 +32,7 @@ class SkillsServiceTest {
 
     @BeforeEach
     void setup() {
-        when(skillRepository.findAll()).thenReturn(List.of(skill1, skill2, skill3));
+        when(skillRepository.findAllForFreeSkills()).thenReturn(List.of(skill1, skill2, skill3));
     }
 
     @Test

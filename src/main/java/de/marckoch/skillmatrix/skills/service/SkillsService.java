@@ -26,7 +26,7 @@ public class SkillsService {
                 .map(exp -> exp.getSkill().getSkillId())
                 .toList();
 
-        return skillRepository.findAll().stream()
+        return skillRepository.findAllForFreeSkills().stream()
                 .filter(skill -> !skillsOfDeveloper.contains(skill.getSkillId()))
                 .toList();
     }

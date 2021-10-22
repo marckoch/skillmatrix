@@ -43,7 +43,7 @@ class SkillMatrixServiceTest {
 
     @Test
     void skillMatrixWorksWithEmptyInput() {
-        when(skillRepository.findAll()).thenReturn(Collections.emptyList());
+        when(skillRepository.findAllForSkillMatrix()).thenReturn(Collections.emptyList());
 
         final List<Skill> skills = skillMatrixService.getSkillsForSkillMatrix();
 
@@ -55,8 +55,8 @@ class SkillMatrixServiceTest {
         // given
         createRandomTestData();
 
-        when(skillRepository.findAll()).thenReturn(skills);
-        when(developerRepository.findAll()).thenReturn(developers);
+        when(skillRepository.findAllForSkillMatrix()).thenReturn(skills);
+        when(developerRepository.findAllForSkillMatrix()).thenReturn(developers);
 
         // when
         final List<Skill> skills = skillMatrixService.getSkillsForSkillMatrix();

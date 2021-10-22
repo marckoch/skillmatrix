@@ -19,9 +19,9 @@ public interface DeveloperRepository extends JpaRepository<Developer, Integer> {
 	@Transactional(readOnly = true)
 	Collection<Developer> findByQuery(@Param("queryInUpperCase") String queryInUpperCase);
 
-	@Query("SELECT DISTINCT dev FROM Developer dev")
+	@Query("SELECT DISTINCT dev, e FROM Developer dev LEFT JOIN FETCH dev.experiences e")
 	@Transactional(readOnly = true)
-	List<Developer> findAll();
+	List<Developer> findAllForSkillMatrix();
 
 	Developer save(Developer developer);
 }

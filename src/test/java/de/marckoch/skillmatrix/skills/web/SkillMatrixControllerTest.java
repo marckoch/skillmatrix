@@ -47,8 +47,8 @@ class SkillMatrixControllerTest {
         dev1.getExperiences().add(expDev1Skill1);
         skill1.getExperiences().add(expDev1Skill1);
 
-        when(skillRepository.findAll()).thenReturn(List.of(skill1, skill2, skill3));
-        when(developerRepository.findAll()).thenReturn(List.of(dev1, dev2));
+        when(skillRepository.findAllForSkillMatrix()).thenReturn(List.of(skill1, skill2, skill3));
+        when(developerRepository.findAllForSkillMatrix()).thenReturn(List.of(dev1, dev2));
         when(developerRepository.findById(dev1.getDeveloperId())).thenReturn(Optional.of(dev1));
         when(developerRepository.findById(dev2.getDeveloperId())).thenReturn(Optional.of(dev2));
 

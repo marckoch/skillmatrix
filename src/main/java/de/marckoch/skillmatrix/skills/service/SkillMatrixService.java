@@ -22,7 +22,7 @@ public class SkillMatrixService {
     public List<Skill> getSkillsForSkillMatrix() {
         final List<Skill> skills = SkillSortUtil.sortSkills(getAllSkills());
 
-        List<Developer> developers = developerRepository.findAll();
+        List<Developer> developers = developerRepository.findAllForSkillMatrix();
 
         return buildSkillList(skills, developers);
     }
@@ -44,6 +44,6 @@ public class SkillMatrixService {
     }
 
     private List<Skill> getAllSkills() {
-        return skillRepository.findAll();
+        return skillRepository.findAllForSkillMatrix();
     }
 }
