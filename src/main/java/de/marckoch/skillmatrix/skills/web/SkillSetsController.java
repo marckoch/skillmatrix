@@ -23,7 +23,7 @@ class SkillSetsController {
     private final SkillSetsService skillSetsService;
 
     @GetMapping("/skills/sets")
-    public String skillSets(@RequestParam(required = false) String skillSetQuery, Model model) {
+    public String skillSets(@RequestParam(required = false, defaultValue = "") String skillSetQuery, Model model) {
         final List<Skill> skills = skillSetsService.getSkillsForSkillSets(skillSetQuery);
         model.addAttribute(SKILLS, skills);
         model.addAttribute("skillSetQuery", buildJsonOfSkillSetQuery(skillSetQuery));
@@ -32,7 +32,7 @@ class SkillSetsController {
 
     // return search terms so token input can show them again (via its prePopulate mechanism)
     private List<Map<String, String>> buildJsonOfSkillSetQuery(String skillSetQuery) {
-        if (skillSetQuery == null || skillSetQuery.isEmpty())
+        if (skillSetQuery.isEmpty())
             return Collections.emptyList();
 
         return Arrays.stream(skillSetQuery.split(","))
