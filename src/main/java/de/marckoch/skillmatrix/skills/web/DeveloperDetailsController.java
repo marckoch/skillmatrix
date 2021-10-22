@@ -21,6 +21,9 @@ import java.util.stream.IntStream;
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.EXPERIENCE_DTO;
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.SKILL_SELECT_ITEMS;
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.WAS_VALIDATED;
+import static de.marckoch.skillmatrix.skills.web.RequestParams.SORT_DIR;
+import static de.marckoch.skillmatrix.skills.web.RequestParams.SORT_FIELD;
+import static de.marckoch.skillmatrix.skills.web.SortDirection.DESC;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.DEVELOPER_DETAILS;
 
 @Controller
@@ -33,8 +36,8 @@ class DeveloperDetailsController {
 
     @GetMapping("/developers/{developerId}")
     public String showDeveloper(@PathVariable("developerId") int developerId,
-                                @RequestParam(name = RequestParams.SORT_FIELD, required = false, defaultValue = "weight") final String sortField,
-                                @RequestParam(name = RequestParams.SORT_DIR, required = false, defaultValue = "desc") final String sortDir,
+                                @RequestParam(name = SORT_FIELD, required = false, defaultValue = "weight") final String sortField,
+                                @RequestParam(name = SORT_DIR, required = false, defaultValue = DESC) final String sortDir,
                                 Model model) {
         Developer dev = developerRepository.findById(developerId).orElseThrow();
 

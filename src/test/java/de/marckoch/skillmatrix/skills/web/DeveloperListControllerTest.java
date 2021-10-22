@@ -15,7 +15,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Collections;
 import java.util.List;
 
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.CURRENT_PAGE;
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.DEVELOPERS;
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.REVERSE_SORT_DIR;
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.SORT_DIR;
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.SORT_FIELD;
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.TOTAL_ITEMS;
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.TOTAL_PAGES;
+import static de.marckoch.skillmatrix.skills.web.SortDirection.ASC;
+import static de.marckoch.skillmatrix.skills.web.SortDirection.DESC;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.DEVELOPER_LIST;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
@@ -59,17 +67,17 @@ class DeveloperListControllerTest {
 
         mockMvc.perform(get("/developers/page/{pagenumber}", 0)
                         .param(RequestParams.SORT_FIELD, "lastName")
-                        .param(RequestParams.SORT_DIR, "asc"))
+                        .param(RequestParams.SORT_DIR, ASC))
                 .andExpect(status().isOk())
                 .andExpect(model().hasNoErrors())
                 .andExpect(model().attributeExists(DEVELOPERS))
                 .andExpect(model().attribute(DEVELOPERS, instanceOf(PageImpl.class)))
-                .andExpect(model().attribute("currentPage", is(0)))
-                .andExpect(model().attribute("totalPages", is(1)))
-                .andExpect(model().attribute("totalItems", is(1L)))
-                .andExpect(model().attribute("sortField", is("lastName")))
-                .andExpect(model().attribute("sortDir", is("asc")))
-                .andExpect(model().attribute("reverseSortDir", is("desc")))
+                .andExpect(model().attribute(CURRENT_PAGE, is(0)))
+                .andExpect(model().attribute(TOTAL_PAGES, is(1)))
+                .andExpect(model().attribute(TOTAL_ITEMS, is(1L)))
+                .andExpect(model().attribute(SORT_FIELD, is("lastName")))
+                .andExpect(model().attribute(SORT_DIR, is(ASC)))
+                .andExpect(model().attribute(REVERSE_SORT_DIR, is(DESC)))
                 .andExpect(view().name(DEVELOPER_LIST));
     }
 }

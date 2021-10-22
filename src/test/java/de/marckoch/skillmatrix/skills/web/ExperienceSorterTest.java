@@ -11,6 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static de.marckoch.skillmatrix.skills.web.ExperienceSorter.sortExperiences;
+import static de.marckoch.skillmatrix.skills.web.SortDirection.ASC;
+import static de.marckoch.skillmatrix.skills.web.SortDirection.DESC;
 
 class ExperienceSorterTest {
     private Experience e1 = Experience.builder()
@@ -30,11 +32,11 @@ class ExperienceSorterTest {
     void sortBySkillName() {
         List<Experience> experiences = new ArrayList<>(Arrays.asList(e2, e1));
 
-        sortExperiences(experiences, "skillName", "asc");
+        sortExperiences(experiences, "skillName", ASC);
 
         Assertions.assertThat(experiences).containsExactly(e1, e2);
 
-        sortExperiences(experiences, "skillName", "desc");
+        sortExperiences(experiences, "skillName", DESC);
 
         Assertions.assertThat(experiences).containsExactly(e2, e1);
     }
@@ -43,11 +45,11 @@ class ExperienceSorterTest {
     void sortByDevLastName() {
         List<Experience> experiences = new ArrayList<>(Arrays.asList(e2, e1));
 
-        sortExperiences(experiences, "devFullName", "asc");
+        sortExperiences(experiences, "devFullName", ASC);
 
         Assertions.assertThat(experiences).containsExactly(e1, e2);
 
-        sortExperiences(experiences, "devFullName", "desc");
+        sortExperiences(experiences, "devFullName", DESC);
 
         Assertions.assertThat(experiences).containsExactly(e2, e1);
     }
@@ -56,11 +58,11 @@ class ExperienceSorterTest {
     void sortByRating() {
         List<Experience> experiences = new ArrayList<>(Arrays.asList(e2, e1));
 
-        sortExperiences(experiences, "rating", "asc");
+        sortExperiences(experiences, "rating", ASC);
 
         Assertions.assertThat(experiences).containsExactly(e1, e2);
 
-        sortExperiences(experiences, "rating", "desc");
+        sortExperiences(experiences, "rating", DESC);
 
         Assertions.assertThat(experiences).containsExactly(e2, e1);
     }
@@ -69,11 +71,11 @@ class ExperienceSorterTest {
     void sortByWeight() {
         List<Experience> experiences = new ArrayList<>(Arrays.asList(e2, e1));
 
-        sortExperiences(experiences, "weight", "asc");
+        sortExperiences(experiences, "weight", ASC);
 
         Assertions.assertThat(experiences).containsExactly(e1, e2);
 
-        sortExperiences(experiences, "weight", "desc");
+        sortExperiences(experiences, "weight", DESC);
 
         Assertions.assertThat(experiences).containsExactly(e2, e1);
     }

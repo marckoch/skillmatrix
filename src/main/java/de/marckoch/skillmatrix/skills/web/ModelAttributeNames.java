@@ -15,4 +15,15 @@ public class ModelAttributeNames {
     public static final String SKILL_SELECT_ITEMS = "skillSelectItems";
 
     public static final String WAS_VALIDATED = "wasValidated";
+
+    public static final String SORT_FIELD = "sortField";
+    public static final String SORT_DIR = "sortDir";
+    public static final String REVERSE_SORT_DIR = "reverseSortDir";
+
+    public static final String CURRENT_PAGE = "currentPage";
+    public static final String TOTAL_PAGES = "totalPages";
+    public static final String TOTAL_ITEMS = "totalItems";
+
+    public static final String SHOW_WARNING = "showWarning";
+    public static final String SKILL_SET_QUERY = "skillSetQuery";
 }

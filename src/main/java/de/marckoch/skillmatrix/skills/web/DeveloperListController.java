@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.DEVELOPERS;
+import static de.marckoch.skillmatrix.skills.web.RequestParams.SORT_DIR;
+import static de.marckoch.skillmatrix.skills.web.RequestParams.SORT_FIELD;
+import static de.marckoch.skillmatrix.skills.web.SortDirection.ASC;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.DEVELOPER_LIST;
 
 @Controller
@@ -29,8 +32,8 @@ class DeveloperListController {
 
 	@GetMapping("/developers/page/{pagenumber}")
 	public String showAll(@PathVariable int pagenumber,
-						  @RequestParam(name = RequestParams.SORT_FIELD, defaultValue = "lastName") final String sortField,
-						  @RequestParam(name = RequestParams.SORT_DIR, defaultValue = "asc") final String sortDir,
+						  @RequestParam(name = SORT_FIELD, defaultValue = "lastName") final String sortField,
+						  @RequestParam(name = SORT_DIR, defaultValue = ASC) final String sortDir,
 						  Model model) {
 		Sort sort = SortUtil.build(sortDir, sortField);
 		Pageable p = PageRequest.of(pagenumber, 10, sort);

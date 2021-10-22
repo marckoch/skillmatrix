@@ -5,6 +5,8 @@ import de.marckoch.skillmatrix.skills.entity.Experience;
 import java.util.Comparator;
 import java.util.List;
 
+import static de.marckoch.skillmatrix.skills.web.SortDirection.ASC;
+
 /**
  * here we sort a list of experiences which usually hangs at a developer or skill instance.
  * we sort here after loading, because a flexible sorting of child instances in the db query is not possible
@@ -20,25 +22,25 @@ public class ExperienceSorter {
 
         switch (sortField) {
             case "skillName":
-                if ("asc".equalsIgnoreCase(sortDir))
+                if (ASC.equalsIgnoreCase(sortDir))
                     experiences.sort(bySkillName);
                 else
                     experiences.sort(bySkillName.reversed());
                 break;
             case "devFullName":
-                if ("asc".equalsIgnoreCase(sortDir))
+                if (ASC.equalsIgnoreCase(sortDir))
                     experiences.sort(byDeveloperFullName);
                 else
                     experiences.sort(byDeveloperFullName.reversed());
                 break;
             case "rating":
-                if ("asc".equalsIgnoreCase(sortDir))
+                if (ASC.equalsIgnoreCase(sortDir))
                     experiences.sort(byRating);
                 else
                     experiences.sort(byRating.reversed());
                 break;
             case "weight":
-                if ("asc".equalsIgnoreCase(sortDir))
+                if (ASC.equalsIgnoreCase(sortDir))
                     experiences.sort(byWeight);
                 else
                     experiences.sort(byWeight.reversed());

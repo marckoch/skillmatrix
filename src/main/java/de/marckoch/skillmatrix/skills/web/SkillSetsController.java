@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.SKILLS;
+import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.SKILL_SET_QUERY;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.SKILL_SETS;
 
 @Controller
@@ -26,7 +27,7 @@ class SkillSetsController {
     public String skillSets(@RequestParam(required = false, defaultValue = "") String skillSetQuery, Model model) {
         final List<Skill> skills = skillSetsService.getSkillsForSkillSets(skillSetQuery);
         model.addAttribute(SKILLS, skills);
-        model.addAttribute("skillSetQuery", buildJsonOfSkillSetQuery(skillSetQuery));
+        model.addAttribute(SKILL_SET_QUERY, buildJsonOfSkillSetQuery(skillSetQuery));
         return SKILL_SETS;
     }
 
