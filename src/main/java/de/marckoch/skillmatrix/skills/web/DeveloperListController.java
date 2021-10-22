@@ -38,7 +38,7 @@ class DeveloperListController {
 
 		model.addAttribute(DEVELOPERS, resultPage);
 
-		SortUtil.addPagingAttributesToModel(model, resultPage, pagenumber);
+		PaginationUtil.addPagingAttributesToModel(model, resultPage, pagenumber);
 		SortUtil.addSortAttributesToModel(model, sortField, sortDir);
 
 		return DEVELOPER_LIST;

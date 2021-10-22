@@ -38,7 +38,7 @@ class SkillListController {
 
         model.addAttribute(SKILLS, resultPage);
 
-        SortUtil.addPagingAttributesToModel(model, resultPage, pagenumber);
+        PaginationUtil.addPagingAttributesToModel(model, resultPage, pagenumber);
         SortUtil.addSortAttributesToModel(model, sortField, sortDir);
 
         return SKILL_LIST;
