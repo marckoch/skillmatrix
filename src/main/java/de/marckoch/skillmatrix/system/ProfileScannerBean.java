@@ -20,10 +20,14 @@ class ProfileScannerBean {
     @PostConstruct
     void postConstruct(){
         String[] activeProfiles = environment.getActiveProfiles();
-        logger.info("active profiles: {}", Arrays.toString(activeProfiles));
+        if (logger.isInfoEnabled()) {
+            logger.info("active profiles: {}", Arrays.toString(activeProfiles));
+        }
 
         String[] defaultProfiles = environment.getDefaultProfiles();
-        logger.info("default profiles: {}", Arrays.toString(defaultProfiles));
+        if (logger.isInfoEnabled()) {
+            logger.info("default profiles: {}", Arrays.toString(defaultProfiles));
+        }
     }
 }
 
