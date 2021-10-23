@@ -8,8 +8,8 @@ import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -22,6 +22,7 @@ import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -29,6 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+@WithMockUser
 @WebMvcTest({SkillEditController.class, SkillMapper.class})
 class SkillEditControllerTest {
     @Autowired
@@ -52,7 +54,7 @@ class SkillEditControllerTest {
     @Test
     void processCreationFormWithWrongDataShouldShowError() throws Exception {
         // error because name is missing in post!
-        mockMvc.perform(post("/skills/new"))
+        mockMvc.perform(post("/skills/new").with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(model().errorCount(1))
                 .andExpect(model().attributeHasFieldErrorCode(SKILL_DTO, "name", "NotEmpty"))
@@ -67,7 +69,8 @@ class SkillEditControllerTest {
         when(skillRepository.save(ArgumentMatchers.any(Skill.class))).thenReturn(newSkill);
 
         mockMvc.perform(post("/skills/new")
-                        .param("name", "newTestSkill"))
+                        .param("name", "newTestSkill")
+                        .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
                 .andExpect(view().name(REDIRECT_SKILLS + "333"));
@@ -90,7 +93,7 @@ class SkillEditControllerTest {
     @Test
     void processUpdateFormWithWrongDataShouldShowError() throws Exception {
         // error because name is missing in post!
-        MvcResult result = mockMvc.perform(post("/skills/123/edit"))
+        mockMvc.perform(post("/skills/123/edit").with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(model().errorCount(1))
                 .andExpect(model().attributeHasFieldErrorCode(SKILL_DTO, "name", "NotEmpty"))
@@ -104,7 +107,8 @@ class SkillEditControllerTest {
         when(skillRepository.save(ArgumentMatchers.any(Skill.class))).thenReturn(skill1);
 
         mockMvc.perform(post("/skills/1/edit")
-                        .param("name", "nnn"))
+                        .param("name", "nnn")
+                        .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
                 .andExpect(view().name(REDIRECT_SKILLS + "1"));

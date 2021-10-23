@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.validation.BindingResult;
@@ -24,6 +25,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
@@ -31,6 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+@WithMockUser
 @WebMvcTest({ExperienceEditController.class, ExperienceMapper.class})
 class ExperienceEditControllerTest {
     @Autowired
@@ -50,7 +53,8 @@ class ExperienceEditControllerTest {
         when(developerRepository.findById(dev1.getDeveloperId())).thenReturn(Optional.of(dev1));
 
         // error because years and rating are missing in post
-        MvcResult result = mockMvc.perform(post("/experience/{developerId}/new", 123))
+        MvcResult result = mockMvc.perform(post("/experience/{developerId}/new", 123)
+                .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
                 .andExpect(flash().attributeExists(EXPERIENCE_DTO, "org.springframework.validation.BindingResult.experienceDTO"))
@@ -78,7 +82,8 @@ class ExperienceEditControllerTest {
         // error because years and rating are wrong values
         MvcResult result = mockMvc.perform(post("/experience/{developerId}/new", 123)
                         .param("years", "99")
-                        .param("rating", "8"))
+                        .param("rating", "8")
+                        .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
                 .andExpect(flash().attributeExists(EXPERIENCE_DTO, "org.springframework.validation.BindingResult.experienceDTO"))
@@ -105,7 +110,8 @@ class ExperienceEditControllerTest {
 
         mockMvc.perform(post("/experience/{developerId}/new", 123)
                         .param("years", "5")
-                        .param("rating", "4"))
+                        .param("rating", "4")
+                        .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
                 .andExpect(view().name("redirect:/developers/123"));

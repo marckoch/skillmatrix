@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body})}"
+      xmlns="http://www.w3.org/1999/xhtml">
+<body>
+    <h2>Your profile</h2>
+
+    <div class="card mb-2">
+        <h6 class="card-header d-flex justify-content-between align-items-center">
+            Details
+        </h6>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label" for="idUsername">Username</label>
+                    <input class="form-control" type="text" id="idUsername" th:value="${#authentication.name}" disabled>
+                </div>
+                <div class="col-md-8">
+                    <label class="form-label" for="idRoles">Roles</label>
+                    <input class="form-control" type="text" id="idRoles" th:value="${#authentication.authorities}" disabled>
+                </div>
+                <div class="col-md-12">
+                    <label class="form-label" for="idDetails">Details</label>
+                    <input class="form-control" type="text" id="idDetails" th:value="${#authentication.details}" disabled>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

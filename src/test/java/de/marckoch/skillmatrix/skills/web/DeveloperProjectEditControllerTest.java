@@ -12,6 +12,7 @@ import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.YearMonth;
@@ -25,6 +26,7 @@ import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -32,6 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+@WithMockUser
 @WebMvcTest({DeveloperProjectEditController.class, ProjectMapper.class})
 class DeveloperProjectEditControllerTest {
 
@@ -77,7 +80,7 @@ class DeveloperProjectEditControllerTest {
         when(developerRepository.findById(dev1.getDeveloperId())).thenReturn(Optional.of(dev1));
 
         // error because name, since and until are missing in post!
-        mockMvc.perform(post("/developers/123/project/add"))
+        mockMvc.perform(post("/developers/123/project/add").with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(model().errorCount(3))
                 .andExpect(model().attributeHasFieldErrorCode(PROJECT_DTO, "name", "NotEmpty"))
@@ -97,7 +100,8 @@ class DeveloperProjectEditControllerTest {
         mockMvc.perform(post("/developers/{developerId}/project/add", dev1.getDeveloperId())
                         .param("name", "my test project")
                         .param("since", "2019-12")
-                        .param("until", "2022-03"))
+                        .param("until", "2022-03")
+                        .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
                 .andExpect(view().name("redirect:/developers/123"));
@@ -134,7 +138,7 @@ class DeveloperProjectEditControllerTest {
         when(developerRepository.findById(dev1.getDeveloperId())).thenReturn(Optional.of(dev1));
 
         // error because name is missing in post!
-        mockMvc.perform(post("/developers/123/project/edit"))
+        mockMvc.perform(post("/developers/123/project/edit").with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(model().errorCount(3))
                 .andExpect(model().attributeHasFieldErrorCode(PROJECT_DTO, "name", "NotEmpty"))
@@ -161,7 +165,8 @@ class DeveloperProjectEditControllerTest {
         mockMvc.perform(post("/developers/{developerId}/project/edit", dev1.getDeveloperId())
                         .param("name", "my test project")
                         .param("since", "2019-12")
-                        .param("until", "2022-03"))
+                        .param("until", "2022-03")
+                        .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
                 .andExpect(view().name("redirect:/developers/123"));
