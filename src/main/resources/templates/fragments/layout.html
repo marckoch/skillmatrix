@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html th:fragment="layout (template)">
-
+<html th:fragment="layout (template)" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta charset="utf-8">
@@ -64,6 +63,19 @@
             <input class="form-control me-2" type="search" name="query" th:value="${query}" placeholder="Search developers or skills" aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Search</button>
           </form>
+
+          <div sec:authorize="isAuthenticated()" class="dropdown">
+            <button class="btn btn-outline-primary ms-2 bi-person dropdown-toggle" type="button" id="idDropdownMenu" data-bs-toggle="dropdown" aria-expanded="false"></button>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="idDropdownMenu">
+              <li><div class="dropdown-item-text">Logged in as <span sec:authentication="name"></span></div></li>
+              <li><a class="dropdown-item" href="/user">Your profile</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="/logout">Logout</a></li>
+            </ul>
+          </div>
+          <div sec:authorize="!isAuthenticated()">
+            <a class="btn btn-outline-primary ms-2" type="button" href="/login">Login</a>
+          </div>
         </div>
       </div>
     </nav>
