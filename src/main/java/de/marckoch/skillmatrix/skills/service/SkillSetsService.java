@@ -61,7 +61,7 @@ public class SkillSetsService {
     }
 
     private List<Skill> getSkills(String query) {
-        if (query == null || query.isEmpty())
+        if (query.isEmpty())
             return Collections.emptyList();
 
         // this should/could be done in one query, but for now this is good enough.

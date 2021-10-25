@@ -5,6 +5,7 @@ import de.marckoch.skillmatrix.skills.entity.DeveloperRepository;
 import de.marckoch.skillmatrix.skills.entity.Skill;
 import de.marckoch.skillmatrix.skills.entity.SkillRepository;
 import de.marckoch.skillmatrix.skills.service.SkillsService;
+import de.marckoch.skillmatrix.skills.web.dto.ExperienceDTO;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,5 +75,23 @@ class DeveloperDetailsControllerTest {
 
         mockMvc.perform(get("/developers/{developerId}", 123))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void redirectionFromExperienceCheckHasDTOinFlashAttributes() throws Exception {
+        Developer dev1 = new Developer();
+        dev1.setDeveloperId(123);
+        dev1.setExperiences(Collections.emptyList());
+
+        ExperienceDTO expDTO = new ExperienceDTO();
+
+        when(developerRepository.findById(dev1.getDeveloperId())).thenReturn(Optional.of(dev1));
+
+        mockMvc.perform(get("/developers/{developerId}", dev1.getDeveloperId())
+                        .flashAttr(EXPERIENCE_DTO, expDTO))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists(DEVELOPER, EXPERIENCE_DTO, SKILL_SELECT_ITEMS))
+                .andExpect(model().attribute(EXPERIENCE_DTO, Matchers.equalTo(expDTO)))
+                .andExpect(view().name(DEVELOPER_DETAILS));
     }
 }
