@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <th:block th:fragment="select (label, name, items)">
+      <div th:with="valid=${!#fields.hasErrors(name)}">
+        <label class="form-label" th:for="${'id' + name}" th:text="${label}">Label</label>
+        <select class="form-select" disabled
+                th:field="*{__${name}__}"
+                th:id="${'id' + name}">
+          <option th:each="item : ${items}" th:value="${item.key}" th:text="${item.value}"></option>
+        </select>
+      </div>
+    </th:block>
+</body>
+</html>

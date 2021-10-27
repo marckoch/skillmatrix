@@ -14,6 +14,8 @@ public class ViewNames {
     public static final String SKILL_LIST = "skills/skillList";
     public static final String CREATE_OR_UPDATE_SKILL_VIEW = "skills/createOrUpdateSkillForm";
 
+    public static final String EXPERIENCE_EDIT_VIEW = "experiences/updateExperienceForm";
+
     public static final String SKILL_MATRIX = "skills/skillMatrix";
     public static final String SKILL_SETS = "skills/skillSets";
 

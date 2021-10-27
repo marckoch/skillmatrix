@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body})}">
+<body>
+<h2 th:text="${developer.getFullName()}">Developer Name</h2>
+
+<div class="card mb-2">
+    <h6 class="card-header d-flex justify-content-between align-items-center">
+        Skill
+    </h6>
+    <div class="card-body">
+        <form th:action="@{/experience/edit/__${experienceDTO.experienceId}__}" th:object="${experienceDTO}"
+              class="row g-3 needs-validation"
+              novalidate id="update-experience-form" method="post">
+
+            <div class="col-md-4">
+                <input th:replace="~{fragments/disabledSelectField :: select ('Skill + Version', 'skill', ${skillSelectItems})}" />
+            </div>
+            <div class="col-md-4">
+                <input th:replace="~{fragments/inputField :: input ('Years', 'years')}" />
+            </div>
+            <div class="col-md-4">
+                <input th:replace="~{fragments/selectField :: select ('Rating', 'rating', ${ratings})}" />
+            </div>
+
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

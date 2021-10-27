@@ -107,9 +107,14 @@
                                 <div th:replace="~{fragments/ratingStars :: stars (${exp.rating})}">2</div>
                             </td>
                             <td>
-                                <a class="btn btn-sm btn-danger" th:href="@{/experience/delete/__${exp.experienceId}__}">
-                                    <span class="bi bi-trash"></span>
-                                </a>
+                                <div class="d-flex">
+                                    <a class="btn btn-sm btn-outline-primary me-2" th:href="@{/experience/edit/__${exp.experienceId}__}">
+                                        <span class="bi bi-wrench"></span>
+                                    </a>
+                                    <a class="btn btn-sm btn-outline-danger" th:href="@{/experience/delete/__${exp.experienceId}__}">
+                                        <span class="bi bi-trash"></span>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     </tbody>

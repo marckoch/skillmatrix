@@ -13,4 +13,14 @@ public class ExperienceMapper {
                 .years(experienceDTO.getYears())
                 .build();
     }
+
+    public ExperienceDTO buildExperienceDTO(Experience entity) {
+        return ExperienceDTO.builder()
+                .experienceId(entity.getExperienceId())
+                .developer(entity.getDeveloper())
+                .rating(entity.getRating())
+                .years(entity.getYears())
+                .skill(entity.getSkill())
+                .build();
+    }
 }

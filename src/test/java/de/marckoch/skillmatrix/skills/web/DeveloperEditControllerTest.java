@@ -46,6 +46,12 @@ class DeveloperEditControllerTest {
     @MockBean
     SkillsService skillsService;
 
+    Developer dev1 = Developer.builder()
+            .developerId(123)
+            .firstName("firstName123")
+            .lastName("lastName123")
+            .build();
+
     @Test
     void initCreationFormShouldShowNewDeveloper() throws Exception {
         mockMvc.perform(get("/developers/new"))
@@ -69,9 +75,6 @@ class DeveloperEditControllerTest {
 
     @Test
     void processCreationFormWithCorrectDataShouldSaveData() throws Exception {
-        Developer dev1 = new Developer();
-        dev1.setDeveloperId(123);
-
         when(developerRepository.save(ArgumentMatchers.any(Developer.class))).thenReturn(dev1);
 
         mockMvc.perform(post("/developers/new")
@@ -85,14 +88,9 @@ class DeveloperEditControllerTest {
 
     @Test
     void initUpdateDeveloperFormShouldShowExistingDeveloper() throws Exception {
-        Developer dev1 = new Developer();
-        dev1.setDeveloperId(123);
-        dev1.setFirstName("firstName123");
-        dev1.setLastName("lastName123");
-
         when(developerRepository.findById(dev1.getDeveloperId())).thenReturn(Optional.of(dev1));
 
-        mockMvc.perform(get("/developers/{developerId}/edit", 123))
+        mockMvc.perform(get("/developers/{developerId}/edit", dev1.getDeveloperId()))
                 .andExpect(status().isOk())
                 .andExpect(model().hasNoErrors())
                 .andExpect(view().name(CREATE_OR_UPDATE_DEVELOPER_VIEW))
@@ -113,10 +111,7 @@ class DeveloperEditControllerTest {
 
     @Test
     void processUpdateFormWithCorrectDataShouldSaveData() throws Exception {
-        Developer dev1 = new Developer();
-        dev1.setDeveloperId(123);
-
-        when(developerRepository.findById(123)).thenReturn(Optional.of(dev1));
+        when(developerRepository.findById(dev1.getDeveloperId())).thenReturn(Optional.of(dev1));
         when(developerRepository.save(ArgumentMatchers.any(Developer.class))).thenReturn(dev1);
 
         mockMvc.perform(post("/developers/123/edit")

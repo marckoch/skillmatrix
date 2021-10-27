@@ -23,6 +23,8 @@ import javax.validation.constraints.Positive;
 @AllArgsConstructor
 public class ExperienceDTO {
 
+    private Integer experienceId;
+
     private Developer developer;
 
     private Skill skill;
