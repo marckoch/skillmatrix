@@ -15,13 +15,14 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Optional;
 
-import static de.marckoch.skillmatrix.skills.web.DeveloperEditController.REDIRECT_DEVELOPERS;
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.DEVELOPER_DTO;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.CREATE_OR_UPDATE_DEVELOPER_VIEW;
+import static de.marckoch.skillmatrix.skills.web.ViewNames.REDIRECT_DEVELOPERS;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -83,7 +84,21 @@ class DeveloperEditControllerTest {
                         .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
-                .andExpect(view().name(REDIRECT_DEVELOPERS + "123"));
+                .andExpect(view().name(REDIRECT_DEVELOPERS + "/123"));
+    }
+
+    @Test
+    void processCreationFormWithCancelShouldCancel() throws Exception {
+        mockMvc.perform(post("/developers/new")
+                        .param("firstName", "first")
+                        .param("lastName", "last")
+                        .param("cancel", "true")
+                        .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(model().hasNoErrors())
+                .andExpect(view().name(REDIRECT_DEVELOPERS));
+
+        verifyNoInteractions(developerRepository);
     }
 
     @Test
@@ -120,6 +135,20 @@ class DeveloperEditControllerTest {
                         .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
-                .andExpect(view().name(REDIRECT_DEVELOPERS + "123"));
+                .andExpect(view().name(REDIRECT_DEVELOPERS + "/123"));
+    }
+
+    @Test
+    void processUpdateFormWithCancelShouldCancel() throws Exception {
+        mockMvc.perform(post("/developers/123/edit")
+                        .param("firstName", "first")
+                        .param("lastName", "last")
+                        .param("cancel", "true")
+                        .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(model().hasNoErrors())
+                .andExpect(view().name(REDIRECT_DEVELOPERS + "/123"));
+
+        verifyNoInteractions(developerRepository);
     }
 }

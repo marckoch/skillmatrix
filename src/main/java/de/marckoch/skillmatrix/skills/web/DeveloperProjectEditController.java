@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 
-import static de.marckoch.skillmatrix.skills.web.DeveloperEditController.REDIRECT_DEVELOPERS;
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.DEVELOPER;
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.PROJECT_DTO;
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.WAS_VALIDATED;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.CREATE_OR_UPDATE_PROJECT_VIEW;
+import static de.marckoch.skillmatrix.skills.web.ViewNames.REDIRECT_DEVELOPERS;
 
 // maybe use this: https://qawithexperts.com/article/bootstrap/showing-month-and-year-only-in-bootstrap-datepicker/292
 @Controller
@@ -59,8 +59,13 @@ class DeveloperProjectEditController {
             Developer developer = developerRepository.findById(developerId).orElseThrow();
             developer.setCurrentProject(newProject);
             Developer savedDev = developerRepository.save(developer);
-            return REDIRECT_DEVELOPERS + savedDev.getDeveloperId();
+            return REDIRECT_DEVELOPERS + '/' + savedDev.getDeveloperId();
         }
+    }
+
+    @PostMapping(value = "/developers/{developerId}/project/add", params = "cancel")
+    public String processCreationFormCancel(@PathVariable("developerId") int developerId) {
+        return REDIRECT_DEVELOPERS + '/' +  developerId;
     }
 
     @GetMapping("/developers/{developerId}/project/edit")
@@ -89,8 +94,13 @@ class DeveloperProjectEditController {
 
             Developer savedDev = developerRepository.save(existingDev);
             model.addAttribute(DEVELOPER, savedDev);
-            return REDIRECT_DEVELOPERS + savedDev.getDeveloperId();
+            return REDIRECT_DEVELOPERS + '/' + savedDev.getDeveloperId();
         }
+    }
+
+    @PostMapping(value = "/developers/{developerId}/project/edit", params = "cancel")
+    public String processUpdateFormCancel(@PathVariable("developerId") int developerId) {
+        return REDIRECT_DEVELOPERS + '/' +  developerId;
     }
 
     @Transactional
@@ -101,6 +111,6 @@ class DeveloperProjectEditController {
         existingDev.setCurrentProject(null);
         Developer savedDev = developerRepository.save(existingDev);
         model.addAttribute(DEVELOPER, savedDev);
-        return REDIRECT_DEVELOPERS + savedDev.getDeveloperId();
+        return REDIRECT_DEVELOPERS + '/' + savedDev.getDeveloperId();
     }
 }

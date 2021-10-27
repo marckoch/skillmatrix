@@ -18,6 +18,7 @@ import static de.marckoch.skillmatrix.skills.web.RequestParams.SORT_DIR;
 import static de.marckoch.skillmatrix.skills.web.RequestParams.SORT_FIELD;
 import static de.marckoch.skillmatrix.skills.web.SortDirection.ASC;
 import static de.marckoch.skillmatrix.skills.web.SortField.SKILL_NAME;
+import static de.marckoch.skillmatrix.skills.web.ViewNames.REDIRECT_SKILLS;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.SKILL_LIST;
 
 @Controller
@@ -28,7 +29,7 @@ class SkillListController {
 
     @GetMapping("/skills")
     public String showAll() {
-        return "redirect:skills/page/0?sort-field=name&sort-dir=asc";
+        return REDIRECT_SKILLS + "/page/0?sort-field=name&sort-dir=asc";
     }
 
     @GetMapping("/skills/page/{pagenumber}")

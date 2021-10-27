@@ -27,6 +27,7 @@ import static de.marckoch.skillmatrix.skills.web.SortDirection.ASC;
 import static de.marckoch.skillmatrix.skills.web.SortDirection.DESC;
 import static de.marckoch.skillmatrix.skills.web.SortField.DEVELOPER_LAST_NAME;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.DEVELOPER_LIST;
+import static de.marckoch.skillmatrix.skills.web.ViewNames.REDIRECT_DEVELOPERS;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
@@ -57,7 +58,7 @@ class DeveloperListControllerTest {
         mockMvc.perform(get("/developers"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
-                .andExpect(view().name("redirect:developers/page/0?sort-field=lastName&sort-dir=asc"));
+                .andExpect(view().name(REDIRECT_DEVELOPERS + "/page/0?sort-field=lastName&sort-dir=asc"));
     }
 
     @Test

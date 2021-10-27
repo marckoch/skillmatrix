@@ -20,11 +20,13 @@ import java.util.Optional;
 
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.PROJECT_DTO;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.CREATE_OR_UPDATE_PROJECT_VIEW;
+import static de.marckoch.skillmatrix.skills.web.ViewNames.REDIRECT_DEVELOPERS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -104,7 +106,25 @@ class DeveloperProjectEditControllerTest {
                         .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
-                .andExpect(view().name("redirect:/developers/123"));
+                .andExpect(view().name(REDIRECT_DEVELOPERS + "/" + dev1.getDeveloperId()));
+    }
+
+    @Test
+    void processCreationFormWithCancelShouldCancel() throws Exception {
+        Developer dev1 = new Developer();
+        dev1.setDeveloperId(123);
+
+        mockMvc.perform(post("/developers/{developerId}/project/add", dev1.getDeveloperId())
+                        .param("name", "my test project")
+                        .param("since", "2019-12")
+                        .param("until", "2022-03")
+                        .param("cancel", "true")
+                        .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(model().hasNoErrors())
+                .andExpect(view().name(REDIRECT_DEVELOPERS + "/" + dev1.getDeveloperId()));
+
+        verifyNoInteractions(developerRepository);
     }
 
     @Test
@@ -169,7 +189,22 @@ class DeveloperProjectEditControllerTest {
                         .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
-                .andExpect(view().name("redirect:/developers/123"));
+                .andExpect(view().name(REDIRECT_DEVELOPERS + "/" + dev1.getDeveloperId()));
+    }
+
+    @Test
+    void processUpdateFormWithCancelShouldCancel() throws Exception {
+        mockMvc.perform(post("/developers/123/project/edit")
+                        .param("name", "my test project")
+                        .param("since", "2019-12")
+                        .param("until", "2022-03")
+                        .param("cancel", "true")
+                        .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(model().hasNoErrors())
+                .andExpect(view().name(REDIRECT_DEVELOPERS + "/123"));
+
+        verifyNoInteractions(developerRepository);
     }
 
     @Test
@@ -190,7 +225,7 @@ class DeveloperProjectEditControllerTest {
         mockMvc.perform(get("/developers/{developerId}/project/delete", dev1.getDeveloperId()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
-                .andExpect(view().name("redirect:/developers/123"));
+                .andExpect(view().name(REDIRECT_DEVELOPERS + "/" + dev1.getDeveloperId()));
 
         // project has been set null
         assertThat(dev1.hasProject()).isFalse();

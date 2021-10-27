@@ -19,6 +19,7 @@ import static de.marckoch.skillmatrix.skills.web.RequestParams.SORT_FIELD;
 import static de.marckoch.skillmatrix.skills.web.SortDirection.ASC;
 import static de.marckoch.skillmatrix.skills.web.SortField.DEVELOPER_LAST_NAME;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.DEVELOPER_LIST;
+import static de.marckoch.skillmatrix.skills.web.ViewNames.REDIRECT_DEVELOPERS;
 
 @Controller
 @AllArgsConstructor
@@ -28,7 +29,7 @@ class DeveloperListController {
 
 	@GetMapping("/developers")
 	public String showAll() {
-		return "redirect:developers/page/0?sort-field=lastName&sort-dir=asc";
+		return REDIRECT_DEVELOPERS + "/page/0?sort-field=lastName&sort-dir=asc";
 	}
 
 	@GetMapping("/developers/page/{pagenumber}")

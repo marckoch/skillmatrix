@@ -24,9 +24,10 @@
             <input th:replace="~{fragments/inputField :: input ('Until', 'until')}" />
             <div id="untilHelp" class="form-text">format: yyyy-MM, e.g. 2019-11, must be after since</div>
           </div>
-          <div class="col-12">
+          <div class="col-4 d-flex">
             <button th:with="text=${projectDTO['new']} ? 'Add Project' : 'Update Project'"
-                    class="btn btn-primary" type="submit" th:text="${text}">Add Project</button>
+                    class="btn btn-primary me-2" type="submit" th:text="${text}">Add Project</button>
+            <button class="btn btn-primary" type="submit" name="cancel">Cancel</button>
           </div>
 
           <th:block th:if="${#fields.hasGlobalErrors()}">

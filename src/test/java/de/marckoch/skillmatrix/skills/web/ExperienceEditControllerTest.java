@@ -26,11 +26,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import static de.marckoch.skillmatrix.skills.web.DeveloperEditController.REDIRECT_DEVELOPERS;
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.DEVELOPER;
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.EXPERIENCE_DTO;
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.SKILL_SELECT_ITEMS;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.EXPERIENCE_EDIT_VIEW;
+import static de.marckoch.skillmatrix.skills.web.ViewNames.REDIRECT_DEVELOPERS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
@@ -82,7 +82,7 @@ class ExperienceEditControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
                 .andExpect(flash().attributeExists(EXPERIENCE_DTO, "org.springframework.validation.BindingResult.experienceDTO"))
-                .andExpect(view().name("redirect:/developers/123"))
+                .andExpect(view().name(REDIRECT_DEVELOPERS + "/" + dev1.getDeveloperId()))
                 .andReturn();
 
         BindingResult bindingResult = (BindingResult) result.getFlashMap().get("org.springframework.validation.BindingResult.experienceDTO");
@@ -108,7 +108,7 @@ class ExperienceEditControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
                 .andExpect(flash().attributeExists(EXPERIENCE_DTO, "org.springframework.validation.BindingResult.experienceDTO"))
-                .andExpect(view().name("redirect:/developers/123"))
+                .andExpect(view().name(REDIRECT_DEVELOPERS + "/" + dev1.getDeveloperId()))
                 .andReturn();
 
         BindingResult bindingResult = (BindingResult) result.getFlashMap().get("org.springframework.validation.BindingResult.experienceDTO");
@@ -132,7 +132,7 @@ class ExperienceEditControllerTest {
                         .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
-                .andExpect(view().name("redirect:/developers/123"));
+                .andExpect(view().name(REDIRECT_DEVELOPERS + "/" + dev1.getDeveloperId()));
 
         verify(experienceRepository, times(1)).save(any(Experience.class));
     }
@@ -144,7 +144,7 @@ class ExperienceEditControllerTest {
         mockMvc.perform(get("/experience/delete/{experienceId}", exp1.getExperienceId()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
-                .andExpect(view().name("redirect:/developers/123"));
+                .andExpect(view().name(REDIRECT_DEVELOPERS + "/" + dev1.getDeveloperId()));
         verify(developerRepository, times(1)).save(dev1);
         assertThat(dev1.getExperiences()).isEmpty();
     }
@@ -200,7 +200,6 @@ class ExperienceEditControllerTest {
                 .andExpect(view().name(EXPERIENCE_EDIT_VIEW));
     }
 
-
     @Test
     void processUpdateFormWithCorrectDataShouldSaveData() throws Exception {
         when(experienceRepository.findById(exp1.getExperienceId())).thenReturn(Optional.of(exp1));
@@ -213,6 +212,20 @@ class ExperienceEditControllerTest {
                         .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
-                .andExpect(view().name(REDIRECT_DEVELOPERS + "123"));
+                .andExpect(view().name(REDIRECT_DEVELOPERS + "/123"));
+    }
+
+    @Test
+    void processUpdateFormCancel() throws Exception {
+        when(experienceRepository.findById(exp1.getExperienceId())).thenReturn(Optional.of(exp1));
+
+        mockMvc.perform(post("/experience/edit/123")
+                        .param("rating", "2")
+                        .param("years", "22")
+                        .param("cancel", "true")
+                        .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(model().hasNoErrors())
+                .andExpect(view().name(REDIRECT_DEVELOPERS + "/123"));
     }
 }

@@ -23,8 +23,9 @@
                 <input th:replace="~{fragments/selectField :: select ('Rating', 'rating', ${ratings})}" />
             </div>
 
-            <div class="col-12">
-                <button class="btn btn-primary" type="submit">Update</button>
+            <div class="col-4 d-flex">
+                <button class="btn btn-primary me-2" type="submit">Update</button>
+                <button class="btn btn-primary" type="submit" name="cancel">Cancel</button>
             </div>
         </form>
     </div>

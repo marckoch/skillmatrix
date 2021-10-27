@@ -18,12 +18,11 @@ import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.DEVELOPER;
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.DEVELOPER_DTO;
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.WAS_VALIDATED;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.CREATE_OR_UPDATE_DEVELOPER_VIEW;
+import static de.marckoch.skillmatrix.skills.web.ViewNames.REDIRECT_DEVELOPERS;
 
 @Controller
 @AllArgsConstructor
 class DeveloperEditController {
-
-	public static final String REDIRECT_DEVELOPERS = "redirect:/developers/";
 
 	private final DeveloperRepository developerRepository;
 
@@ -45,8 +44,13 @@ class DeveloperEditController {
 			Developer newDev = new Developer();
 			developerMapper.updateEntityFromDTO(developerDTO, newDev);
 			Developer savedDev = developerRepository.save(newDev);
-			return REDIRECT_DEVELOPERS + savedDev.getDeveloperId();
+			return REDIRECT_DEVELOPERS + '/' + savedDev.getDeveloperId();
 		}
+	}
+
+	@PostMapping(value = "/developers/new", params = "cancel")
+	public String processCreationFormCancel() {
+		return REDIRECT_DEVELOPERS;
 	}
 
 	@GetMapping("/developers/{developerId}/edit")
@@ -58,7 +62,7 @@ class DeveloperEditController {
 		return CREATE_OR_UPDATE_DEVELOPER_VIEW;
 	}
 
-	@PostMapping("/developers/{developerId}/edit")
+	@PostMapping(value = "/developers/{developerId}/edit")
 	public String processUpdateDeveloperForm(@Valid DeveloperDTO developerDTO, BindingResult result,
 										 	 @PathVariable("developerId") int developerId, Model model) {
 		model.addAttribute(WAS_VALIDATED, true);
@@ -71,7 +75,12 @@ class DeveloperEditController {
 
 			Developer savedDev = developerRepository.save(existingDev);
 			model.addAttribute(DEVELOPER, savedDev);
-			return REDIRECT_DEVELOPERS + savedDev.getDeveloperId();
+			return REDIRECT_DEVELOPERS + '/' + savedDev.getDeveloperId();
 		}
+	}
+
+	@PostMapping(value = "/developers/{developerId}/edit", params = "cancel")
+	public String processUpdateFormCancel(@PathVariable("developerId") int developerId) {
+		return REDIRECT_DEVELOPERS + '/' +  developerId;
 	}
 }

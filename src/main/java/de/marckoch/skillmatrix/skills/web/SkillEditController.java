@@ -18,12 +18,11 @@ import java.util.Map;
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.SKILL_DTO;
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.WAS_VALIDATED;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.CREATE_OR_UPDATE_SKILL_VIEW;
+import static de.marckoch.skillmatrix.skills.web.ViewNames.REDIRECT_SKILLS;
 
 @Controller
 @AllArgsConstructor
 class SkillEditController {
-
-    public static final String REDIRECT_SKILLS = "redirect:/skills/";
 
     private final SkillRepository skillRepository;
 
@@ -45,8 +44,13 @@ class SkillEditController {
             Skill newSkill = new Skill();
             skillMapper.updateEntityFromDTO(skillDTO, newSkill);
             Skill savedSkill = skillRepository.save(newSkill);
-            return REDIRECT_SKILLS + savedSkill.getSkillId();
+            return REDIRECT_SKILLS + '/' + savedSkill.getSkillId();
         }
+    }
+
+    @PostMapping(value = "/skills/new", params = "cancel")
+    public String processCreationFormCancel() {
+        return REDIRECT_SKILLS;
     }
 
     @GetMapping("/skills/{skillId}/edit")
@@ -71,7 +75,12 @@ class SkillEditController {
 
             Skill savedSkill = skillRepository.save(existingSkill);
             model.addAttribute(SKILL_DTO, savedSkill);
-            return REDIRECT_SKILLS + savedSkill.getSkillId();
+            return REDIRECT_SKILLS + '/' + savedSkill.getSkillId();
         }
+    }
+
+    @PostMapping(value = "/skills/{skillId}/edit", params = "cancel")
+    public String processUpdateSkillFormCancel(@PathVariable("skillId") int skillId) {
+        return REDIRECT_SKILLS + '/' +  skillId;
     }
 }

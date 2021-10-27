@@ -23,12 +23,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-import static de.marckoch.skillmatrix.skills.web.DeveloperEditController.REDIRECT_DEVELOPERS;
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.DEVELOPER;
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.EXPERIENCE_DTO;
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.SKILL_SELECT_ITEMS;
 import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.WAS_VALIDATED;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.EXPERIENCE_EDIT_VIEW;
+import static de.marckoch.skillmatrix.skills.web.ViewNames.REDIRECT_DEVELOPERS;
 
 @Controller
 @AllArgsConstructor
@@ -58,7 +58,7 @@ class ExperienceEditController {
             experienceRepository.save(newExp);
         }
 
-        return "redirect:/developers/" + dev.getDeveloperId();
+        return REDIRECT_DEVELOPERS + '/' + dev.getDeveloperId();
     }
 
     @GetMapping("/experience/edit/{experienceId}")
@@ -89,8 +89,14 @@ class ExperienceEditController {
             existingExpEntity.setRating(experienceDTO.getRating());
 
             Experience updatedExpEntity = experienceRepository.save(existingExpEntity);
-            return REDIRECT_DEVELOPERS + updatedExpEntity.getDeveloper().getDeveloperId();
+            return REDIRECT_DEVELOPERS + '/' + updatedExpEntity.getDeveloper().getDeveloperId();
         }
+    }
+
+    @PostMapping(value = "/experience/edit/{experienceId}", params = "cancel")
+    public String processExperienceEditViewCancel(@PathVariable("experienceId") int experienceId) {
+        Experience existingExpEntity = experienceRepository.findById(experienceId).orElseThrow();
+        return REDIRECT_DEVELOPERS + '/' + existingExpEntity.getDeveloper().getDeveloperId();
     }
 
     @ModelAttribute("ratings")
@@ -106,7 +112,7 @@ class ExperienceEditController {
         dev.getExperiences().removeIf(e -> e.getExperienceId().equals(experienceId));
         developerRepository.save(dev);
 
-        return "redirect:/developers/" + dev.getDeveloperId();
+        return REDIRECT_DEVELOPERS + '/' + dev.getDeveloperId();
     }
 
     private void addSingleSelectItemToModel(Experience exp, Model model) {

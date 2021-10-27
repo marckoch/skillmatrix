@@ -24,6 +24,7 @@ import static de.marckoch.skillmatrix.skills.web.ModelAttributeNames.TOTAL_PAGES
 import static de.marckoch.skillmatrix.skills.web.SortDirection.ASC;
 import static de.marckoch.skillmatrix.skills.web.SortDirection.DESC;
 import static de.marckoch.skillmatrix.skills.web.SortField.SKILL_NAME;
+import static de.marckoch.skillmatrix.skills.web.ViewNames.REDIRECT_SKILLS;
 import static de.marckoch.skillmatrix.skills.web.ViewNames.SKILL_LIST;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
@@ -52,7 +53,7 @@ class SkillListControllerTest {
         mockMvc.perform(get("/skills"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
-                .andExpect(view().name("redirect:skills/page/0?sort-field=name&sort-dir=asc"));
+                .andExpect(view().name(REDIRECT_SKILLS + "/page/0?sort-field=name&sort-dir=asc"));
     }
 
     @Test

@@ -21,4 +21,7 @@ public class ViewNames {
 
     public static final String SEARCH_RESULT = "globalsearch/searchResult";
     public static final String EMPTY_SEARCH = "globalsearch/emptySearch";
+
+    public static final String REDIRECT_DEVELOPERS = "redirect:/developers";
+    public static final String REDIRECT_SKILLS = "redirect:/skills";
 }
