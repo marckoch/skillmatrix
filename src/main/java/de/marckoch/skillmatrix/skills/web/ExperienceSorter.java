@@ -17,6 +17,7 @@ public class ExperienceSorter {
     public static void sortExperiences(List<Experience> experiences, String sortField, String sortDir) {
         final Comparator<Experience> byWeight = Comparator.comparing(Experience::getWeight);
         final Comparator<Experience> byRating = Comparator.comparing(Experience::getRating);
+        final Comparator<Experience> byYears = Comparator.comparing(Experience::getYears);
         final Comparator<Experience> byDeveloperFullName = Comparator.comparing(o -> o.getDeveloper().getFullName());
         final Comparator<Experience> bySkillName = Comparator.comparing(o -> o.getSkill().getNameAndVersion());
 
@@ -35,9 +36,9 @@ public class ExperienceSorter {
                 break;
             case "rating":
                 if (ASC.equalsIgnoreCase(sortDir))
-                    experiences.sort(byRating);
+                    experiences.sort(byRating.thenComparing(byYears));
                 else
-                    experiences.sort(byRating.reversed());
+                    experiences.sort(byRating.reversed().thenComparing(byYears.reversed()));
                 break;
             case "weight":
                 if (ASC.equalsIgnoreCase(sortDir))
