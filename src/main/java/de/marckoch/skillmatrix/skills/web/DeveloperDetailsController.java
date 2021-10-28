@@ -52,7 +52,6 @@ class DeveloperDetailsController {
         // this was checked and put there by redirect from ExperienceController
         if (model.containsAttribute(EXPERIENCE_DTO)) {
             model.addAttribute(WAS_VALIDATED, true);
-            model.addAttribute(EXPERIENCE_DTO, model.getAttribute(EXPERIENCE_DTO));
         } else {
             ExperienceDTO experienceDTO = ExperienceDTO.builder()
                     .developer(dev)
