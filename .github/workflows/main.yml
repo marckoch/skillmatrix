@@ -24,14 +24,14 @@ jobs:
           java-version: '17'
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v2.1.7
+        uses: actions/cache@v3
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
       - name: Cache local Maven repository
-        uses: actions/cache@v2.1.7
+        uses: actions/cache@v3
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
@@ -59,7 +59,7 @@ jobs:
           java-version: '17'
 
       - name: Cache local Maven repository
-        uses: actions/cache@v2.1.7
+        uses: actions/cache@v3
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
