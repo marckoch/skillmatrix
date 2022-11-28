@@ -19,7 +19,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<webjars-bootstrap.version>5.2.0</webjars-bootstrap.version>
+		<webjars-bootstrap.version>5.2.3</webjars-bootstrap.version>
 		<webjars-jquery-ui.version>1.13.1</webjars-jquery-ui.version>
 		<webjars-jquery.version>3.6.0</webjars-jquery.version>
 
